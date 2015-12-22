@@ -88,6 +88,7 @@ public class VerificationSearchTest {
 		Thread.sleep(2000);
 		newVerificationPage.gotoLogout();
 		softAssert.assertAll();
+		System.out.println("Hello");
 	}
 
 }
