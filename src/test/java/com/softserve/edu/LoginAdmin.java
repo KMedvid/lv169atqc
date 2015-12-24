@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -16,14 +17,28 @@ public class LoginAdmin {
     
     @BeforeClass
     public void oneTimeSetUp() {
-        driver = new FirefoxDriver();
+        System.out.println("@BeforeClass - oneTimeSetUp() START");
+        //driver = new FirefoxDriver();
+        driver = new HtmlUnitDriver(true);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        System.out.println("@BeforeClass - oneTimeSetUp() DONE");
     }
 
     @AfterClass
     public void oneTimeTearDown() {
-        //driver.quit();
-        System.out.println("@AfterClass - oneTimeTearDown");
+        driver.quit();
+        System.out.println("@AfterClass - oneTimeTearDown()");
+    }
+
+    @Test
+    public void testUnit() throws Exception {
+        System.out.println("@Test -  testUnit() START");
+        driver.get("http://localhost:8080/OMS");
+        driver.findElement(By.name("j_username")).sendKeys("iva");
+        driver.findElement(By.name("j_password")).sendKeys("qwerty");
+        driver.findElement(By.name("submit")).click();
+        driver.findElement(By.xpath("//a[@class='spec']")).click();
+        System.out.println("@Test -  testUnit() DONE");
     }
     
     @Test
@@ -39,12 +54,16 @@ public class LoginAdmin {
         //
         login.sendKeys("iva");
         password.sendKeys("qwerty");
+        Thread.sleep(2000);
         button.click();
+        Thread.sleep(2000);
         // Prepare to Check
         String lastname = driver.findElement(By.xpath("//table/tbody/tr[2]/td[2]")).getText();
         //Assert.assertEquals(s, "horoshko");
         // Return to Previous State
+        Thread.sleep(2000);
         driver.findElement(By.xpath("//a[@class='spec']")).click();
+        Thread.sleep(2000);
         //driver.quit();
         // Checking
         Assert.assertEquals(lastname, "horoshko");
@@ -70,6 +89,7 @@ public class LoginAdmin {
         // Prepare to Check
         String lastname = driver.findElement(By.xpath("//font[@color='red']")).getText();
         // Return to Previous State
+        Thread.sleep(2000);
         driver.navigate().back();
         //driver.quit();
         // Checking
