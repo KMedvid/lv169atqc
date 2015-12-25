@@ -41,8 +41,10 @@ public class LoginAdmin {
     public void testUnit() throws Exception {
         logger.info("@Test -  testUnit() START");
         System.out.println("@Test -  testUnit() START");
-        logger.info("Goto http://localhost:8080/OMS");
-        driver.get("http://localhost:8080/OMS");
+        //logger.info("Goto http://localhost:8080/OMS");
+        //driver.get("http://localhost:8080/OMS");
+        logger.info("Goto http://ssu-oms.training.local:8180/OMS/login.htm");
+        driver.get("http://ssu-oms.training.local:8180/OMS/login.htm");
         logger.info("Creating Web Elements");
         driver.findElement(By.name("j_username")).sendKeys("iva");
         driver.findElement(By.name("j_password")).sendKeys("qwerty");
