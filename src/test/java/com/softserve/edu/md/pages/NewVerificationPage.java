@@ -10,6 +10,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.User;
 
 public class NewVerificationPage {
@@ -149,7 +150,7 @@ public class NewVerificationPage {
 	}
 
 	// Return a new page object representing the destination.
-	public NewVerificationPage successVerifaction(User calibrator) {
+	public NewVerificationPage successVerifaction(IUser calibrator) {
 		return new NewVerificationPage(driver);
 	}
 

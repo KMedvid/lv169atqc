@@ -81,7 +81,6 @@ public class LoginTest {
 
 	@Test(dataProvider = "calibratorUsers")
 	public void checkCalibratorLogin(IUser calibrator, IUrls urls) throws InterruptedException {
-		//driver.get("http://localhost:8080/#/login");
 		LoginPage loginPage = LoginStartPage.get().load(urls);	
 		CalibratorHomePage calhomepage = loginPage.successCalLogin(UserRepository.get().getCalibratorUser());
 		Thread.sleep(2000);

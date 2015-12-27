@@ -4,7 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.User;
+import com.softserve.edu.md.pages.MeasuringEquipmentPage.MeasuringEquipmentEditPage;
 
 public class MeasuringEquipmentPage {
 	
@@ -12,7 +14,7 @@ public class MeasuringEquipmentPage {
 	private WebElement editbutton;
 
 	public MeasuringEquipmentPage(WebDriver driver) {
-	
+	    this.driver = driver;
 		this.editbutton = driver.findElement(By.cssSelector(
 				"td.text-center img[src='/resources/assets/button-icons/measuring-equipments%20icons/test-edit.png']"));
 	}
@@ -21,10 +23,15 @@ public class MeasuringEquipmentPage {
 		return this.editbutton;
 	}
 
-	public MeasuringEquipmentPage successMeasuringequipment(User calibrator) {
+	public MeasuringEquipmentPage successMeasuringequipment(IUser calibrator) {
 		return new MeasuringEquipmentPage(driver);
 	}
-
+	
+	public MeasuringEquipmentPage.MeasuringEquipmentEditPage gotoMeasuringEquipmentEditForm() {
+		this.editbutton.click();
+		return new MeasuringEquipmentPage.MeasuringEquipmentEditPage(driver);
+	}
+	
 	public class MeasuringEquipmentEditPage {
 		// constants with testing data
 		public static final String PARTIAL_EDIT_NAME_DATA = "ANOTHERNAME";
@@ -109,7 +116,7 @@ public class MeasuringEquipmentPage {
 		 * 
 		 * inner class of class MeasuringEquipment for edit form
 		 */
-		public MeasuringEquipmentEditPage successequipmentEdit(User calibrator) {
+		public MeasuringEquipmentEditPage successequipmentEdit(IUser calibrator) {
 			return new MeasuringEquipmentEditPage(driver);
 		}
 
@@ -157,4 +164,5 @@ public class MeasuringEquipmentPage {
 			return driver.findElement(By.xpath("//tbody/tr[1]/td[2]")).getAttribute("textContent");
 		}
 	}
+
 }
