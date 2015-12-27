@@ -3,10 +3,14 @@ package com.softserve.edu.md.tests;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.softserve.edu.md.data.IUrls;
+import com.softserve.edu.md.data.IUser;
+import com.softserve.edu.md.data.UrlRepository;
 import com.softserve.edu.md.data.User;
 import com.softserve.edu.md.data.UserRepository;
 import com.softserve.edu.md.pages.CalibratorHomePage;
 import com.softserve.edu.md.pages.LoginPage;
+import com.softserve.edu.md.pages.LoginStartPage;
 import com.softserve.edu.md.pages.NewVerificationPage;
 
 import org.testng.annotations.BeforeMethod;
@@ -33,42 +37,38 @@ import org.testng.annotations.AfterClass;
 
  */
 public class VerificationSearchTest {
-	//constants with testing data
-	
-	private WebDriver driver;
+
 	private SoftAssert softAssert;
 
 	@BeforeClass
 	public void beforeSearch() {
 		softAssert = new SoftAssert();
-		driver = new FirefoxDriver();
-		driver.manage().window().maximize();
-		driver.manage().deleteAllCookies();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
+	   @AfterMethod
+	    public void tearDown() {
+	        LoginStartPage.get().logout();
+	    }
+
+	    @AfterClass
+	    public void oneTimeTearDown() {
+	        LoginStartPage.get().close();
+	    }
+	    
 	@DataProvider
 	public Object[][] calibratorUsers() {
-		return new Object[][] { { UserRepository.get().getCalibratorUser() }, };
+		return new Object[][] { 
+			{ UserRepository.get().getCalibratorUser(), UrlRepository.get().getLocalUrls() }, 
+			};
 	}
 
-	@AfterClass
-	public void afterClass() {
-		driver.close();
-	}
-	@AfterMethod
-	public void afterMethod() {
-		driver.get("http://localhost:8080/#/logout");
-	}
 	@Test(dataProvider = "calibratorUsers")
-	public void checkVerificationSearch(User calibrator) throws InterruptedException, IOException
+	public void checkVerificationSearch(IUser calibrator, IUrls urls) throws InterruptedException, IOException
 	{
-		driver.get("http://localhost:8080/#/login");
-		CalibratorHomePage calhomepage = new LoginPage(driver)
-				.successCalLogin(calibrator);
-		driver.get("http://localhost:8080/employee#/calibrator/verifications/new");
-		NewVerificationPage newVerificationPage = new NewVerificationPage(driver)
-				.successVerifaction(calibrator);
+		LoginPage loginPage = LoginStartPage.get().load(urls);	
+		CalibratorHomePage calhomepage = loginPage
+				.successCalLogin(UserRepository.get().getCalibratorUser());
+		NewVerificationPage newVerificationPage = calhomepage.gotoverificationpage();
 		Thread.sleep(2000);
     	softAssert.assertEquals(newVerificationPage
     			.searchSearchNumber(NewVerificationPage.SERCH_NUMBER_DATA),
