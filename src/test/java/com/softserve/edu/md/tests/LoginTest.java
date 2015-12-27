@@ -61,7 +61,7 @@ public class LoginTest {
 		return new Object[][] { { UserRepository.get().getInvalidUser(), UrlRepository.get().getLocalUrls() } };
 	}
 
-	@Test(dataProvider = "invalidUsers")
+	//@Test(dataProvider = "invalidUsers")
 	public void checkInvalidLogin(IUser invalidUser, IUrls urls) throws InterruptedException {
 		LoginPage loginPage = LoginStartPage.get().load(urls);
 		LoginValidatorPage loginValidatorPage = loginPage.unsuccessfulLogin(UserRepository.get().getInvalidUser());
@@ -81,7 +81,7 @@ public class LoginTest {
 		return CombineProvider.get().getExistUsersCVS(UrlRepository.get().getLocalUrls());
 	}
 
-	@Test(dataProvider = "calibratorUsers")
+	@Test(dataProvider = "existUsersCVS")
 	public void checkCalibratorLogin(IUser calibrator, IUrls urls) throws InterruptedException {
 		LoginPage loginPage = LoginStartPage.get().load(urls);
 		CalibratorHomePage calhomepage = loginPage.successCalLogin(UserRepository.get().getCalibratorUser());
