@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.User;
 
 //import some.test.stuff.data.User;
@@ -86,7 +87,7 @@ public class LoginPage {
 	/**
 	 * Accepts data that allows to log in user
 	 */
-	private void setLoginData(User user) {
+	private void setLoginData(IUser user) {
 		clickLogin();
 		clearLogin();
 		setLogin(user.getLogin());
@@ -96,14 +97,15 @@ public class LoginPage {
 		clickSubmit();
 	}
 
-	public CalibratorHomePage successCalLogin(User calibrator) {
+	public CalibratorHomePage successCalLogin(IUser calibrator) {
 		setLoginData(calibrator);
 		return new CalibratorHomePage(driver);
 	}
 
-	public LoginValidatorPage unsuccessfulLogin(User invalidUser) {
+	public LoginValidatorPage unsuccessfulLogin(IUser invalidUser) {
 		setLoginData(invalidUser);
 		return new LoginValidatorPage(driver);
 	}
 
+  
 }

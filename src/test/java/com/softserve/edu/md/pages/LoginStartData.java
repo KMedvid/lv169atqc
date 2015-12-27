@@ -2,35 +2,28 @@ package com.softserve.edu.md.pages;
 
 import org.openqa.selenium.WebDriver;
 
+import com.softserve.edu.md.data.IUrls;
+
 public class LoginStartData {
     private WebDriver driver;
-    private String login;
-    private String logout;
-
-    public LoginStartData(WebDriver driver, String login, String logout) {
+    private IUrls urls;
+    
+    public LoginStartData(WebDriver driver, IUrls urls) {
         this.driver = driver;
-        this.login = login;
-        this.logout = logout;
+        this.urls = urls;
     }
 
-    public WebDriver getDriver() {
+	public WebDriver getDriver() {
         return driver;
     }
 
-    public String getLogin() {
-        return login;
+    public IUrls getUrls() {
+        return urls;
     }
 
-    public String getLogout() {
-        return logout;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setLogout(String logout) {
-        this.logout = logout;
+    public void setUrls(IUrls urls) {
+        this.urls = urls;
     }
 
 }
+
