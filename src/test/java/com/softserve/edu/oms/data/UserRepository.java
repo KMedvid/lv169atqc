@@ -60,17 +60,15 @@ public final class UserRepository {
                 .build();
     }
 
-    public IUser getInvalidUser() {
-        // return new User("ivanka", "horoshko", "iva1", "qwerty1",
-        // "mail@gmail.com", "West", "Administrator");
+    public IUser getSuperVisorUser() {
         return User.get()
-                .setFirstname("ivanka")
-                .setLastname("horoshko")
-                .setLogin("iva1")
-                .setPassword("qwerty1")
+                .setFirstname("firstName3")
+                .setLastname("lastName3")
+                .setLogin("login3")
+                .setPassword("qwerty")
                 .setEmail("mail@gmail.com")
-                .setRegion("West")
-                .setRole("Administrator")
+                .setRegion("East")
+                .setRole("Supervisor")
                 .build();
     }
 
@@ -95,6 +93,18 @@ public final class UserRepository {
                 .setEmail("cccc@gmail.com")
                 .setRegion("West")
                 .setRole("Administrator")
+                .build();
+    }
+    
+    public IUser getInvalidUser() {
+        return User.get()
+                .setFirstname("firstName31")
+                .setLastname("lastName31")
+                .setLogin("login31")
+                .setPassword("qwerty1")
+                .setEmail("mail@gmail.com")
+                .setRegion("East")
+                .setRole("Supervisor")
                 .build();
     }
 

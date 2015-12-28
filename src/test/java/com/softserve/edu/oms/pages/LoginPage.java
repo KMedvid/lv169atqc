@@ -11,6 +11,7 @@ public class LoginPage {
 	//
 	private WebElement login;
 	private WebElement password;
+	private WebElement checkbox;
 	private WebElement submit;
 
 	public LoginPage(WebDriver driver) {
@@ -18,6 +19,7 @@ public class LoginPage {
 		//
 		this.login = driver.findElement(By.name("j_username"));
 		this.password = driver.findElement(By.name("j_password"));
+		this.checkbox = driver.findElement(By.name("_spring_security_remember_me"));
 		this.submit = driver.findElement(By.name("submit"));
 	}
 
@@ -33,6 +35,10 @@ public class LoginPage {
 
 	public WebElement getSubmit() {
 		return this.submit;
+	}
+
+	public WebElement getCheckbox() {
+		return this.checkbox;
 	}
 
 	public String getLoginText() {
@@ -69,6 +75,10 @@ public class LoginPage {
 		this.password.click();
 	}
 
+	public void clickCheckbox() {
+		this.checkbox.click();
+	}
+
 	public void clickSubmit() {
 		this.submit.click();
 	}
@@ -85,16 +95,29 @@ public class LoginPage {
 		clickSubmit();
 	}
 
-    public HomePage successUserLogin(IUser user) {
-        setLoginData(user);
-        // Return a new page object representing the destination.
-        return new HomePage(driver);
-    }
+	public HomePage successUserLogin(IUser user) {
+		clickCheckbox();
+		setLoginData(user);
+		// Return a new page object representing the destination.
+		return new HomePage(driver);
+	}
 
-    public AdminHomePage successAdminLogin(IUser admin) {
+	public AdminHomePage successAdminLogin(IUser admin) {
 		setLoginData(admin);
 		// Return a new page object representing the destination.
 		return new AdminHomePage(driver);
+	}
+
+	public SupervisorHomePage successSvisorLogin(IUser svisor) {
+		setLoginData(svisor);
+		// Return a new page object representing the destination.
+		return new SupervisorHomePage(driver);
+	}
+
+	public CustomerHomePage successMerchantLogin(IUser merchant) {
+		setLoginData(merchant);
+		// Return a new page object representing the destination.
+		return new CustomerHomePage(driver);
 	}
 
 	public CustomerHomePage successCustomerLogin(IUser customer) {

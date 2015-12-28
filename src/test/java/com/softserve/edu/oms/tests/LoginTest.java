@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.softserve.edu.oms.data.IUser;
-import com.softserve.edu.oms.data.UserRepositoryStatic;
+import com.softserve.edu.oms.data.UserRepository;
 import com.softserve.edu.oms.pages.AdminHomePage;
 import com.softserve.edu.oms.pages.LoginPage;
 import com.softserve.edu.oms.pages.LoginValidatorPage;
@@ -45,7 +45,7 @@ public class LoginTest {
 	public Object[][] invalidUsers() {
 		return new Object[][] { 
             //{ new User("ivanka","horoshko","iva1","qwerty1","mail@gmail.com","West","Administrator") },
-		    { UserRepositoryStatic.getInvalidUser() },
+		    { UserRepository.get().getSuperVisorUser() },
 		};
 	}
 
@@ -71,7 +71,7 @@ public class LoginTest {
 	public Object[][] adminUsers() {
 		return new Object[][] {
 				//{ new User("ivanka","horoshko","iva","qwerty","mail@gmail.com","West","Administrator") },
-	            { UserRepositoryStatic.getAdminUser() },
+	            { UserRepository.get().getAdminUser() },
 		};
 	}
 
