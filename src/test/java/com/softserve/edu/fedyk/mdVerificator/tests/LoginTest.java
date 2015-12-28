@@ -1,6 +1,5 @@
 package com.softserve.edu.fedyk.mdVerificator.tests;
 
-import static org.testng.AssertJUnit.assertTrue;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -62,17 +61,17 @@ public class LoginTest {
 		LoginPage loginPage = new LoginPage(driver);
 		HomePage page = loginPage.doLogin();
 		page.click();
-		Employee petro = new Employee("petro18" /* + new Date() */, "pass", "Полухтович", "Петро", "Петрович",
+		Employee petro = new Employee("petro19" /* + new Date() */, "pass", "РџРѕР»СѓС…С‚РѕРІРёС‡", "РџРµС‚СЂРѕ", "РџРµС‚СЂРѕРІРёС‡",
 				"666666666", "blabla@gmail.com");
 		EmployeePage employeePage = page.clickAdd();
 		employeePage.addEmployee(petro);
 
-		// Assert.assertTrue(text.contains("Ви успішно додали нового
-		// працівника!"));
+		// Assert.assertTrue(text.contains("Р’Рё СѓСЃРїС–С€РЅРѕ РґРѕРґР°Р»Рё РЅРѕРІРѕРіРѕ
+		// РїСЂР°С†С–РІРЅРёРєР°!"));
 
 		WebElement garazd = driver.findElement(By.cssSelector("button[ng-click='successController.ok()']"));
 		String checkUser = garazd.getText();
-		Assert.assertTrue(checkUser.contains("Гаразд"));
+		Assert.assertTrue(checkUser.contains("Р“Р°СЂР°Р·Рґ"));
 		garazd.click();
 
 	}
