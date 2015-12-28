@@ -85,7 +85,7 @@ public class LoginPage {
 	}
 
 	/**
-	 * Accepts data that allows to log in user
+	 * method that allows us to login as user
 	 */
 	private void setLoginData(IUser user) {
 		clickLogin();

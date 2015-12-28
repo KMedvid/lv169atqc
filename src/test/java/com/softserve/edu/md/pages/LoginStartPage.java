@@ -70,13 +70,19 @@ public class LoginStartPage {
 		}
 		return startData.get(Thread.currentThread().getId()).getDriver();
 	}
-
+	
+	/**
+	 * load login page and return driver with elements of this page
+	 */
 	public LoginPage load(IUrls urls) {
 		WebDriver driver = getDriver(urls);
 		driver.get(urls.getLogin());
 		return new LoginPage(driver);
 	}
-
+	
+	/**
+	 * log out and return system to previous state
+	 */
 	public LoginPage logout() {
 		LoginStartData data = getCurrentData();
 		WebDriver driver = data.getDriver();
