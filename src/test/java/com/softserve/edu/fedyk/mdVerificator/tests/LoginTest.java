@@ -1,12 +1,13 @@
 package com.softserve.edu.fedyk.mdVerificator.tests;
 
-
+import static org.testng.AssertJUnit.assertTrue;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -28,7 +29,7 @@ public class LoginTest {
 	// page.logOut();
 	// }
 	@AfterTest
-	
+
 	public void tearDown() throws Exception {
 		if (!driver.getCurrentUrl().contains("start")) {
 			System.out.println("\t*** logout in progress ... ***");
@@ -61,12 +62,17 @@ public class LoginTest {
 		LoginPage loginPage = new LoginPage(driver);
 		HomePage page = loginPage.doLogin();
 		page.click();
-		Employee petro = new Employee("petroooon" /* + new Date() */, "pass", "РџРѕР»СѓС…С‚РѕРІРёС‡", "РџРµС‚СЂРѕ", "РџРµС‚СЂРѕРІРёС‡",
+		Employee petro = new Employee("petro133ooon" /* + new Date() */, "pass", "Полухтович", "Петро", "Петрович",
 				"666666666", "blabla@gmail.com");
 		EmployeePage employeePage = page.clickAdd();
 		employeePage.addEmployee(petro);
 
+		// Assert.assertTrue(text.contains("Ви успішно додали нового
+		// працівника!"));
+
 		WebElement garazd = driver.findElement(By.cssSelector("button[ng-click='successController.ok()']"));
+		String checkUser = garazd.getText();
+		Assert.assertTrue(checkUser.contains("Гаразд"));
 		garazd.click();
 
 	}
