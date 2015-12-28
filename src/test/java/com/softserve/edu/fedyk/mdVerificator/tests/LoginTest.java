@@ -62,7 +62,7 @@ public class LoginTest {
 		LoginPage loginPage = new LoginPage(driver);
 		HomePage page = loginPage.doLogin();
 		page.click();
-		Employee petro = new Employee("petro133ooon" /* + new Date() */, "pass", "Полухтович", "Петро", "Петрович",
+		Employee petro = new Employee("petro18" /* + new Date() */, "pass", "Полухтович", "Петро", "Петрович",
 				"666666666", "blabla@gmail.com");
 		EmployeePage employeePage = page.clickAdd();
 		employeePage.addEmployee(petro);
