@@ -267,12 +267,18 @@ public class AdministrationPage {
         // System.out.println("After Searsh1: firstname="+firstname.getText());
         initTableRowByLogin(user.getLogin());
          try {
-         Thread.sleep(4000);
+         Thread.sleep(1000);
          } catch (InterruptedException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();
          }
         // System.out.println("After Searsh2: firstname="+firstname.getText());
+    }
+    public void deleteSelectedUser() throws InterruptedException {
+    	driver.findElement(By.partialLinkText("Delete")).click();
+    	Thread.sleep(2000);
+		driver.switchTo().alert().accept();
+		Thread.sleep(2000);
     }
 
     public CreateNewUserPage gotoCreateNewUser() {
@@ -282,6 +288,7 @@ public class AdministrationPage {
 
     public LoginPage gotoLogout() {
         clickLogout();
+        driver.close();
         return new LoginPage(driver);
     }
 

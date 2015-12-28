@@ -47,8 +47,6 @@ public final class UserRepository {
     }
 
     public IUser getCustomerUser() {
-        // return new User("firstName1", "lastName1", "login1", "qwerty",
-        // "mail@gmail.com", "East", "Customer");
         return User.get()
                 .setFirstname("firstName1")
                 .setLastname("lastName1")
@@ -61,8 +59,6 @@ public final class UserRepository {
     }
 
     public IUser getInvalidUser() {
-        // return new User("ivanka", "horoshko", "iva1", "qwerty1",
-        // "mail@gmail.com", "West", "Administrator");
         return User.get()
                 .setFirstname("ivanka")
                 .setLastname("horoshko")
@@ -93,6 +89,18 @@ public final class UserRepository {
                 .setLogin("cccc")
                 .setPassword("qwerty")
                 .setEmail("cccc@gmail.com")
+                .setRegion("West")
+                .setRole("Administrator")
+                .build();
+    }
+    
+    public IUser getDelUser() {
+        return User.get()
+                .setFirstname("deluser")
+                .setLastname("deluser")
+                .setLogin("deluser")
+                .setPassword("qwerty")
+                .setEmail("mail@gmail.com")
                 .setRegion("West")
                 .setRole("Administrator")
                 .build();

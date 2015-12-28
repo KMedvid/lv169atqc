@@ -5,13 +5,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.softserve.edu.oms.data.CombineProvider;
 import com.softserve.edu.oms.data.IUrls;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.UrlRepository;
 import com.softserve.edu.oms.data.UserRepository;
 import com.softserve.edu.oms.pages.AdministrationPage;
+import com.softserve.edu.oms.pages.CreateNewUserPage;
 import com.softserve.edu.oms.pages.LoginStartPage;
 
 public class FindTest {
@@ -32,7 +32,7 @@ public class FindTest {
     public Object[][] existUsers() {
         return new Object[][] {
             { UserRepository.get().getExistUser(), UrlRepository.get().getLocalUrls() },
-            { UserRepository.get().getCustomerUser(), UrlRepository.get().getLocalUrls() },
+            { UserRepository.get().getDelUser(), UrlRepository.get().getLocalUrls() },
             { UserRepository.get().getAdminUser(), UrlRepository.get().getSsuUrls() }, 
             };
     }
@@ -49,7 +49,7 @@ public class FindTest {
 
     //@Test(dataProvider = "existUsers")
     //@Test(dataProvider = "existUsersCVS")
-    @Test(dataProvider = "existUsersExcel")
+    //@Test(dataProvider = "existUsersExcel")
     public void checkExistUsersFind(IUser existUser, IUrls urls) {
         // PreCondition
         AdministrationPage administrationPage = LoginStartPage.get().load(urls)
@@ -67,5 +67,6 @@ public class FindTest {
         // LoginStartPage.quit();
         // TODO Checking
     }
-
+    
+   
 }
