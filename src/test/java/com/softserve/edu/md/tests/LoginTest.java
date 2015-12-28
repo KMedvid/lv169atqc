@@ -56,12 +56,12 @@ public class LoginTest {
 		LoginStartPage.get().close();
 	}
 
-	@DataProvider(parallel = true)
+	@DataProvider
 	public Object[][] invalidUsers() {
 		return new Object[][] { { UserRepository.get().getInvalidUser(), UrlRepository.get().getLocalUrls() } };
 	}
 
-	//@Test(dataProvider = "invalidUsers")
+	@Test(dataProvider = "invalidUsers")
 	public void checkInvalidLogin(IUser invalidUser, IUrls urls) throws InterruptedException {
 		LoginPage loginPage = LoginStartPage.get().load(urls);
 		LoginValidatorPage loginValidatorPage = loginPage.unsuccessfulLogin(UserRepository.get().getInvalidUser());
@@ -71,7 +71,7 @@ public class LoginTest {
 		softAssert.assertAll();
 	}
 
-	@DataProvider(parallel = true)
+	@DataProvider
 	public Object[][] calibratorUsers() {
 		return new Object[][] { { UserRepository.get().getCalibratorUser(), UrlRepository.get().getLocalUrls() } };
 	}

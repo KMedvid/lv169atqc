@@ -47,6 +47,7 @@ public class LoginStartPage {
 
 	private WebDriver createFirefoxDriver() {
 		WebDriver driver = new FirefoxDriver();
+		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(getCurrentImplicitlyWait(), TimeUnit.SECONDS);
 		return driver;
 	}
@@ -76,17 +77,12 @@ public class LoginStartPage {
 		return new LoginPage(driver);
 	}
 
-	public LoginPage load() {
-		LoginStartData data = getCurrentData();
-		WebDriver driver = data.getDriver();
-		driver.get(data.getUrls().getLogin());
-		return new LoginPage(driver);
-	}
-
-	public void logout() {
+	public LoginPage logout() {
 		LoginStartData data = getCurrentData();
 		WebDriver driver = data.getDriver();
 		driver.get(data.getUrls().getLogout());
+		driver.get(data.getUrls().getLogin());
+		return new LoginPage(driver);
 
 	}
 

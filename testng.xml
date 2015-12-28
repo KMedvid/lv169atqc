@@ -5,6 +5,10 @@
 	<test name="Test1">
 		<classes>
 			<class name="com.softserve.edu.md.tests.LoginTest"/>
+			<class name="com.softserve.edu.md.tests.VerificationSearchTest"/>
+			<class name="com.softserve.edu.md.tests.EquipmentEditAllFieldsTest"/>
+			<class name="com.softserve.edu.md.tests.EquipmentEditSomeFieldsTest"/>
+			<class name="com.softserve.edu.md.tests.EquipmentEditNotificationTest"/>
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->
