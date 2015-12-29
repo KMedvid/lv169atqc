@@ -1,10 +1,14 @@
 package com.softserve.edu.md.tests;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.softserve.edu.md.data.AgreementRepository;
 import com.softserve.edu.md.data.IAgreement;
@@ -16,18 +20,25 @@ import com.softserve.edu.md.data.WaterType;
 import com.softserve.edu.md.pages.AgreementsPage;
 import com.softserve.edu.md.pages.LoginStartPage;
 import com.softserve.edu.md.pages.MetersCategoryPage;
+import com.softserve.training.Calc;
 
 public class AdminRoleTests {
+    SoftAssert softAssert;
+    public static final Logger logger = LoggerFactory.getLogger(Calc.class);
+    
+    @BeforeClass
+    public void oneTimeSetUp() {
+        softAssert = new SoftAssert();  
+        
+    }
     
     @AfterMethod
     public void tearDown() {
-//        System.out.println("@AfterMethod: ThreadId = " + Thread.currentThread().getId());
         LoginStartPage.get().logout();
     }
 
     @AfterClass
     public void oneTimeTearDown() {
-//        System.out.println("@AfterClass: ThreadId = " + Thread.currentThread().getId());
         LoginStartPage.get().quit();
     }
 
@@ -48,6 +59,7 @@ public class AdminRoleTests {
 
     @Test(dataProvider = "existAdmins")
     public void checkAddingNewMeterCategory(IUser admin, IUrls urls) {
+        logger.info("TEST START: checkAddingNewMeterCategory");
         final String CATEGORY_NAME = "Новий лічильник гарячої води";
         final WaterType CATEGORY_WATER_TYPE = WaterType.HEATED;
         
@@ -63,6 +75,8 @@ public class AdminRoleTests {
         
         //Checking
         Assert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
+        logger.info("TEST DONE: checkAddingNewMeterCategory");
+
     }
     
     
@@ -70,6 +84,9 @@ public class AdminRoleTests {
     public void checkAddingNewMeterCategoryFilterSearch(IUser admin, IUrls urls) {
         final String CATEGORY_NAME = "Новий лічильник холодної води";
         final WaterType CATEGORY_WATER_TYPE = WaterType.COLD;
+
+        logger.info("TEST START: checkAddingNewMeterCategoryFilterSearch");
+
         
         // PreCondition
         MetersCategoryPage metersCategoryPage = LoginStartPage.get().load(urls).gotoSignIn()
@@ -78,9 +95,15 @@ public class AdminRoleTests {
         // Test Operation
         metersCategoryPage.addNewMeterCategory(CATEGORY_WATER_TYPE, CATEGORY_NAME);
         metersCategoryPage.initFirstTableRow();
+        softAssert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
+
         metersCategoryPage.deleteMeterCategory(CATEGORY_WATER_TYPE, CATEGORY_NAME); 
-        Assert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
-    }
+        softAssert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
+        
+        softAssert.assertAll();
+        logger.info("TEST DONE: checkAddingNewMeterCategoryFilterSearch");
+
+     }
     
     //@Test(dataProvider = "newAreements")
     public void checkAddingNewMAgreement(IAgreement agreement, IUrls urls) {

@@ -4,7 +4,7 @@
 	<parameter name="testurl" value="http://10.1.10.100:8080" />
 	<test name="Test1">
 		<classes>
-			<class name="com.softserve.edu.md.tests.AdminRoleTests"/> -->
+			<class name="com.softserve.edu.md.tests.AdminRoleTests"/>
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

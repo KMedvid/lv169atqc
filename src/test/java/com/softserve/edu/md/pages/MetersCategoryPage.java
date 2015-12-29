@@ -83,9 +83,12 @@ public class MetersCategoryPage extends AdminHomePage{
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT)).until(ExpectedConditions
                 .elementToBeClickable(getSelectWaterTypeField()));
+        
         clickSelectWaterTypeField();
+        
         (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT)).until(ExpectedConditions
                 .presenceOfElementLocated(By.xpath("//span[text() = '" + waterType.toString() + "']")));
+        
         driver.findElement(By.xpath("//span[text() = '" + waterType.toString() + "']")).click();
     }
 
@@ -138,10 +141,13 @@ public class MetersCategoryPage extends AdminHomePage{
      */
     public void addNewMeterCategory(WaterType waterType, String meterName) {
         clickAddMeterCategory();
+        
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
                 .until(ExpectedConditions.visibilityOf(new NewMetersCategoryPage(driver).getMeterNameCategoryField()));
-        new NewMetersCategoryPage(driver).addNewMetercategory(waterType, meterName);
+        
+        new NewMetersCategoryPage(driver).fillFieldsNewMeterCategory(waterType, meterName);
+        
         (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
         .until(ExpectedConditions.visibilityOf(new MetersCategoryPage(driver).getMeterName()));
         
@@ -239,7 +245,7 @@ public class MetersCategoryPage extends AdminHomePage{
         }
 
         // Business Logic
-        void addNewMetercategory(WaterType waterType, String name) {
+        public void fillFieldsNewMeterCategory(WaterType waterType, String name) {
             setWaterTypeCategoryField(waterType);
             clickMeterNameCategoryField();
             clearMeterNameCategoryField();
