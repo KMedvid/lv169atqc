@@ -83,7 +83,7 @@ public class NewVerificationPage {
 		String s = driver.findElement(By.cssSelector("td.ng-pristine.ng-untouched.ng-valid.ng-binding")).getText();
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("screenfolde/screenshot_searchbynumber.png"));
+			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbynumber.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -102,7 +102,7 @@ public class NewVerificationPage {
 		String s = driver.findElement(By.xpath("//table/tbody/tr/td[7]")).getText();
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("screenfolde/screenshot_searchbyworkerdata.png"));
+			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbyworkerdata.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -122,7 +122,7 @@ public class NewVerificationPage {
 		String s = driver.findElement(By.xpath("//table/tbody/tr/td[4]")).getText();
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("screenfolde/screenshot_searchbyclientdata.png"));
+			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbyclientdata.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -141,7 +141,7 @@ public class NewVerificationPage {
 		String s = driver.findElement(By.xpath("//table/tbody/tr/td[5]")).getText();
 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
-			FileUtils.copyFile(scrFile, new File("screenfolde/screenshot_searchbyclientstreet.png"));
+			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbyclientstreet.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
