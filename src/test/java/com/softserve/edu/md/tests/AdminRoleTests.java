@@ -46,7 +46,7 @@ public class AdminRoleTests {
     }
     
 
-    //@Test(dataProvider = "existAdmins")
+    @Test(dataProvider = "existAdmins")
     public void checkAddingNewMeterCategory(IUser admin, IUrls urls) {
         final String CATEGORY_NAME = "Новий лічильник гарячої води";
         final WaterType CATEGORY_WATER_TYPE = WaterType.HEATED;
@@ -66,7 +66,7 @@ public class AdminRoleTests {
     }
     
     
-    //@Test(dataProvider = "existAdmins")
+    @Test(dataProvider = "existAdmins")
     public void checkAddingNewMeterCategoryFilterSearch(IUser admin, IUrls urls) {
         final String CATEGORY_NAME = "Новий лічильник холодної води";
         final WaterType CATEGORY_WATER_TYPE = WaterType.COLD;
@@ -82,7 +82,7 @@ public class AdminRoleTests {
         Assert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
     }
     
-    @Test(dataProvider = "newAreements")
+    //@Test(dataProvider = "newAreements")
     public void checkAddingNewMAgreement(IAgreement agreement, IUrls urls) {
         
         // PreCondition
