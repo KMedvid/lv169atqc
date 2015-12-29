@@ -24,10 +24,13 @@ public class OrderingPage {
         this.status = driver.findElement(By.cssSelector("a[href*='status']"));
         this.assignee = driver.findElement(By.cssSelector("a[href*='assignee']"));
         this.role = driver.findElement(By.cssSelector("a[href*='role']"));
+        // initFirstTableRow();
         //this.logout = driver.findElement(By.xpath("//a[@href='/OMS/logout.htm']"));
     }
 
+
     // Get Elements
+
     public WebElement getOrderName() {
         return orderName;
     }
@@ -57,6 +60,7 @@ public class OrderingPage {
     }
 
     // Set Data
+
     public void clickOrderName() {
         driver.findElement(By.cssSelector("a[href*='orderName']")).click();
     }
@@ -101,10 +105,10 @@ public class OrderingPage {
     }
 
     //
-    // Business Logic
+
     public LoginPage gotoLogout() {
         clickLogout();
         return new LoginPage(driver);
     }
-
 }
+

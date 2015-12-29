@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * Created by Администратор on 19.12.2015.
+ * Fetch data about orders from the DB
  */
 public class DBService {
 

@@ -32,14 +32,12 @@ public class TestSortingOrders1 {
 
     @AfterMethod
     public void tearDown() {
-        System.out.println("@AfterMethod: ThreadId = " + Thread.currentThread().getId());
         LoginStartPage.get().logout();
     }
 
     @AfterClass
     public void oneTimeTearDown() {
         log.info("@AfterClass - oneTimeTearDown");
-        System.out.println("@AfterClass: ThreadId = " + Thread.currentThread().getId());
         LoginStartPage.get().quit();
     }
 
@@ -56,9 +54,9 @@ public class TestSortingOrders1 {
         OrderingPage orderingPage = LoginStartPage.get().load(urls)
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         orderingPage.clickOrderName();
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by OrderName desc");
 
@@ -72,11 +70,10 @@ public class TestSortingOrders1 {
         OrderingPage orderingPage = LoginStartPage.get().load(urls)
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
-        //Thread.sleep(1000);
         orderingPage.clickOrderName();
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         orderingPage.clickOrderName();
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by OrderName asc");
 
@@ -90,9 +87,9 @@ public class TestSortingOrders1 {
         OrderingPage orderingPage = LoginStartPage.get().load(urls)
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         orderingPage.clickTotalPrice();
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by TotalPrice desc");
 
@@ -106,15 +103,12 @@ public class TestSortingOrders1 {
         OrderingPage orderingPage = LoginStartPage.get().load(urls)
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
-        //Thread.sleep(1000);
         orderingPage.clickTotalPrice();
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         orderingPage.clickTotalPrice();
-        //Thread.sleep(1000);
-
+        Thread.sleep(1000);
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by TotalPrice asc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -126,10 +120,8 @@ public class TestSortingOrders1 {
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
         orderingPage.clickMaxDiscount();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by MaxDiscount desc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -142,10 +134,8 @@ public class TestSortingOrders1 {
         // test steps
         orderingPage.clickMaxDiscount();
         orderingPage.clickMaxDiscount();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by MaxDiscount asc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -157,10 +147,8 @@ public class TestSortingOrders1 {
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
         orderingPage.clickDeliveryDate();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by DeliveryDate desc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -173,10 +161,8 @@ public class TestSortingOrders1 {
         // test steps
         orderingPage.clickDeliveryDate();
         orderingPage.clickDeliveryDate();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by DeliveryDate asc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -188,10 +174,8 @@ public class TestSortingOrders1 {
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
         orderingPage.clickAssignee();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by Login desc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -204,10 +188,8 @@ public class TestSortingOrders1 {
         // test steps
         orderingPage.clickAssignee();
         orderingPage.clickAssignee();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by Login asc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -219,10 +201,8 @@ public class TestSortingOrders1 {
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
         orderingPage.clickRole();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by RoleName desc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -235,10 +215,8 @@ public class TestSortingOrders1 {
         // test steps
         orderingPage.clickRole();
         orderingPage.clickRole();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by RoleName asc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -251,10 +229,8 @@ public class TestSortingOrders1 {
         // test steps
         orderingPage.clickStatus();
         orderingPage.clickStatus();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by OrederStatusName desc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
 
     }
@@ -266,10 +242,8 @@ public class TestSortingOrders1 {
                 .successCustomerLogin(UserRepository.get().getCustomerUser()).gotoOrdering();
         // test steps
         orderingPage.clickStatus();
-
         List<OrderContainer> ordersFromPage = pageService.parseOrderPage(orderingPage.getOrderTableElement());
         List<OrderContainer> ordersFromDB = dbService.getDBOrders("order by OrederStatusName asc");
-
         Assert.assertTrue(compareElems.isTheSameOrder(ordersFromPage, ordersFromDB), "Order is not the same");
     }
 

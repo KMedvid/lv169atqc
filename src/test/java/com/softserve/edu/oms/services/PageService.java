@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Admin on 12/19/2015.
+ * Parse data about orders from the page table
  */
 public class PageService {
     private static final Logger log = Logger.getLogger(PageService.class);
