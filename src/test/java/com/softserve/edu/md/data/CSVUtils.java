@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CSVUtils {
+public class CSVUtils implements IExternalData {
     private static final String PROPERTIES_EXCEPTION_READ = " File %s could not be read";
     private static final String PROPERTIES_EXCEPTION_CLOSE = " File %s could not be closed";
     private static final String CSV_SPLIT_BY = ",";
