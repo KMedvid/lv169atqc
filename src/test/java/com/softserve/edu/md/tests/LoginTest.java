@@ -82,7 +82,6 @@ public class LoginTest {
 		softAssert.assertEquals(calhomepage.getLoginNameText(), LoginPage.LOGIN_ATTRIBUTES);
 		softAssert.assertEquals(calhomepage.getTitleText(), LoginPage.TITLE);
 		Thread.sleep(2000);
-		calhomepage.gotoLogout();
 		softAssert.assertAll();
 	}
 
