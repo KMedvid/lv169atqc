@@ -11,9 +11,9 @@ import com.softserve.edu.md.data.IUrls;
 import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.UrlRepository;
 import com.softserve.edu.md.data.UserRepository;
+import com.softserve.edu.md.data.WaterType;
 import com.softserve.edu.md.pages.LoginStartPage;
 import com.softserve.edu.md.pages.MetersCategoryPage;
-import com.softserve.edu.md.pages.MetersCategoryPage.WaterType;
 
 public class LoginTest {
     
