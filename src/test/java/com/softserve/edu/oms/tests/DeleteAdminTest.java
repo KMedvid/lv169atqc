@@ -1,5 +1,7 @@
 package com.softserve.edu.oms.tests;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
@@ -16,6 +18,7 @@ import com.softserve.edu.oms.pages.LoginStartPage;
 
 public class DeleteAdminTest {
 	private SoftAssert softAssert;
+	public static final Logger logger = LoggerFactory.getLogger(DeleteAdminTest.class);
 
 	@BeforeTest
 	public void beforeTest() {
@@ -23,15 +26,16 @@ public class DeleteAdminTest {
 	}
 
 	@AfterMethod
-	public void afterMethod() {		
+	public void afterMethod() {
 		LoginStartPage.get().logout();
-		
+
 	}
 
 	@AfterClass
 	public void afterClass() {
 		LoginStartPage.get().close();
 		softAssert.assertAll();
+		logger.info("DeleteAdminTest - Done");
 	}
 
 	@DataProvider
@@ -40,7 +44,8 @@ public class DeleteAdminTest {
 	}
 
 	@Test(dataProvider = "delAdmin")
-	public void createNewUser(IUser delAdmin, IUrls urls){
+	public void createNewUser(IUser delAdmin, IUrls urls) throws InterruptedException {
+		logger.info("DeleteAdminTest - Done");
 		// PreCondition
 		AdministrationPage administrationPage = LoginStartPage.get().load(urls).successAdminLogin(delAdmin)
 				.gotoAdministration();
@@ -49,6 +54,7 @@ public class DeleteAdminTest {
 		// Check
 		softAssert.assertEquals(administrationPage.getDelete().isDisplayed(), false,
 				"Administrator cannot be deleted by himself!");
-
+		administrationPage.deleteSelectedUser();
+		logger.error("DeleteAdminTest - Fail");
 	}
 }
