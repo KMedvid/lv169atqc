@@ -1,11 +1,7 @@
 package com.softserve.edu.md.tests;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -17,13 +13,11 @@ import com.softserve.edu.md.data.CombineProvider;
 import com.softserve.edu.md.data.IUrls;
 import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.UrlRepository;
-import com.softserve.edu.md.data.User;
 import com.softserve.edu.md.data.UserRepository;
 import com.softserve.edu.md.pages.CalibratorHomePage;
 import com.softserve.edu.md.pages.LoginPage;
 import com.softserve.edu.md.pages.LoginStartPage;
 import com.softserve.edu.md.pages.LoginValidatorPage;
-import com.softserve.edu.md.pages.NewVerificationPage;
 
 /**
  * 
@@ -37,10 +31,9 @@ import com.softserve.edu.md.pages.NewVerificationPage;
  * 
  */
 public class LoginTest {
-
-	// private WebDriver driver;
 	private SoftAssert softAssert;
-
+	public static final Logger logger = LoggerFactory.getLogger(LoginTest.class);
+	
 	@BeforeClass
 	public void oneTimeSetUp() {
 		softAssert = new SoftAssert();
