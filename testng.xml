@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite1">
-	<parameter name="testurl" value="http://10.1.10.100:8080" />
+	<parameter name="testurl" value="http://localhost:8080" />
 	<test name="Test1">
 		<classes>
 			<class name="com.softserve.edu.md.tests.AdminRoleTests"/>

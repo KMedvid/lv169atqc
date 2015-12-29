@@ -24,7 +24,7 @@ public final class AgreementRepository {
                 .setCustomerType(CustomerType.PROVIDER)
                 .setCustomerName("ЛКП «Львівводоканал»")
                 .setExecutorName("Київ калібратор")
-                .setAgreementCode("КДГ012345")
+                .setAgreementCode("КДХ012345")
                 .setMetersQuantity(25)
                 .build();
     }
@@ -36,7 +36,18 @@ public final class AgreementRepository {
                 .setCustomerName("ЛКП «Львівводоканал»")
                 .setExecutorName("Київ калібратор")
                 .setAgreementCode("КДГ012340")
-                .setMetersQuantity(50)
+                .setMetersQuantity(75)
+                .build();
+    }   
+    
+    public IAgreement getLaboratoryAgreementHeated() {
+        return Agreement.get()
+                .setWaterType(WaterType.HEATED)
+                .setCustomerType(CustomerType.LABORATORY)
+                .setCustomerName("Київ калібратор")
+                .setExecutorName("Київ верифікатор")
+                .setAgreementCode("КВГ012995")
+                .setMetersQuantity(100)
                 .build();
     }   
 

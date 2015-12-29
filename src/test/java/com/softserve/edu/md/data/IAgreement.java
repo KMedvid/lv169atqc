@@ -9,7 +9,7 @@ public interface IAgreement {
 
     String getExecutorName();
 
-    int getMetersQuantity();
+    Integer getMetersQuantity();
 
     String getAgreementCode();
 

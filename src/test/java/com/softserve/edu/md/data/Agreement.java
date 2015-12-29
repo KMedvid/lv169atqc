@@ -21,7 +21,7 @@ interface IAgreementCode {
 }
 
 interface IMetersQuantity {
-    IBuildAgreement setMetersQuantity(int metersQuantity);
+    IBuildAgreement setMetersQuantity(Integer metersQuantity);
 }
 
 interface IBuildAgreement {
@@ -36,7 +36,7 @@ public class Agreement implements IWaterType, ICustomerType, ICustomerName, IExe
     private String customerName;
     private String executorName;
     private String agreementCode;
-    private int metersQuantity;
+    private Integer metersQuantity;
 
     private Agreement() {
 
@@ -71,7 +71,7 @@ public class Agreement implements IWaterType, ICustomerType, ICustomerName, IExe
         return this;
     }
 
-    public IBuildAgreement setMetersQuantity(int metersQuantity) {
+    public IBuildAgreement setMetersQuantity(Integer metersQuantity) {
         this.metersQuantity = metersQuantity;
         return this;
     }
@@ -97,7 +97,7 @@ public class Agreement implements IWaterType, ICustomerType, ICustomerName, IExe
         return this.executorName;
     }
 
-    public int getMetersQuantity() {
+    public Integer getMetersQuantity() {
         return this.metersQuantity;
     }
 
