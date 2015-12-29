@@ -8,23 +8,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.softserve.edu.md.data.WaterType;
+
 public class MetersCategoryPage extends AdminHomePage{
-    public static enum WaterType {
-        COLD("Холодна вода"), HEATED("Гаряча вода");
-        //
-        private String field;
-
-        private WaterType(String field) {
-            this.field = field;
-        }
-
-        @Override
-        public String toString() {
-            return this.field;
-        }
-    }
-
-    //private WebDriver driver;
 
     private WebElement addMeterCategory;
     private WebElement meterCodeField;
@@ -152,11 +138,12 @@ public class MetersCategoryPage extends AdminHomePage{
      */
     public void addNewMeterCategory(WaterType waterType, String meterName) {
         clickAddMeterCategory();
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
-                .until(ExpectedConditions.visibilityOf(new NewMetersCategoryPage(driver).getMeterNameField()));
+                .until(ExpectedConditions.visibilityOf(new NewMetersCategoryPage(driver).getMeterNameCategoryField()));
         new NewMetersCategoryPage(driver).addNewMetercategory(waterType, meterName);
         (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
-        .until(ExpectedConditions.visibilityOf(new MetersCategoryPage(driver).getSelectWaterTypeField()));
+        .until(ExpectedConditions.visibilityOf(new MetersCategoryPage(driver).getMeterName()));
         
     }
 
@@ -202,30 +189,30 @@ public class MetersCategoryPage extends AdminHomePage{
      */
     private class NewMetersCategoryPage {
         private WebDriver driver;
-        private WebElement waterTypeField;
-        private WebElement meterNameField;
+        private WebElement waterTypeCategoryField;
+        private WebElement meterNameCategoryField;
         private WebElement submit;
 
         NewMetersCategoryPage(WebDriver driver) {
             this.driver = driver;
-            this.waterTypeField = driver.findElement(
+            this.waterTypeCategoryField = driver.findElement(
                     By.xpath("//div[@id = 'deviceType']/a[@class = 'select2-choice ui-select-match select2-default']"));
-            this.meterNameField = driver.findElement(By.xpath("//input[@ng-model = 'addCategoryFormData.deviceName']"));
+            this.meterNameCategoryField = driver.findElement(By.xpath("//input[@ng-model = 'addCategoryFormData.deviceName']"));
             this.submit = driver.findElement(By.xpath("//div[@class = 'form-group row row-buttons']/button[@type = 'submit']"));
         }
 
         // Get Elements
-        public WebElement getMeterNameField() {
-            return meterNameField;
+        public WebElement getMeterNameCategoryField() {
+            return meterNameCategoryField;
         }
 
         // Set Elements
-        public void setMeterName(String meterName) {
-            this.meterNameField.sendKeys(meterName);
+        public void setMeterNameCategoryField(String meterName) {
+            this.meterNameCategoryField.sendKeys(meterName);
         }
 
-        public void setWaterTypeField(WaterType waterType) {
-            clickWaterTypeField();
+        public void setWaterTypeCategoryField(WaterType waterType) {
+            clickWaterTypeCategoryField();
             driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
             (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT)).until(ExpectedConditions
                     .presenceOfElementLocated(By.xpath("//span[text() = '" + waterType.toString() + "']")));
@@ -234,29 +221,29 @@ public class MetersCategoryPage extends AdminHomePage{
         }
 
         // Click Elements
-        public void clickMeterName() {
-            this.meterNameField.click();
+        public void clickMeterNameCategoryField() {
+            this.meterNameCategoryField.click();
         }
 
         public void clickSubmit() {
             this.submit.click();
         }
 
-        public void clickWaterTypeField() {
-            this.waterTypeField.click();
+        public void clickWaterTypeCategoryField() {
+            this.waterTypeCategoryField.click();
         }
 
         // Clear Element
-        public void clearMeterName() {
-            this.meterNameField.clear();
+        public void clearMeterNameCategoryField() {
+            this.meterNameCategoryField.clear();
         }
 
         // Business Logic
         void addNewMetercategory(WaterType waterType, String name) {
-            setWaterTypeField(waterType);
-            clickMeterName();
-            clearMeterName();
-            setMeterName(name);
+            setWaterTypeCategoryField(waterType);
+            clickMeterNameCategoryField();
+            clearMeterNameCategoryField();
+            setMeterNameCategoryField(name);
             clickSubmit();
         }
     }

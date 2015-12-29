@@ -147,6 +147,7 @@ public class AgreementsPage extends AdminHomePage {
     }
     
     //Clear Elements
+    
     public void clearAgreementCodeField() {
         agreementCodeField.clear();
    }
@@ -163,17 +164,91 @@ public class AgreementsPage extends AdminHomePage {
         executorField.clear();
    }
    
-   
-   //Business Logic
-   /**
-    * 
-    */
-   
-   void addAgreement(IAgreement agreement) {
-       
+   public void clickAddAgreement() {
+        addAgreement.click();
    }
    
+  
+  //Business Logic
+  /**
+   * 
+   */
+  
+  void addAgreement(IAgreement agreement) {
+      clickAddAgreement();
+//      (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
+//      .until(ExpectedConditions.visibilityOf(new NewMetersCategoryPage(driver).getMeterNameField()));
+//      new NewMetersCategoryPage(driver).addNewMetercategory(waterType, meterName);
+//      (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
+//      .until(ExpectedConditions.visibilityOf(new MetersCategoryPage(driver).getSelectWaterTypeField()));
+
+      
+  }
    
+  
+  /**
+   * Pop-up window for adding new meter category page .
+   */
+//  private class NewAgreementPage {
+//      private WebDriver driver;
+//      private WebElement waterTypeField;
+//      private WebElement meterNameField;
+//      private WebElement submit;
+//
+//      NewAgreementPage(WebDriver driver) {
+//          this.driver = driver;
+//          this.waterTypeField = driver.findElement(
+//                  By.xpath("//div[@id = 'deviceType']/a[@class = 'select2-choice ui-select-match select2-default']"));
+//          this.meterNameField = driver.findElement(By.xpath("//input[@ng-model = 'addCategoryFormData.deviceName']"));
+//          this.submit = driver.findElement(By.xpath("//div[@class = 'form-group row row-buttons']/button[@type = 'submit']"));
+//      }
+//
+//      // Get Elements
+//      public WebElement getMeterNameField() {
+//          return meterNameField;
+//      }
+//
+//      // Set Elements
+//      public void setMeterName(String meterName) {
+//          this.meterNameField.sendKeys(meterName);
+//      }
+//
+//      public void setWaterTypeField(WaterType waterType) {
+//          clickWaterTypeField();
+//          driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+//          (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT)).until(ExpectedConditions
+//                  .presenceOfElementLocated(By.xpath("//span[text() = '" + waterType.toString() + "']")));
+//
+//          driver.findElement(By.xpath("//span[text() = '" + waterType.toString() + "']")).click();
+//      }
+//
+//      // Click Elements
+//      public void clickMeterName() {
+//          this.meterNameField.click();
+//      }
+//
+//      public void clickSubmit() {
+//          this.submit.click();
+//      }
+//
+//      public void clickWaterTypeField() {
+//          this.waterTypeField.click();
+//      }
+//
+//      // Clear Element
+//      public void clearMeterName() {
+//          this.meterNameField.clear();
+//      }
+//
+//      // Business Logic
+//      void addNewMetercategory(WaterType waterType, String name) {
+//          setWaterTypeField(waterType);
+//          clickMeterName();
+//          clearMeterName();
+//          setMeterName(name);
+//          clickSubmit();
+//      }
+//  }
    
    
    
