@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.fedyk.mdVerificator.data.UserRepository;
 import com.softserve.edu.fedyk.mdVerificator.model.EmployeePage;
 import com.softserve.edu.fedyk.mdVerificator.model.User;
 
@@ -86,7 +87,7 @@ public class LoginPage {
 	}
 	public HomePage doLogin() {
 	LoginPage login = new LoginPage(driver);
-	User verificator = new User("verificator-lv", "pass");
+	User verificator = UserRepository.getVerificator();
 	return login.successUserLogin(verificator);
 }
 	public void click() {

@@ -1,4 +1,5 @@
 package com.softserve.edu.fedyk.mdVerificator.model;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,7 @@ public class EmployeePage {
 	private WebElement password;
 	private WebElement secondPassword;
 	private WebElement submit;
+	private WebDriver driver;
 
 	public EmployeePage(WebDriver driver) {
 		this.lastName = driver.findElement(By.id("lastName"));
@@ -25,6 +27,7 @@ public class EmployeePage {
 		this.password = driver.findElement(By.name("password"));
 		this.secondPassword = driver.findElement(By.name("rePassword"));
 		this.submit = driver.findElement(By.className("btn-success"));
+		this.driver = driver;
 	}
 
 	private void submit() {
@@ -34,6 +37,20 @@ public class EmployeePage {
 	public void addEmployee(Employee employee) {
 		setEmployeeData(employee);
 		submit();
+	}
+
+//	public void doAccept(Employee employee) {
+	public void doAccept() {
+		
+		By cssSelector = By.cssSelector("button[ng-click='successController.ok()']");
+		WebElement accept = driver.findElement(cssSelector);
+		accept.click();
+//		set filter
+//		....
+//		check user field
+//		By userRow = By.cssSelector("input[]");
+//		WebElement userRowElement = driver.findElement(userRow);
+//		Assert.assertTrue(userRowElement.getText().contains(employee.getSurname()));
 	}
 
 	// SET
@@ -96,6 +113,7 @@ public class EmployeePage {
 	public void setEmail(String email) {
 		this.email.sendKeys(email);
 	}
+
 	public void clickLogin() {
 		this.login.click();
 	}
@@ -107,6 +125,7 @@ public class EmployeePage {
 	public void setLogin(String login) {
 		this.login.sendKeys(login);
 	}
+
 	public void clickPassword() {
 		this.password.click();
 	}
@@ -118,6 +137,7 @@ public class EmployeePage {
 	public void setPassword(String password) {
 		this.password.sendKeys(password);
 	}
+
 	public void clickSecondPassword() {
 		this.secondPassword.click();
 	}
@@ -129,10 +149,6 @@ public class EmployeePage {
 	public void setSecondPassword(String password) {
 		this.secondPassword.sendKeys(password);
 	}
-	
-
-	
-
 
 	private void setEmployeeData(Employee employee) {
 		clickLastName();
@@ -159,7 +175,7 @@ public class EmployeePage {
 		clickSecondPassword();
 		clearSecondPassword();
 		setSecondPassword(employee.getPassword());
-		
+
 	}
 
 }
