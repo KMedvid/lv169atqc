@@ -44,14 +44,14 @@ public class AdminRoleTests {
 
     @DataProvider
     public Object[][] existAdmins() {
-        return new Object[][] { { UserRepository.get().getAdminUser(), UrlRepository.get().getLocalUrls() } };
+        return new Object[][] { { UserRepository.get().getAdminUser(), UrlRepository.get().getVmUrls() } };
     }
 
     @DataProvider
     public Object[][] newAreements() {
         return new Object[][] {
-                { AgreementRepository.get().getProviderAgreementCold(), UrlRepository.get().getLocalUrls() },
-                { AgreementRepository.get().getLaboratoryAgreementHeated(), UrlRepository.get().getLocalUrls() } };
+                { AgreementRepository.get().getProviderAgreementCold(), UrlRepository.get().getVmUrls() },
+                { AgreementRepository.get().getLaboratoryAgreementHeated(), UrlRepository.get().getVmUrls() } };
     }
 
     @Test(dataProvider = "existAdmins")
