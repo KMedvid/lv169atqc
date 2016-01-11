@@ -1,0 +1,4 @@
+Login,FirstName,LastName,Password,Mail,Region,Role
+iva,ivanka,horoshko,qwerty,mail@gmail.com,West,Administrator
+myroslav,myroslav,shram,qwerty,mail@gmail.com,South,Administrator
+login1,firstName1,lastName1,qwerty,mail@gmail.com,East,Customer
