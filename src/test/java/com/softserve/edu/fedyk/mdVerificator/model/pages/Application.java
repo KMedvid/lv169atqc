@@ -10,7 +10,7 @@ public class Application {
 
 	public Application(WebDriver driver1) {
 		this.driver = driver1;
-		driver.get("http://localhost:8080/#/start");
+		driver.get("http://java.training.local:8080/#/start");
 	}
 
 	public void loginButtonClick() {

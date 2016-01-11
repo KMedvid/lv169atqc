@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.fedyk.mdVerificator.data.UserRepository;
-import com.softserve.edu.fedyk.mdVerificator.model.EmployeePage;
-import com.softserve.edu.fedyk.mdVerificator.model.User;
+import com.softserve.edu.fedyk.mdVerificator.model.pages.EmployeePage;
+import com.softserve.edu.fedyk.mdVerificator.model.pages.User;
 
 public class LoginPage {
 

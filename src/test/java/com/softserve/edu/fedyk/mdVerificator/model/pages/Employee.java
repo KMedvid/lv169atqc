@@ -1,4 +1,4 @@
-package com.softserve.edu.fedyk.mdVerificator.model;
+package com.softserve.edu.fedyk.mdVerificator.model.pages;
 
 public class Employee extends User {
 	
