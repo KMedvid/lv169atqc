@@ -5,10 +5,12 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -21,9 +23,9 @@ public class LoginAdmin {
     public void oneTimeSetUp() {
         logger.info("@BeforeClass - oneTimeSetUp() START");
         System.out.println("@BeforeClass - oneTimeSetUp() START");
-        //driver = new FirefoxDriver();
-        driver = new HtmlUnitDriver(true);
-        ((HtmlUnitDriver) driver).setJavascriptEnabled(true);
+        driver = new FirefoxDriver();
+        //driver = new HtmlUnitDriver(true);
+        //((HtmlUnitDriver) driver).setJavascriptEnabled(true);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         System.out.println("@BeforeClass - oneTimeSetUp() DONE");
         logger.info("@BeforeClass - oneTimeSetUp() DONE");
@@ -35,16 +37,21 @@ public class LoginAdmin {
         driver.quit();
         System.out.println("@AfterClass - oneTimeTearDown()");
         logger.info("oneTimeTearDown() - oneTimeSetUp() DONE");
+        Reporter.log("<BR><P><FONT color='green' size='3'><B>@Test</B> -  oneTimeTearDown() DONE</FONT></P>");
     }
 
     @Test
     public void testUnit() throws Exception {
         logger.info("@Test -  testUnit() START");
+        Reporter.log("<BR><P><FONT color='green' size='3'><B>@Test</B> -  testUnit() START</FONT></P>");
         System.out.println("@Test -  testUnit() START");
         //logger.info("Goto http://localhost:8080/OMS");
         //driver.get("http://localhost:8080/OMS");
-        logger.info("Goto http://ssu-oms.training.local:8180/OMS/login.htm");
-        driver.get("http://ssu-oms.training.local:8180/OMS/login.htm");
+        logger.info("Goto http://localhost:8080/OMS");
+        //Reporter.log("Goto http://localhost:8080/OMS");
+        Reporter.log("<BR><P><FONT color='blue'><B>@Test</B> Goto http://localhost:8080/OMS</FONT></P>");
+        //driver.get("http://ssu-oms.training.local:8180/OMS/login.htm");
+        driver.get("http://localhost:8080/OMS");
         logger.info("Creating Web Elements");
         driver.findElement(By.name("j_username")).sendKeys("iva");
         driver.findElement(By.name("j_password")).sendKeys("qwerty");
@@ -61,6 +68,8 @@ public class LoginAdmin {
         logger.info("Logout Succesfull");
         System.out.println("@Test -  testUnit() DONE");
         logger.info("@Test -  testUnit() DONE");
+        //Reporter.log("@Test -  testUnit() DONE");
+        Reporter.log("<BR><P><FONT color='green' size='3'><B>@Test</B> -  testUnit() DONE</FONT></P>");
     }
     
     //@Test
