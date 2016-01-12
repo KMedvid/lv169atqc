@@ -2,7 +2,7 @@ package com.softserve.edu.atqc.tools;
 
 import org.openqa.selenium.WebDriver;
 
-abstract class ABrowser {
+public abstract class ABrowser {
     private final String BROWSER_CLOSED = "Browser was Closed.";
     private WebDriver driver = null;
 
@@ -32,6 +32,28 @@ abstract class ABrowser {
 
     boolean isEnabled() {
         return driver != null;
+    }
+
+    public void loadPage(String url) {
+        getWebDriver().get(url);
+    }
+
+    public void refreshPage() {
+        getWebDriver().navigate().refresh();
+    }
+
+    public void forwardPage() {
+        // TODO Use try
+        getWebDriver().navigate().forward();
+    }
+
+    public void previousPage() {
+        // TODO Use try
+        getWebDriver().navigate().back();
+    }
+
+    public String getCurrentUrl() {
+        return getWebDriver().getCurrentUrl();
     }
 
     void close() {

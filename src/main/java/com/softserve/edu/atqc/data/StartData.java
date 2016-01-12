@@ -1,10 +1,13 @@
 package com.softserve.edu.atqc.data;
 
+import com.softserve.edu.atqc.tools.ABrowser;
+
 public final class StartData {
     private String login;
     private String logout;
     private String browserName;
     private String browserPath;
+    private ABrowser browser;
 
     public StartData() {
     }
@@ -28,6 +31,10 @@ public final class StartData {
         return browserName;
     }
 
+    public ABrowser getBrowser() {
+        return browser;
+    }
+
     public String getBrowserPath() {
         return browserPath;
     }
@@ -49,6 +56,11 @@ public final class StartData {
 
     public StartData setBrowserPath(String browserPath) {
         this.browserPath = browserPath;
+        return this;
+    }
+
+    public StartData setBrowser(ABrowser browser) {
+        this.browser = browser;
         return this;
     }
 
