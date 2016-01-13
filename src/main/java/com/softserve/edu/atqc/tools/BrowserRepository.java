@@ -1,6 +1,22 @@
 package com.softserve.edu.atqc.tools;
 
 final class BrowserRepository {
+    
+    public static enum BrowserPath {
+        CHROME_PATH("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe"),
+        IE_PATH("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");
+        private String field;
+
+        private BrowserPath(String field) {
+            this.field = field;
+        }
+
+        @Override
+        public String toString() {
+            return this.field;
+        }
+    }
+    
     private static volatile BrowserRepository instance = null;
 
     private BrowserRepository() {
@@ -17,9 +33,14 @@ final class BrowserRepository {
         return instance;
     }
 
-    public ABrowser getDefault() {
+//    public ABrowser getNullBrowser() {
+//        // TODO Create default class without create webdriver.
+//        return null;
+//    }
+
+    public ABrowser getDefaultBrowser() {
         // TODO Create default class without create webdriver.
-        return new FirefoxBrowser();
+        return getFirefoxByTemporaryProfile();
     }
 
     public ABrowser getFirefoxByTemporaryProfile() {

@@ -10,6 +10,10 @@ public final class StartData {
     private ABrowser browser;
 
     public StartData() {
+        this.login = new String();
+        this.logout = new String();
+        this.browserName = new String();
+        this.browserPath = new String();
     }
 
     public StartData(String login, String logout, String browserName, String browserPath) {
