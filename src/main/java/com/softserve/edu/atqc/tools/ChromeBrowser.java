@@ -1,6 +1,7 @@
 package com.softserve.edu.atqc.tools;
 
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import com.softserve.edu.atqc.tools.BrowserRepository.BrowserPath;
 
@@ -19,7 +20,10 @@ final class ChromeBrowser extends ABrowser {
 
     private void init(String browserPath) {
         System.setProperty(CHROME_PROPERTY, browserPath);
-        setWebDriver(new ChromeDriver());
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-proxy-server");
+        options.addArguments("--ignore-certificate-errors");
+        setWebDriver(new ChromeDriver(options));
     }
 
 }

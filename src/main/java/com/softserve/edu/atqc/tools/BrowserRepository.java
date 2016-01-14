@@ -46,7 +46,7 @@ final class BrowserRepository {
     public ABrowser getFirefoxByTemporaryProfile() {
         return new FirefoxBrowser();
     }
-
+    
     public ABrowser getChromeByTemporaryProfile() {
         return new ChromeBrowser();
     }

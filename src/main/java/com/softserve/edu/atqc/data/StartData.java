@@ -67,5 +67,10 @@ public final class StartData {
         this.browser = browser;
         return this;
     }
+    public StartData clone() {
+        StartData startData = new StartData(this.login, this.logout, this.browserName, this.browserPath);
+        startData.setBrowser(this.browser);
+        return startData;
+    }
 
 }

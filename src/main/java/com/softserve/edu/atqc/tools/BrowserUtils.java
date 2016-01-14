@@ -9,6 +9,7 @@ import java.util.List;
 import com.softserve.edu.atqc.data.StartData;
 
 public final class BrowserUtils {
+    private final String NO_SUCH_METHOD = "No such method.";
     private static volatile BrowserUtils instance = null;
     private final HashMap<Long, StartData> startDatas;
 
@@ -39,12 +40,32 @@ public final class BrowserUtils {
                 }
             } else {
                 // startData != null
+                if (startData != null) {
+                System.out.println("*****startData.getBrowserName()="
+                        +startData.getBrowserName());}
+                if (instance.getStartData() != null) {
+                System.out.println("*****instance.getStartData().getBrowserName()="
+                        +instance.getStartData().getBrowserName());}
                 if (instance.getStartData() == null) {
                     instance.setStartData(startData);
                 }
+                System.out.println("++++startData.getBrowserName()="
+                        +startData.getBrowserName());
+                System.out.println("++++instance.getStartData().getBrowserName()="
+                        +instance.getStartData().getBrowserName());
+                
+                System.out.println("\t(instance.getStartData().getBrowser() != null)"
+                        +(instance.getStartData().getBrowser() != null));
+                if (instance.getStartData().getBrowser() != null) {
+                System.out.println("\t(instance.getBrowser().isEnabled())"
+                        +(instance.getBrowser().isEnabled())); }
+                System.out.println("\t(!instance.getStartData().getBrowserName().equals(startData.getBrowserName()))"
+                        +(!instance.getStartData().getBrowserName().equals(startData.getBrowserName())));
+                
                 if ((instance.getStartData().getBrowser() != null)
                         && (instance.getBrowser().isEnabled())
                         && (!instance.getStartData().getBrowserName().equals(startData.getBrowserName()))) {
+                    System.out.println("++++instance.getBrowser().close();");
                     instance.getBrowser().close();
                     // instance.getBrowser().quit();
                     instance.setStartData(startData);
@@ -68,7 +89,7 @@ public final class BrowserUtils {
     }
 
     private void setStartData(StartData startData) {
-        this.startDatas.put(Thread.currentThread().getId(), startData);
+        this.startDatas.put(Thread.currentThread().getId(), startData.clone());
     }
 
     private StartData getStartData() {
@@ -78,7 +99,8 @@ public final class BrowserUtils {
     private List<String> getAccessableBrowsers() {
         List<String> result = new ArrayList<String>();
         for (Method method : BrowserRepository.class.getDeclaredMethods()) {
-            if (Modifier.isPublic(method.getModifiers())) {
+            if ((Modifier.isPublic(method.getModifiers())) 
+                    && (!Modifier.isStatic(method.getModifiers()))) {
                 result.add(method.getName());
             }
         }
@@ -86,24 +108,49 @@ public final class BrowserUtils {
     }
     
     private boolean isAccessableBrowsersPath(String browserName) {
-        return true;
+        boolean result = false;
+        for (Method method : BrowserRepository.class.getDeclaredMethods()) {
+            if ((Modifier.isPublic(method.getModifiers())) 
+                    && (!Modifier.isStatic(method.getModifiers()))
+                    && (method.getParameters().length == 1) 
+                    && (method.getName().equals(browserName))
+                    && (method.getParameters()[0].getType().getName().equals(String.class.getName()))) {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
     
     private void startupBrowser(StartData startData) {
         String browserName = "getDefaultBrowser";
+        Method method;
         for (String methodName : getAccessableBrowsers()) {
-            if (methodName.contains(startData.getBrowserName())) {
+            if (methodName.toLowerCase().contains(startData.getBrowserName().toLowerCase())) {
                 browserName = methodName;
                 break;
             }
         }
-        if ((startData.getBrowserPath() != null) 
-                && (startData.getBrowserPath().length() > 0 )
+        if ((startData.getBrowserPath() != null)
+                && (startData.getBrowserPath().length() > 0)
                 && (isAccessableBrowsersPath(browserName))) {
-            //
+            try {
+               method = BrowserRepository.class.getMethod(browserName, String.class);
+               startData.setBrowser((ABrowser) method.invoke(BrowserRepository.get(),
+                       new Object[] { startData.getBrowserPath() }));
+            } catch (Exception e) {
+                // TODO Create class Exception + log + report.
+                throw new RuntimeException(NO_SUCH_METHOD, e);
+            }
+        } else {
+            try {
+                method = BrowserRepository.class.getMethod(browserName);
+                startData.setBrowser((ABrowser) method.invoke(BrowserRepository.get()));
+             } catch (Exception e) {
+                 // TODO Create class Exception + log + report.
+                 throw new RuntimeException(NO_SUCH_METHOD, e);
+             }
         }
-        //Method method = BrowserRepository.class.getMethod(browserName);
-        //ABrowser firefox = (ABrowser)method.invoke(browserRepository);
     }
 
     public ABrowser getBrowser() {

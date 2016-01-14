@@ -13,7 +13,8 @@ public abstract class ABrowser {
         this.driver = driver;
     }
 
-    WebDriver getWebDriver() {
+    //TODO +++
+    public WebDriver getWebDriver() {
         if (driver != null) {
             return driver;
         } else {
