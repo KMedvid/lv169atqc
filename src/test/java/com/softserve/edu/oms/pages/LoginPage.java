@@ -96,7 +96,6 @@ public class LoginPage {
 	}
 
 	public HomePage successUserLogin(IUser user) {
-		clickCheckbox();
 		setLoginData(user);
 		// Return a new page object representing the destination.
 		return new HomePage(driver);

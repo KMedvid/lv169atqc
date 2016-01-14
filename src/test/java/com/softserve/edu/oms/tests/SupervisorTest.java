@@ -35,7 +35,7 @@ public class SupervisorTest {
 		LoginStartPage.get().quit();
 	}
 
-	@DataProvider // (parallel = true)
+	@DataProvider 
 	public Object[][] existUsers() {
 		return new Object[][] { { UserRepository.get().getSuperVisorUser(), UrlRepository.get().getLocalUrls() } };
 	}
@@ -51,7 +51,7 @@ public class SupervisorTest {
 		SupervisorHomePage svisorHomePage = LoginStartPage.get().load(urls).successSvisorLogin(svisor);
 
 		// Test Operation
-		softAssert.assertEquals(svisorHomePage.getRoleText(), svisor.getRole());
+		Assert.assertEquals(svisorHomePage.getRoleText(), svisor.getRole());
 	}
 
 	@Test(dataProvider = "invalidUsers")
@@ -60,9 +60,7 @@ public class SupervisorTest {
 		LoginValidatorPage loginValidatorPage = LoginStartPage.get().load(urls).unsuccessfulLogin(svisor);
 
 		// Test Operation
-		Assert.assertTrue(loginValidatorPage.getValidatorText().startsWith(LoginValidatorPage.START_VALIDATOR_MESSAGE));
 		Assert.assertEquals(loginValidatorPage.getStartValidatorText(), LoginValidatorPage.START_VALIDATOR_MESSAGE);
-
 	}
 
 	@Test(dataProvider = "existUsers")
@@ -76,10 +74,12 @@ public class SupervisorTest {
 		softAssert.assertEquals(svisorHomePage.getRoleText(), svisor.getRole());
 
 		svisorHomePage.clickLogout();
+		loginPage.clickPassword();
+		loginPage.clearPassword();
 		loginPage.setPassword(svisor.getPassword());
 		loginPage.clickSubmit();
+		
 		softAssert.assertEquals(svisorHomePage.getRoleText(), svisor.getRole());
-
 		softAssert.assertAll();
 
 	}
