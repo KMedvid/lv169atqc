@@ -123,6 +123,7 @@ public final class BrowserUtils {
     }
     
     private void startupBrowser(StartData startData) {
+        // TODO Set Search Strategy
         String browserName = "getDefaultBrowser";
         Method method;
         for (String methodName : getAccessableBrowsers()) {
