@@ -13,7 +13,7 @@ public class ControlSearch {
 
     private ControlSearch() {
         //this.observeLoad = new ArrayList<IObserveLoad>();
-        this.context = ContextRepository.get().getExplicitWrapper();
+        this.context = ContextRepository.get().getSearchExplicit();
     }
 
     public static ControlSearch get() {
@@ -36,11 +36,11 @@ public class ControlSearch {
     }
 
     public ControlSearch setImplicitStrategy() {
-        return setContext(ContextRepository.get().getImplicitWrapper());
+        return setContext(ContextRepository.get().getSearchImplicit());
     }
 
     public ControlSearch setExplicitStrategy() {
-        return setContext(ContextRepository.get().getExplicitWrapper());
+        return setContext(ContextRepository.get().getSearchExplicit());
     }
 
     /**

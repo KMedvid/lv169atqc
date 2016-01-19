@@ -12,7 +12,7 @@ import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.UserRepository;
 
 public class LoginParallelTest2 {
-    StartData startData = new StartData("","","chrome","");
+    StartData startData = new StartData("","","","chrome","");
 
 	@AfterClass
 	public void oneTimeTearDown() {
@@ -81,7 +81,7 @@ public class LoginParallelTest2 {
         System.out.println("+++Logout");
         Thread.sleep(2000);
         //startData.setBrowserName("firefox");
-        //startData = new StartData("","","firefox","");
+        //startData = new StartData("","","","firefox","");
         // driver.quit();
     }
 

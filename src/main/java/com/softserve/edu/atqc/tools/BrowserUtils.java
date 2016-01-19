@@ -10,6 +10,9 @@ import com.softserve.edu.atqc.data.StartData;
 
 public final class BrowserUtils {
     private final String NO_SUCH_METHOD = "No such method.";
+    private final String DEFAULT_BROWSER = "getDefaultBrowser";
+    private final String EXPLICIT = "explicit";
+    private final String IMPLICIT = "implicit";
     private static volatile BrowserUtils instance = null;
     private final HashMap<Long, StartData> startDatas;
 
@@ -123,8 +126,7 @@ public final class BrowserUtils {
     }
     
     private void startupBrowser(StartData startData) {
-        // TODO Set Search Strategy
-        String browserName = "getDefaultBrowser";
+        String browserName = DEFAULT_BROWSER;
         Method method;
         for (String methodName : getAccessableBrowsers()) {
             if (methodName.toLowerCase().contains(startData.getBrowserName().toLowerCase())) {
@@ -152,8 +154,27 @@ public final class BrowserUtils {
                  throw new RuntimeException(NO_SUCH_METHOD, e);
              }
         }
+        // Set Search Strategy
+        setSearchStrategy(startData);
     }
 
+    private void setSearchStrategy(StartData startData) {
+        if ((startData.getSearchStrategy() != null) 
+                && (startData.getSearchStrategy().length() > 0)) {
+            if (startData.getSearchStrategy().toLowerCase().contains(EXPLICIT)) {
+                //ControlSearch.get().setExplicitStrategy();
+                ControlSearch.get().setContext(ContextRepository.get().getSearchExplicit());
+            } else if (startData.getSearchStrategy().toLowerCase().contains(IMPLICIT)) {
+                //ControlSearch.get().setImplicitStrategy();
+                ControlSearch.get().setContext(ContextRepository.get().getSearchImplicit());
+            } else {
+                ControlSearch.get().setContext(ContextRepository.get().getSearchDefault());
+            }
+        } else {
+            ControlSearch.get().setContext(ContextRepository.get().getSearchDefault());
+        }
+    }
+    
     public ABrowser getBrowser() {
         return startDatas.get(Thread.currentThread().getId()).getBrowser();
     }

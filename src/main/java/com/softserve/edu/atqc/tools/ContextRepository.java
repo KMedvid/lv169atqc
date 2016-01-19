@@ -17,11 +17,15 @@ public final class ContextRepository {
         return instance;
     }
 
-    public ASearchContext getImplicitWrapper() {
+    public ASearchContext getSearchDefault() {
+        return SearchExplicit.get();
+    }
+
+    public ASearchContext getSearchImplicit() {
         return SearchImplicit.get();
     }
 
-    public ASearchContext getExplicitWrapper() {
+    public ASearchContext getSearchExplicit() {
         return SearchExplicit.get();
     }
 
