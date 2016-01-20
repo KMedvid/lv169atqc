@@ -1,6 +1,6 @@
 package com.softserve.edu.atqc.controls;
 
-public final class TextField extends GTextField<ITextField> {
+public final class TextField extends ATextField<ITextField> {
 
     // implements constructor
     private TextField() {
@@ -8,7 +8,7 @@ public final class TextField extends GTextField<ITextField> {
 
     // implements static factory
 
-    public static AComponent<ITextField> get() {
+    public static ABaseComponent<ITextField> get() {
         TextField instance = new TextField();
         instance.setTComponent(instance);
         return instance;

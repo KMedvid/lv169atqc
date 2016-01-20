@@ -1,6 +1,6 @@
 package com.softserve.edu.atqc.controls;
 
-public final class Button extends GButton<IButton> {
+public final class Button extends AButton<IButton> {
 
     // implements constructor
     private Button() {
@@ -8,7 +8,7 @@ public final class Button extends GButton<IButton> {
 
     // implements static factory
 
-    public static AComponent<IButton> get() {
+    public static ABaseComponent<IButton> get() {
         Button instance = new Button();
         instance.setTComponent(instance);
         return instance;
