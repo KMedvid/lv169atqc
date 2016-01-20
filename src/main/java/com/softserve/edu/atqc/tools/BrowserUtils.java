@@ -95,7 +95,7 @@ public final class BrowserUtils {
         this.startDatas.put(Thread.currentThread().getId(), startData.clone());
     }
 
-    private StartData getStartData() {
+    public StartData getStartData() {
         return startDatas.get(Thread.currentThread().getId());
     }
 

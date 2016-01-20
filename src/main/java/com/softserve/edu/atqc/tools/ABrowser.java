@@ -13,7 +13,7 @@ public abstract class ABrowser {
         this.driver = driver;
     }
 
-    //TODO +++
+    //TODO +++ Set Package Access
     public WebDriver getWebDriver() {
         if (driver != null) {
             return driver;
@@ -57,12 +57,12 @@ public abstract class ABrowser {
         return getWebDriver().getCurrentUrl();
     }
 
-    void close() {
+    public void close() {
         getWebDriver().close();
         driver = null;
     }
 
-    void quit() {
+    public void quit() {
         getWebDriver().quit();
         driver = null;
     }
