@@ -128,6 +128,29 @@ class SearchExplicit extends ASearchContext {
         return invisibilityWebElement;
     }
     
+    boolean isInvisibleWebElementWithText(ControlLocation controlLocation, String text){
+        Boolean invisibilityWebElement = false;
+        try {
+            invisibilityWebElement = new WebDriverWait(
+                    BrowserUtils.get().getBrowser().getWebDriver(),
+                        getExplicitlyWaitTimeout())
+                .until(ExpectedConditions
+                    .invisibilityOfElementWithText(controlLocation.getBy(), text));
+        } catch (Exception e) {
+//            throw new ScreenCapturingCustomException(String.format(ASearchControl.ERROR_STILL_VISIBLE,
+//                    controlLocation.getValue()));
+            throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+                    controlLocation.getValue()));
+        }
+        if (!invisibilityWebElement) {
+//            throw new ScreenCapturingCustomException(String.format(ASearchControl.ERROR_STILL_VISIBLE,
+//                    controlLocation.getValue()));
+            throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+                    controlLocation.getValue()));
+        }
+        return invisibilityWebElement;
+    }
+    
     boolean isStatelessOfWebElement(ControlWrapper controlWrapper){
         Boolean statelessOfWebElement = true;
         try {

@@ -75,8 +75,20 @@ public class ControlSearch {
         return context.isInvisibleWebElement(controlLocation);
     }
 
+    /**
+     * An expectation for checking that an element with text is either invisible
+     * or not present on the DOM.
+     */
+    public boolean isInvisibleWebElementWithText(ControlLocation controlLocation, String text) {
+        return context.isInvisibleWebElementWithText(controlLocation, text);
+    }
+
     public boolean isInvisibleWebElementById(String id) {
         return isInvisibleWebElement(ControlLocation.getById(id));
+    }
+
+    public boolean isInvisibleWebElementByPartialLinkText(String partialLinkText) {
+        return isInvisibleWebElement(ControlLocation.getByPartialLinkText(partialLinkText));
     }
 
     /**
@@ -87,7 +99,8 @@ public class ControlSearch {
         return context.isStatelessOfWebElement(controlWrapper);
     }
 
-    Select getVisibleSelectWebElement(ControlLocation controlLocation) {
+    //TODO +++ not public
+    public Select getVisibleSelectWebElement(ControlLocation controlLocation) {
         return new Select(getVisibleWebElement(controlLocation));
     }
 

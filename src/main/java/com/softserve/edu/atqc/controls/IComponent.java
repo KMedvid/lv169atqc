@@ -17,6 +17,8 @@ public interface IComponent {
     boolean isSelected();
     
     boolean isInvisible();
+
+    boolean isInvisibleWithText(String text);
     
     boolean isStatelessOf();
 

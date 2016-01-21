@@ -43,6 +43,10 @@ abstract class AComponent<TComponent> extends ABaseComponent<TComponent> impleme
         return ControlSearch.get().isInvisibleWebElement(getControlLocation());
     }
 
+	public boolean isInvisibleWithText(String text) {
+        return ControlSearch.get().isInvisibleWebElementWithText(getControlLocation(), text);
+    }
+
 	public boolean isStatelessOf() {
 		return ControlSearch.get().isStatelessOfWebElement(getControlWrapper());
 	}

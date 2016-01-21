@@ -1,15 +1,14 @@
 package com.softserve.edu.oms.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
-
-import com.softserve.edu.atqc.tools.browsers.WebDriverUtils;
-import com.softserve.edu.atqc.tools.controls.ILabel;
-import com.softserve.edu.atqc.tools.controls.ILink;
-import com.softserve.edu.atqc.tools.controls.ITextField;
-import com.softserve.edu.atqc.tools.controls.Label;
-import com.softserve.edu.atqc.tools.controls.Link;
-import com.softserve.edu.atqc.tools.controls.TextField;
+import com.softserve.edu.atqc.controls.ILabel;
+import com.softserve.edu.atqc.controls.ILink;
+import com.softserve.edu.atqc.controls.ITextField;
+import com.softserve.edu.atqc.controls.Label;
+import com.softserve.edu.atqc.controls.Link;
+import com.softserve.edu.atqc.controls.TextField;
+import com.softserve.edu.atqc.tools.BrowserUtils;
+import com.softserve.edu.atqc.tools.ControlLocation;
+import com.softserve.edu.atqc.tools.ControlSearch;
 import com.softserve.edu.oms.data.IUser;
 
 public class AdministrationPage {
@@ -52,31 +51,33 @@ public class AdministrationPage {
 
     private class AdministrationPageUIMap {
         public final ILink createNewUser;
-        //public final ISelect field;
-        //public final ISelect condition;
+        //public final ISelect selectField;
+        //public final ISelect selectCondition;
         public final ITextField searchField;
         public final ILink logout;
 
         public AdministrationPageUIMap() {
+            this.createNewUser = Link.get().getByPartialLinkText("Create New User");
             this.searchField = TextField.get().getById("searchField");
             //this.field = Select.getById("field");
             //this.condition = Select.getById("condition");
-            this.createNewUser = Link.get().getByPartialLinkText("Create New User");
             this.logout = Link.get().getByXpath("//a[@href='/OMS/logout.htm']");
         }
     }
 
-    private class AdministrationPageUIMapTable {
+    private class AdministrationPageTableUIMap {
         public final ILabel usersFound;
         public final ILabel firstname;
         public final ILabel lastname;
         public final ILabel login;
         public final ILink delete;
+        public final String usersFoundText;
 
-        public AdministrationPageUIMapTable() {
+        public AdministrationPageTableUIMap() {
             // TODO if Load Table Complete
             this.usersFound = Label.get().getById("usersFound");
-            if (Integer.parseInt(usersFound.getText()) > 0) {
+            this.usersFoundText = usersFound.getText();
+            if (Integer.parseInt(usersFoundText) > 0) {
                 this.firstname = Label.get().getByXpath("//tbody/tr[1]/td[1]");
                 this.lastname = Label.get().getByXpath("//tbody/tr[1]/td[2]");
                 this.login = Label.get().getByXpath("//tbody/tr[1]/td[3]");
@@ -89,13 +90,15 @@ public class AdministrationPage {
             }
         }
 
-        public AdministrationPageUIMapTable(String login) {
+        public AdministrationPageTableUIMap(String login) {
             // TODO if Load Table Complete
+            // TODO Check Existing Row
             this.usersFound = Label.get().getById("usersFound");
+            this.usersFoundText = usersFound.getText();
             //
-            this.login = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']");
-            this.lastname = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[1]");
             this.firstname = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[2]");
+            this.lastname = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[1]");
+            this.login = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']");
             this.delete = Link.get().getByXpath("//tbody//td[3][text()='" + login + "']/following-sibling::td[4]/a");
         }
 
@@ -104,28 +107,56 @@ public class AdministrationPage {
     // Elements
     private AdministrationPageUIMap controls;
     // AJAX Elements
-    private AdministrationPageUIMapTable controlsTable;
+    private AdministrationPageTableUIMap controlsTable;
     // Alert Elements
     //private IAlertLight controlsAlert = null;
 
     public AdministrationPage() {
         controls = new AdministrationPageUIMap();
-        controlsTable = new AdministrationPageUIMapTable();
+        controlsTable = new AdministrationPageTableUIMap();
     }
 
+    private boolean isTableRefresh() {
+        return this.controlsTable.firstname.isStatelessOf()
+                && this.controlsTable.usersFound.isInvisibleWithText(
+                        this.controlsTable.usersFoundText);
+    }
+
+    private String getUserPropertyByField(IUser user, AdministrationPageFields field) {
+        String searchProperties;
+        switch (field) {
+        case FIRST_NAME:
+            searchProperties = user.getFirstname();
+            break;
+        case LAST_NAME:
+            searchProperties = user.getLastname();
+            break;
+        case ROLE:
+            searchProperties = user.getRole();
+            break;
+        case LOGIN_NAME:
+            searchProperties = user.getLogin();
+            break;
+        default:
+            searchProperties = user.getLogin();
+        }
+        return searchProperties;
+    }
+    
     // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     // getters controls
 
     public ILink getCreateNewUser() {
         return this.controls.createNewUser;
     }
 
-//    public ISelect getField() {
-//        return this.controls.field;
+//    public ISelect getSelectField() {
+//        return this.controls.selectField;
 //    }
 
-//    public ISelect getCondition() {
-//        return this.controls.condition;
+//    public ISelect getSelectCondition() {
+//        return this.controls.selectCondition;
 //    }
 
     public ITextField getSearchField() {
@@ -136,6 +167,18 @@ public class AdministrationPage {
         return this.controls.logout;
     }
 
+//    public String getSelectFieldText() {
+//        return this.controls.selectField.getFirstSelectedOption().getText();
+//    }
+
+//    public String getSelectConditionText() {
+//        return this.controls.selectCondition.getFirstSelectedOption().getText();
+//    }
+
+    public String getSearchFieldText() {
+        return this.controls.searchField.getText();
+    }
+    
     // getters controlsTable
 
     public ILabel getUsersFound() {
@@ -158,6 +201,22 @@ public class AdministrationPage {
         return this.controlsTable.delete;
     }
 
+//    public String getUsersFoundText() {
+//        return this.controlsTable.usersFoundText;
+//    }
+
+    public String getFirstnameText() {
+        return this.controlsTable.firstname.getText();
+    }
+
+    public String getLastnameText() {
+        return this.controlsTable.lastname.getText();
+    }
+
+    public String getLoginText() {
+        return this.controlsTable.login.getText();
+    }
+
     // getters controlsAlert
 
     //public IAlert getAlert() {
@@ -168,70 +227,76 @@ public class AdministrationPage {
 
     // setters controls
 
-    public void createNewUserClick() {
-        this.controls.createNewUser.click();
-    }
-
-    public void selectColumnFields(AdministrationPageFields field) {
-        //this.controls.field.selectByVisibleText(field.toString());
-        new Select(WebDriverUtils.get().getWebDriver().findElement(By.id("field")))
+    public void setSelectField(AdministrationPageFields field) {
+        //this.controls.selectField.selectByVisibleText(field.toString());
+        // TODO +++
+        ControlSearch.get().getVisibleSelectWebElement(ControlLocation.getById("field"))
             .selectByVisibleText(field.toString());
     }
 
-    public void selectMatchConditions(AdministrationPageConditions condition) {
-        //this.controls.condition.selectByVisibleText(condition.toString());
-        new Select(WebDriverUtils.get().getWebDriver().findElement(By.id("condition")))
+    public void setSelectCondition(AdministrationPageConditions condition) {
+        //this.controls.selectCondition.selectByVisibleText(condition.toString());
+        // TODO +++
+        ControlSearch.get().getVisibleSelectWebElement(ControlLocation.getById("condition"))
             .selectByVisibleText(condition.toString());
     }
 
-    public void searchFieldClear() {
-        this.controls.searchField.clear();
-    }
-
-    public void searchFieldClick() {
-        this.controls.searchField.click();
-    }
-    
-    public void searchFieldSendKeys(String text) {
+    public void setSearchField(String text) {
         this.controls.searchField.sendKeys(text);
     }
 
-    public void logoutClick() {
+    public void clearSearchField() {
+        this.controls.searchField.clear();
+    }
+
+    public void clickSearchField() {
+        this.controls.searchField.click();
+    }
+
+    public void clickCreateNewUser() {
+        this.controls.createNewUser.click();
+    }
+
+    public void clickLogout() {
         this.controls.logout.click();
     }
     
     // setters controlsTable
 
     public void resetTable() {
-        if (this.controlsTable.firstname.isStatelessOf()) {
-            controlsTable = new AdministrationPageUIMapTable();
+        if (isTableRefresh()) {
+            controlsTable = new AdministrationPageTableUIMap();
         }
     }
     
     public void resetTable(String login) {
-        if (this.controlsTable.firstname.isStatelessOf()) {
-            controlsTable = new AdministrationPageUIMapTable(login);
+        if (isTableRefresh()) {
+            controlsTable = new AdministrationPageTableUIMap(login);
         }
     }
 
-    public void deleteClick() {
+    public void clickDelete() {
         this.controlsTable.delete.click();
+        // TODO Alert
         // this.controlsAlert = new Alert();
     }
 
     // setters controlsAlert
 
-    public void alertAccept() {
+    public void acceptAlert() {
 //      if (this.controlsAlert != null) {
 //      this.controlsAlert.click();
 //      this.controlsAlert = null;
 //        controls = new AdministrationPageUIMap();
 //        controlsAjax = new AdministrationPageUIMapAjax();
+          //
+//        resetTable();
 //  }
-        WebDriverUtils.get().getWebDriver().switchTo().alert().dismiss();
+        // TODO +++
+       BrowserUtils.get().getBrowser().getWebDriver().switchTo().alert().dismiss();
     }
 
-    public void alertDismiss() {
+    public void dismissAlert() {
 //      if (this.controlsAlert != null) {
 //          this.controlsAlert.click();
 //          this.controlsAlert = null;
@@ -240,32 +305,33 @@ public class AdministrationPage {
 
     // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public CreateNewUserPage gotoCreateNewUserPage() {
-        createNewUserClick();
-        return new CreateNewUserPage();
-    }
-
-    public void searchByLoginName(AdministrationPageFields field,
-            AdministrationPageConditions condition, IUser user) {
-        selectColumnFields(field);
-        selectMatchConditions(condition);
-        searchFieldSendKeys(user.getLogin());
+    public void searchUser(IUser user, AdministrationPageFields field,
+            AdministrationPageConditions condition) {
+        setSelectField(field);
+        setSelectCondition(condition);
+        setSearchField(getUserPropertyByField(user, field));
         // Initialize Table Elements
         resetTable(user.getLogin());
     }
 
+    public void searchByLoginName(IUser user) {
+        searchUser(user, AdministrationPageFields.LOGIN_NAME, AdministrationPageConditions.EQUALS);
+    }
+    
     public void deleteByLoginName(IUser user) {
-        searchByLoginName(AdministrationPageFields.LOGIN_NAME,
-                AdministrationPageConditions.STARTS_WITH, user);
-        deleteClick();
+        searchByLoginName(user);
+        clickDelete();
         // TODO Develop AlertWrapper
-        alertAccept();
-        // TODO Because alert().dismiss()
-        // resetTable();
+        acceptAlert();
+    }
+
+    public CreateNewUserPage gotoCreateNewUser() {
+        clickCreateNewUser();
+        return new CreateNewUserPage();
     }
 
     public LoginPage logout() {
-        logoutClick();
+        clickLogout();
         return new LoginPage();
     }
 

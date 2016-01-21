@@ -89,6 +89,27 @@ class SearchImplicit extends ASearchContext {
         return isWebElementInvisible;
     }
 
+    boolean isInvisibleWebElementWithText(ControlLocation controlLocation, String text){
+        // TODO +++++++++++++++++++++++++++++++++++++++++++++++
+        boolean isWebElementInvisible = false;
+        long beginTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - beginTime < ASearchContext.ONE_SECOND * getImplicitlyWaitTimeout()) {
+            try {
+                BrowserUtils.get().getBrowser().getWebDriver()
+                    .findElement(controlLocation.getBy());
+                Thread.sleep(ASearchContext.ONE_SECOND / 2);
+            } catch (NoSuchElementException e) {
+                isWebElementInvisible = true;
+                break;
+            } catch (Exception e) {
+//                throw new ScreenCapturingCustomException(
+//                        String.format(ASearchControl.ERROR_STILL_VISIBLE, controlLocation.getValue()));
+                throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE, controlLocation.getValue()));
+            }
+        }
+        return isWebElementInvisible;
+    }
+
     boolean isStatelessOfWebElement(ControlWrapper controlWrapper) {
         boolean isStalenessWebElement = false;
         long beginTime = System.currentTimeMillis();

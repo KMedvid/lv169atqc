@@ -18,6 +18,8 @@ abstract class ASearchContext {
 
     abstract boolean isInvisibleWebElement(ControlLocation controlLocation);
 
+    abstract boolean isInvisibleWebElementWithText(ControlLocation controlLocation, String text);
+
     abstract boolean isStatelessOfWebElement(ControlWrapper controlWrapper);
 
     abstract boolean isVisibleTitle(String partialTitle);

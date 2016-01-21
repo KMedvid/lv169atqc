@@ -65,4 +65,8 @@ public abstract class ABaseComponent<TComponent> {
         return ControlSearch.get().isInvisibleWebElementById(id);
     }
 
+    public boolean isInvisibleWebElementByPartialLinkText(String partialLinkText) {
+        return ControlSearch.get().isInvisibleWebElementByPartialLinkText(partialLinkText);
+    }
+
 }

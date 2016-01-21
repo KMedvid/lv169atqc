@@ -1,9 +1,9 @@
 package com.softserve.edu.oms.pages;
 
-import com.softserve.edu.atqc.tools.controls.ILink;
-import com.softserve.edu.atqc.tools.controls.Link;
+import com.softserve.edu.atqc.controls.ILink;
+import com.softserve.edu.atqc.controls.Link;
 
-public class AdminHomePage extends HomePage {
+public class AdminHomePage extends InfoPage {
     
     private class AdminHomePageUIMap {
         public final ILink administration;
@@ -26,7 +26,7 @@ public class AdminHomePage extends HomePage {
 
     // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void administrationClick() {
+    public void clickAdministration() {
         this.controls.administration.click();
     }
 
@@ -38,8 +38,8 @@ public class AdminHomePage extends HomePage {
 
     // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public AdministrationPage gotoAdministrationPage() {
-        administrationClick();
+    public AdministrationPage gotoAdministration() {
+        clickAdministration();
         return new AdministrationPage();
     }    
     
