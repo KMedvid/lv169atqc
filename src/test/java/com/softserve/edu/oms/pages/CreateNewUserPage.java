@@ -2,13 +2,13 @@ package com.softserve.edu.oms.pages;
 
 import org.openqa.selenium.Keys;
 
-import com.softserve.edu.atqc.tools.controls.Button;
-import com.softserve.edu.atqc.tools.controls.IButton;
-import com.softserve.edu.atqc.tools.controls.ILink;
-import com.softserve.edu.atqc.tools.controls.ITextField;
-import com.softserve.edu.atqc.tools.controls.Label;
-import com.softserve.edu.atqc.tools.controls.Link;
-import com.softserve.edu.atqc.tools.controls.TextField;
+import com.softserve.edu.atqc.controls.Button;
+import com.softserve.edu.atqc.controls.IButton;
+import com.softserve.edu.atqc.controls.ILink;
+import com.softserve.edu.atqc.controls.ITextField;
+import com.softserve.edu.atqc.controls.Label;
+import com.softserve.edu.atqc.controls.Link;
+import com.softserve.edu.atqc.controls.TextField;
 import com.softserve.edu.oms.data.IUser;
 
 public class CreateNewUserPage {
