@@ -12,7 +12,8 @@ import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.UserRepository;
 
 public class LoginParallelTest2 {
-    StartData startData = new StartData("","","","chrome","");
+  //  StartData startData = new StartData("","","","chrome","");
+    StartData startData = new StartData("","","","firefox","");
 
 	@AfterClass
 	public void oneTimeTearDown() {
