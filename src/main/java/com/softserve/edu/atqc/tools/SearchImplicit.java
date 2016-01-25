@@ -90,13 +90,17 @@ class SearchImplicit extends ASearchContext {
     }
 
     boolean isInvisibleWebElementWithText(ControlLocation controlLocation, String text){
-        // TODO +++++++++++++++++++++++++++++++++++++++++++++++
         boolean isWebElementInvisible = false;
+        WebElement webElementWithText;
         long beginTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - beginTime < ASearchContext.ONE_SECOND * getImplicitlyWaitTimeout()) {
             try {
-                BrowserUtils.get().getBrowser().getWebDriver()
+                webElementWithText = BrowserUtils.get().getBrowser().getWebDriver()
                     .findElement(controlLocation.getBy());
+                if (!webElementWithText.getText().toLowerCase().contains(text.toLowerCase().trim())) {
+                    isWebElementInvisible = true;
+                    break;
+                }
                 Thread.sleep(ASearchContext.ONE_SECOND / 2);
             } catch (NoSuchElementException e) {
                 isWebElementInvisible = true;

@@ -130,4 +130,15 @@ public class User implements IFirstname, ILastname, ILogin, IPassword, IEmail, I
         return role;
     }
 
+    @Override
+    public String toString() {
+        return "firstname=" + firstname
+                + ", lastname=" + lastname
+                + ", login=" + login
+                + ", password=" + password
+                + ", email=" + email
+                + ", region=" + region
+                + ", role=" + role;
+    }
+
 }

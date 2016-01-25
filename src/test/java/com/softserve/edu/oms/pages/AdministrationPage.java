@@ -176,7 +176,7 @@ public class AdministrationPage {
 //    }
 
     public String getSearchFieldText() {
-        return this.controls.searchField.getText();
+        return getSearchField().getText();
     }
     
     // getters controlsTable
@@ -206,15 +206,15 @@ public class AdministrationPage {
 //    }
 
     public String getFirstnameText() {
-        return this.controlsTable.firstname.getText();
+        return getFirstname().getText();
     }
 
     public String getLastnameText() {
-        return this.controlsTable.lastname.getText();
+        return getLastname().getText();
     }
 
     public String getLoginText() {
-        return this.controlsTable.login.getText();
+        return getLogin().getText();
     }
 
     // getters controlsAlert
@@ -242,23 +242,23 @@ public class AdministrationPage {
     }
 
     public void setSearchField(String text) {
-        this.controls.searchField.sendKeys(text);
+        getSearchField().sendKeys(text);
     }
 
     public void clearSearchField() {
-        this.controls.searchField.clear();
+        getSearchField().clear();
     }
 
     public void clickSearchField() {
-        this.controls.searchField.click();
+        getSearchField().click();
     }
 
     public void clickCreateNewUser() {
-        this.controls.createNewUser.click();
+        getCreateNewUser().click();
     }
 
     public void clickLogout() {
-        this.controls.logout.click();
+        getLogout().click();
     }
     
     // setters controlsTable
@@ -276,7 +276,7 @@ public class AdministrationPage {
     }
 
     public void clickDelete() {
-        this.controlsTable.delete.click();
+        getDelete().click();
         // TODO Alert
         // this.controlsAlert = new Alert();
     }

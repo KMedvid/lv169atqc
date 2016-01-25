@@ -2,13 +2,14 @@ package com.softserve.edu.oms.pages;
 
 import org.openqa.selenium.Keys;
 
-import com.softserve.edu.atqc.tools.controls.Button;
-import com.softserve.edu.atqc.tools.controls.IButton;
-import com.softserve.edu.atqc.tools.controls.ILink;
-import com.softserve.edu.atqc.tools.controls.ITextField;
-import com.softserve.edu.atqc.tools.controls.Label;
-import com.softserve.edu.atqc.tools.controls.Link;
-import com.softserve.edu.atqc.tools.controls.TextField;
+import com.softserve.edu.atqc.controls.Button;
+import com.softserve.edu.atqc.controls.IButton;
+import com.softserve.edu.atqc.controls.ILabel;
+import com.softserve.edu.atqc.controls.ILink;
+import com.softserve.edu.atqc.controls.ITextField;
+import com.softserve.edu.atqc.controls.Label;
+import com.softserve.edu.atqc.controls.Link;
+import com.softserve.edu.atqc.controls.TextField;
 import com.softserve.edu.oms.data.IUser;
 
 public class CreateNewUserPage {
@@ -48,7 +49,6 @@ public class CreateNewUserPage {
     }
 
     private class CreateNewUserPageUIMap {
-        public final ILink logout;
         public final ITextField login;
         public final ITextField firstname;
         public final ITextField lastname;
@@ -59,9 +59,9 @@ public class CreateNewUserPage {
         //private final IRadioButtonGroup role;
         public final IButton create;
         public final IButton cancel;
+        public final ILink logout;
 
         public CreateNewUserPageUIMap() {
-            this.logout = Link.get().getByXpath("//a[@href='/OMS/logout.htm']");
             this.login = TextField.get().getById("login");
             this.firstname = TextField.get().getById("firstName");
             this.lastname = TextField.get().getById("lastName");
@@ -81,17 +81,82 @@ public class CreateNewUserPage {
 //                    .build();
             this.create = Button.get().getByXpath("//input[@value='Create']");
             this.cancel = Button.get().getByXpath("//input[@value='Cancel']");
+            this.logout = Link.get().getByXpath("//a[@href='/OMS/logout.htm']");
+        }
+
+        public ILabel getNameLoaderValidator() {
+            return Label.get().getPresentById("nameLoader");
+        }
+        
+        public ILabel getNameErrorValidator() {
+            return Label.get().getPresentById("nameError");
+        }
+
+        public ILabel getFirstNameErrorValidator() {
+            return Label.get().getPresentById("firstNameError");
+        }
+
+        public ILabel getLastNameErrorValidator() {
+            return Label.get().getPresentById("lastNameError");
+        }
+
+        public ILabel getPasswordErrorValidator() {
+            return Label.get().getPresentById("passwordError");
+        }
+        
+        public ILabel getConfirmErrorValidator() {
+            return Label.get().getPresentById("confirmError");
+        }
+        
+        public ILabel getEmailErrorValidator() {
+            return Label.get().getPresentById("emailError");
+        }
+
+        public String getNameLoaderValidatorText() {
+            return getNameLoaderValidator().getText();
+        }
+        
+        public String getNameErrorValidatorText() {
+            return getNameErrorValidator().getText();
+        }
+
+        public String getFirstNameErrorValidatorText() {
+            return getFirstNameErrorValidator().getText();
+        }
+
+        public String getLastNameErrorValidatorText() {
+            return getLastNameErrorValidator().getText();
+        }
+
+        public String getPasswordErrorValidatorText() {
+            return getPasswordErrorValidator().getText();
+        }
+        
+        public String getConfirmErrorValidatorText() {
+            return getConfirmErrorValidator().getText();
+        }
+
+        public String getEmailErrorValidatorText() {
+            return getEmailErrorValidator().getText();
         }
 
         public boolean isDisableValidators() {
             boolean isValidatorInvisible = true;
-            isValidatorInvisible = isValidatorInvisible && Label.get().isInvisibleWebElementById("emailError");
-            // TODO Add All Validators.
+            // All Validators
+            isValidatorInvisible = isValidatorInvisible
+                    && Label.get().isInvisibleWebElementById("nameLoader")
+                    && Label.get().isInvisibleWebElementById("nameError")
+                    && Label.get().isInvisibleWebElementById("firstNameError")
+                    && Label.get().isInvisibleWebElementById("lastNameError")
+                    && Label.get().isInvisibleWebElementById("passwordError")
+                    && Label.get().isInvisibleWebElementById("confirmError")
+                    && Label.get().isInvisibleWebElementById("emailError");
             return isValidatorInvisible;
         }
 
     }
 
+    private final String USER_CANNOT_CREATED = "User %s Cannot be Created";
     // Elements
     private CreateNewUserPageUIMap controls;
     // Alert Elements
@@ -105,41 +170,7 @@ public class CreateNewUserPage {
     
     // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    public void setLogin(String login) {
-        this.controls.login.sendKeys(login);
-    }
-
-    public void setFirstname(String firstname) {
-        this.controls.firstname.sendKeys(firstname);
-    }
-
-    public void setLastname(String lastname) {
-        this.controls.lastname.sendKeys(lastname);
-    }
-
-    public void setPassword(String password) {
-        this.controls.password.sendKeys(password);
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.controls.confirmPassword.sendKeys(confirmPassword);
-    }
-
-    public void setEmail(String email) {
-        this.controls.email.sendKeys(email);
-        // TODO Wrap Keys
-        this.controls.email.sendKeys(Keys.ARROW_RIGHT.toString());
-    }
-
-//    public void setRegion(RegionID region) {
-//        controls.region.selectByText(region.toString());
-//    }
-
-//    public void setRole(RoleID role) {
-//        controls.role.selectByPartialText(role.toString());
-//    }
-
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // getters controls
 
     public ITextField getLogin() {
         return this.controls.login;
@@ -165,6 +196,10 @@ public class CreateNewUserPage {
         return this.controls.email;
     }
 
+    public ILink getLogout() {
+        return this.controls.logout;
+    }
+
     // public ISelect getRegion();
     // public IRadioButtonGroup getRole(); 
 
@@ -172,7 +207,57 @@ public class CreateNewUserPage {
 //        return controlsAlertLight;
 //    }
 
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    public String getLoginText() {
+        return getLogin().getText();
+    }
+
+    public String getFirstnameText() {
+        return  getFirstname().getText();
+    }
+
+    public String getLastnameText() {
+        return getLastname().getText();
+    }
+
+    public String getPasswordText() {
+        return getPassword().getText();
+    }
+
+    public String getConfirmPasswordText() {
+        return getConfirmPassword().getText();
+    }
+
+    public String getEmailText() {
+        return getEmail().getText();
+    }
+
+    public String getNameLoaderValidatorText() {
+        return controls.getNameLoaderValidatorText();
+    }
+    
+    public String getNameErrorValidatorText() {
+        return controls.getNameErrorValidatorText();
+    }
+
+    public String getFirstNameErrorValidatorText() {
+        return controls.getFirstNameErrorValidatorText();
+    }
+
+    public String getLastNameErrorValidatorText() {
+        return controls.getLastNameErrorValidatorText();
+    }
+
+    public String getPasswordErrorValidatorText() {
+        return controls.getPasswordErrorValidatorText();
+    }
+    
+    public String getConfirmErrorValidatorText() {
+        return controls.getConfirmErrorValidatorText();
+    }
+
+    public String getEmailValidatorText() {
+        return controls.getEmailErrorValidatorText();
+    }
 
     // TODO
     RegionID getRegionByPartialText(IUser user) {
@@ -193,13 +278,114 @@ public class CreateNewUserPage {
     //private RoleID getRoleByPartialText(IUser user) {
         RoleID roleID = RoleID.CUSTOMER;
         for (RoleID role : RoleID.values()) {
-            if ((role.toString().indexOf(user.getRole()) >= 0) || (user.getRole().indexOf(role.toString()) >= 0)) {
+            if ((role.toString().indexOf(user.getRole()) >= 0)
+                    || (user.getRole().indexOf(role.toString()) >= 0)) {
                 roleID = role;
                 break;
             }
         }
         return roleID;
     }
+
+    // setters controls
+
+    public void setLogin(String login) {
+        this.controls.login.sendKeys(login);
+        // TODO Wrap Keys
+        this.controls.login.sendKeys(Keys.ARROW_RIGHT.toString());
+    }
+
+    public void setFirstname(String firstname) {
+        this.controls.firstname.sendKeys(firstname);
+        // TODO Wrap Keys
+        this.controls.firstname.sendKeys(Keys.ARROW_RIGHT.toString());
+    }
+
+    public void setLastname(String lastname) {
+        this.controls.lastname.sendKeys(lastname);
+        // TODO Wrap Keys
+        this.controls.lastname.sendKeys(Keys.ARROW_RIGHT.toString());
+    }
+
+    public void setPassword(String password) {
+        this.controls.password.sendKeys(password);
+        // TODO Wrap Keys
+        this.controls.password.sendKeys(Keys.ARROW_RIGHT.toString());
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.controls.confirmPassword.sendKeys(confirmPassword);
+        // TODO Wrap Keys
+        this.controls.confirmPassword.sendKeys(Keys.ARROW_RIGHT.toString());
+    }
+
+    public void setEmail(String email) {
+        this.controls.email.sendKeys(email);
+        // Action for Making Email Error Message Invisible 
+        // TODO Wrap Keys
+        this.controls.email.sendKeys(Keys.ARROW_RIGHT.toString());
+    }
+
+//    public void setRegion(RegionID region) {
+//        controls.region.selectByText(region.toString());
+//    }
+
+//    public void setRole(RoleID role) {
+//        controls.role.selectByPartialText(role.toString());
+//    }
+
+    public void clearLogin() {
+        getLogin().clear();
+    }
+
+    public void clearFirstname() {
+        getFirstname().clear();
+    }
+
+    public void clearLastname() {
+        getLastname().clear();
+    }
+
+    public void clearPassword() {
+        getPassword().clear();
+    }
+
+    public void clearConfirmPassword() {
+        getConfirmPassword().clear();
+    }
+
+    public void clearEmail() {
+        getEmail().clear();
+    }
+
+    public void clickLogin() {
+        getLogin().click();
+    }
+
+    public void clickFirstname() {
+        getFirstname().click();
+    }
+
+    public void clickLastname() {
+        getLastname().click();
+    }
+
+    public void clickPassword() {
+        getPassword().click();
+    }
+
+    public void clickConfirmPassword() {
+        getConfirmPassword().click();
+    }
+
+    public void clickEmail() {
+        getEmail().click();
+    }
+    
+    public void clickLogout() {
+        getLogout().click();
+    }
+
 
     // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -218,12 +404,13 @@ public class CreateNewUserPage {
             // TODO Logs User Cannot be Created
             controls.cancel.click();
             // TODO throw Exception Test Failed
+            throw new RuntimeException(String.format(USER_CANNOT_CREATED, user.toString()));
         }
         return new AdministrationPage();
     }
 
     public LoginPage logout() {
-        controls.logout.click();
+        clickLogout();
         // controlsAlertLight.alertAccept();
         return new LoginPage();
     }

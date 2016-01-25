@@ -39,12 +39,34 @@ public class StartPage {
         return login(startData);
     }
    
+    // TODO Code Duplicate
+    public LoginPage login() {
+        StartData startData = BrowserUtils.get().getStartData();
+        if ((startData.getLogin() == null)
+                || (startData.getLogin().isEmpty())) {
+            // TODO Create class Exception + log + report.
+            throw new RuntimeException(START_PAGE_UNDEFINED);
+        }
+        return login(startData);
+    }
+    
     public LoginPage login(StartData startData) {
         BrowserUtils.get().getBrowser().loadPage(startData.getLogout());
         BrowserUtils.get().getBrowser().loadPage(startData.getLogin());
         return new LoginPage();
     }
 
+    // TODO Code Duplicate
+    public LoginPage logout() {
+        StartData startData = BrowserUtils.get().getStartData();
+        if ((startData.getLogin() == null)
+                || (startData.getLogin().isEmpty())) {
+            // TODO Create class Exception + log + report.
+            throw new RuntimeException(START_PAGE_UNDEFINED);
+        }
+        return logout(startData);
+    }
+    
     public LoginPage logout(StartData startData) {
         BrowserUtils.get().getBrowser().loadPage(startData.getLogout());
         return new LoginPage();
