@@ -1,0 +1,6 @@
+[INFO] 09:22:24 CreateNewUserTest - Start
+[INFO] 09:22:58 CreateNewUserTest - Done
+[INFO] 09:22:58 DeleteExistUserTest - Done
+[INFO] 09:23:33 DeleteExistUserTest - Done
+[INFO] 09:23:33 DeleteAdminTest - Done
+[ERROR] 09:24:00 DeleteAdminTest - Fail

@@ -9,7 +9,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.softserve.edu.Calc;
 import com.softserve.edu.oms.data.IUrls;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.UrlRepository;
