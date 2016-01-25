@@ -54,7 +54,7 @@ public class VerificationProtocols {
 
 	public void findUser() {
 		WebElement user = driver.findElement(By.cssSelector("td[data-title=\"'CLIENT_FULL_NAME' | translate\"]"));
-		Assert.assertTrue(user.getText().contains(UserRepository.getUser()));
+		Assert.assertTrue(user.getText().contains(UserRepository.getUser()),"Повірку найдено");
 	}
 
 	public void doFilter() {

@@ -15,10 +15,19 @@ public class ChangeVerificator {
 	private WebElement save;
 
 	public ChangeVerificator(WebDriver driver) {
-		this.changeStatus = driver.findElement(By.xpath("//*[@id='page-wrapper']/form/div[3]/div/div/a"));
+		//For java.training
+//		this.changeStatus = driver.findElement(By.xpath("//*[@id='page-wrapper']/form/div[3]/div/div/a"));
+		//For local
+		this.changeStatus = driver.findElement(By.xpath("//*[@id='page-wrapper']/form/div[1]/div[15]/div/div/a/span[1]"));
 		this.driver = driver;
+		
 //		this.noSuitable = driver.findElement(By.id("ui-select-choices-row-1-1"));
-		this.save = driver.findElement(By.xpath("//*[@id='page-wrapper']/form/div[3]/div/button[1]"));
+		
+		//For java.training
+//		this.save = driver.findElement(By.xpath("//*[@id='page-wrapper']/form/div[3]/div/button[1]"));
+		//For local
+		this.save = driver.findElement(By.xpath("//*[@id='page-wrapper']/form/div[1]/div[16]/div[1]/button"));
+		
 	}
 
 	public void clickChangeStatus() {
@@ -28,7 +37,10 @@ public class ChangeVerificator {
 
 	public void clickSetNoSuitable() {
 		LOGGER.info("Select no suitable");
-		this.noSuitable = driver.findElement(By.id("ui-select-choices-row-1-1"));
+		//For java.training
+//		this.noSuitable = driver.findElement(By.id("//*[@id='ui-select-choices-row-1-1'])"));
+		//For local
+		this.noSuitable = driver.findElement(By.xpath("//*[@id='ui-select-choices-row-1-1']/div"));
 		noSuitable.click();
 	}
 
@@ -41,6 +53,6 @@ public class ChangeVerificator {
 		clickChangeStatus();
 		clickSetNoSuitable();
 		clickSave();
-		//Додати провірку чи помінялось.
+		//TODO Додати провірку чи помінялось.
 	}
 }

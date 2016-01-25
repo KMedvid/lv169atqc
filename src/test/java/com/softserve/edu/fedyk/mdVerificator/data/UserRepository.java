@@ -14,6 +14,6 @@ public class UserRepository {
 		return new User("verificator-lv", "pass");
 	}
 	public static String getUser() {
-		return "Скала Міша Іванович";
+		return "Володя Назар Тарасович";
 	}
 }

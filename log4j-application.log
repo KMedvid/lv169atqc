@@ -1,1 +1,15 @@
 2016-01-08 21:11:58 INFO  LoginTest:41 - Вікно максимайз
+2016-01-11 14:17:46 INFO  Tests:42 - Firefox fullscreen
+2016-01-11 14:18:00 INFO  Tests:51 - Log in as Verificator
+2016-01-11 14:18:00 INFO  Tests:56 - !TEST - checkProtocol
+2016-01-11 14:18:05 INFO  Tests:33 - Going to protocols
+2016-01-11 14:18:09 INFO  Tests:61 - Clearing Fields
+2016-01-11 14:18:10 INFO  Tests:64 - Setting Filters
+2016-01-11 14:18:29 INFO  Tests:67 - Checking if user exist in td
+2016-01-11 14:18:52 INFO  Tests:51 - Log in as Verificator
+2016-01-11 14:18:52 INFO  Tests:66 - !TEST - editProtocol
+2016-01-11 14:18:56 INFO  Tests:33 - Going to protocols
+2016-01-11 14:19:01 INFO  Tests:34 - Click edit icon
+2016-01-11 14:19:04 INFO  Tests:25 - Click to change field
+2016-01-11 14:19:04 INFO  Tests:30 - Select no suitable
+2016-01-11 14:19:04 INFO  Tests:36 - Click Save Button

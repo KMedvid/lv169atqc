@@ -29,7 +29,7 @@ public class Tests {
 
 	public void tearDown() throws Exception {
 		if (!driver.getCurrentUrl().contains("start")) {
-			driver.get("http://java.training.local:8080/#/start");
+			driver.get("http://localhost:8080/#/start");
 		}
 		// driver.quit();
 	}
@@ -53,23 +53,26 @@ public class Tests {
 
 	@Test
 	public void checkProtocol() {
-		LOGGER.info("!TEST - checkProtocol");
+		LOGGER.info("!TEST - checkProtocol() - START!");
 		HomePage page = new HomePage(driver);
 		page.clickProtocols();
 		VerificationProtocols protocols = new VerificationProtocols(driver);
 		protocols.doFilter();
+		LOGGER.info("!TEST - checkProtocol() - DONE!");
 
 	}
 
 	@Test
 	public void editProtocol() {
-		LOGGER.info("!TEST - editProtocol");
+		LOGGER.info("!TEST - editProtocol() - START!");
 		HomePage page = new HomePage(driver);
 		page.clickProtocols();
 		VerificationProtocols protocols = new VerificationProtocols(driver);
 		protocols.clickEdit();
 		ChangeVerificator change = new ChangeVerificator(driver);
 		change.changeToNoSuitable();
+		LOGGER.info("!TEST - editProtocol() - DONE!");
+		//TODO Check status in td
 	}
 
 	// @Test
