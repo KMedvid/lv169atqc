@@ -12,8 +12,4 @@ public interface IUser {
 
     String getEmail();
 
-    String getRegion();
-
-    String getRole();
-
 }

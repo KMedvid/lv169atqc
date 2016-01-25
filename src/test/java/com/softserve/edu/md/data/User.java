@@ -17,43 +17,22 @@ interface IPassword {
 }
 
 interface IEmail {
-    IRegion setEmail(String email);
-}
-
-interface IRegion {
-    IRole setRegion(String region);
-}
-
-interface IRole {
-    IBuild setRole(String role);
+    IBuild setEmail(String email);
 }
 
 interface IBuild {
     IUser build();
 }
 
-public class User implements IFirstname, ILastname, ILogin, IPassword, IEmail, IRegion, IRole, IBuild, IUser {
+public class User implements IFirstname, ILastname, ILogin, IPassword, IEmail, IBuild, IUser {
     private String firstname;
     private String lastname;
     private String login;
     private String password;
     private String email;
-    private String region;
-    private String role;
 
     private User() {
     }
-
-    // public User(String firstname, String lastname, String login,
-    // String password, String email, String region, String role) {
-    // this.firstname = firstname;
-    // this.lastname = lastname;
-    // this.login = login;
-    // this.password = password;
-    // this.email = email;
-    // this.region = region;
-    // this.role = role;
-    // }
 
     // set - - - - - - - - - -
 
@@ -81,18 +60,8 @@ public class User implements IFirstname, ILastname, ILogin, IPassword, IEmail, I
         return this;
     }
 
-    public IRegion setEmail(String email) {
+    public IBuild setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public IRole setRegion(String region) {
-        this.region = region;
-        return this;
-    }
-
-    public IBuild setRole(String role) {
-        this.role = role;
         return this;
     }
 
@@ -120,14 +89,6 @@ public class User implements IFirstname, ILastname, ILogin, IPassword, IEmail, I
 
     public String getEmail() {
         return email;
-    }
-
-    public String getRegion() {
-        return region;
-    }
-
-    public String getRole() {
-        return role;
     }
 
 }
