@@ -110,6 +110,12 @@ public class LoginPage {
         // Return a new page object representing the destination.
         return new CustomerHomePage();
     }
+    
+    public SupervisorHomePage successSupervisorLogin(IUser supervisor) {
+        setLoginData(supervisor);
+        // Return a new page object representing the destination.
+        return new SupervisorHomePage();
+    }
 
     public LoginValidatorPage unSuccesfulLogin(IUser invalidUser) {
         setLoginData(invalidUser);

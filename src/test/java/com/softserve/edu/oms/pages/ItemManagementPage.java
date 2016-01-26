@@ -77,11 +77,11 @@ public class ItemManagementPage {
             this.productsFound = Label.get().getById("recordsFound");
             this.productsFoundText = productsFound.getText();
             //
-            this.name = Label.get().getByXpath("//tbody/tr[1][text()='" + productName + "']");
-            this.description = Label.get().getByXpath("//tbody/tr[1][text()='" + productName + "']/following-sibling::td[2]");
-            this.price = Link.get().getByXpath("//tbody/tr[1][text()='" + productName + "']/following-sibling::td[3]");
-            this.edit = Link.get().getByXpath("//tbody/tr[1][text()='" + productName + "']/following-sibling::td[4]/a");
-            this.delete = Link.get().getByXpath("//tbody/tr[1][text()='" + productName + "']/following-sibling::td[5]/a");
+            this.name = Label.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']");
+            this.description = Label.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[1]");
+            this.price = Link.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[2]");
+            this.edit = Link.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[3]/a");
+            this.delete = Link.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[4]/a");
         }
 	}
 
@@ -207,8 +207,11 @@ public class ItemManagementPage {
     }
     
     public void resetTable(String productName) {
+    	System.out.println("Table is refreshing...");
         if (isTableRefresh()) {
             controlsTable = new ItemManagementPageTableUIMap(productName);
+        	System.out.println("Table is refreshed!");
+
         }
     }
     
@@ -235,9 +238,12 @@ public class ItemManagementPage {
  // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public void searchProductByName(String productName){
+    	System.out.println("++ setSelectField");
         setSelectField(ItemManagementPageFields.PRODUCT_NAME);
+        System.out.println("++ setSearchField");
         setSearchField(productName);
         // Initialize Table Elements
+        System.out.println("++ resetTable");
         resetTable(productName);
     }
     
