@@ -9,50 +9,59 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.softserve.edu.oms.data.IUrls;
+import com.softserve.edu.data.StartData;
 import com.softserve.edu.oms.data.IUser;
-import com.softserve.edu.oms.data.UrlRepository;
+import com.softserve.edu.oms.data.StartPage;
 import com.softserve.edu.oms.data.UserRepository;
 import com.softserve.edu.oms.pages.AdministrationPage;
-import com.softserve.edu.oms.pages.LoginStartPage;
 
 public class DeleteExistUserTest {
 	private SoftAssert softAssert;
+	StartData startdata;
 	public static final Logger logger = LoggerFactory.getLogger(DeleteExistUserTest.class);
 
 	@BeforeTest
 	public void beforeTest() {
+		 startdata = new StartData("http://localhost:8080/OMS/login.htm",
+				"http://localhost:8080/OMS/logout.htm", 
+				"",	"firefox", "");
 		softAssert = new SoftAssert();
 	}
 
 	@AfterMethod
 	public void afterMethod() {
 		softAssert.assertAll();
-		LoginStartPage.get().logout();
+		StartPage.get().logout();
 	}
 
 	@AfterClass
 	public void afterClass() {
-		LoginStartPage.get().close();
+		StartPage.get().close();
 		logger.info("DeleteExistUserTest - Done");
 	}
 
 	@DataProvider
 	public Object[][] delUser() {
-		return new Object[][] { { UserRepository.get().getDelUser(), UserRepository.get().getAdminUser(),
-				UrlRepository.get().getLocalUrls() } };
+		return new Object[][] {
+			{ UserRepository.get().getDelUser(),
+			  UserRepository.get().getAdminUser()}
+			};
 	}
 
 	@Test(dataProvider = "delUser")
-	public void createNewUser(IUser delUser, IUser admin, IUrls urls) throws InterruptedException {
+	public void createNewUser(IUser delUser, IUser admin) throws InterruptedException {
 		logger.info("DeleteExistUserTest - Done");
 		// PreCondition
-		AdministrationPage administrationPage = LoginStartPage.get().load(urls).successAdminLogin(admin)
-				.gotoAdministration().gotoCreateNewUser().successCreateNewUser(delUser);
-		administrationPage.searchByLoginName(delUser);
-		administrationPage.deleteSelectedUser();
+		StartPage.get().load(startdata);
+		AdministrationPage administrationPage = 
+				StartPage.get().load()
+				.successAdminLogin(admin)
+				.gotoAdministration()
+				.gotoCreateNewUser()
+				.createNewUser(delUser);
+		administrationPage.deleteByLoginName(delUser);
 		// Check
-		softAssert.assertEquals(administrationPage.getUsersFoundText(), "1");
+		softAssert.assertEquals(administrationPage.getUsersFound().getText(), "1");
 
 	}
 }

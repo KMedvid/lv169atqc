@@ -1,64 +1,81 @@
 package com.softserve.edu.oms.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.softserve.edu.controls.ILabel;
+import com.softserve.edu.controls.ILink;
+import com.softserve.edu.controls.Label;
+import com.softserve.edu.controls.Link;
 
 public abstract class InfoPage {
-	protected WebDriver driver;
-	//
-	private WebElement firstname;
-	private WebElement lastname;
-	private WebElement role;
-	private WebElement logout;
 
-	public InfoPage(WebDriver driver) {
-		this.driver = driver;
-		//
-		this.firstname=driver.findElement(By.xpath("//td[text()='First name']/following-sibling::td"));
-		this.lastname=driver.findElement(By.xpath("//td[text()='Last name']/following-sibling::td"));
-		this.role=driver.findElement(By.xpath("//td[text()='Role']/following-sibling::td"));
-		this.logout=driver.findElement(By.xpath("//a[@href='/OMS/logout.htm']"));
-	}
+    private class InfoPageUIMap {
+        public final ILabel firstname;
+        public final ILabel lastname;
+        public final ILabel role;
+        public final ILink logout;
 
-	// Get Elements
-	public WebElement getFirstname() {
-		return this.firstname;
-	}
-	
-	public WebElement getLastname() {
-		return this.lastname;
-	}
+        public InfoPageUIMap() {
+            this.firstname = Label.get()
+                    .getByXpath("//tbody/tr/td[text( )='First name']/following-sibling::td");
+            this.lastname = Label.get()
+                    .getByXpath("//tbody/tr/td[text( )='Last name']/following-sibling::td");
+            this.role = Label.get()
+                    .getByXpath("//tbody/tr/td[text( )='Role']/following-sibling::td");
+            this.logout = Link.get()
+                    .getByXpath("//a[@href='/OMS/logout.htm']");
+        }
+    }
 
-	public WebElement getRole() {
-		return this.role;
-	}
-	
-	public WebElement getLogout() {
-		return this.logout;
-	}
-	
-	public String getFirstnameText() {
-		return this.firstname.getText();
-	}
-	
-	public String getLastnameText() {
-		return this.lastname.getText();
-	}
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	public String getRoleText() {
-		return this.role.getText();
-	}
+    // Elements
+    private InfoPageUIMap controls;
 
-	// Set Data
-	public void clickLogout() {
-		this.logout.click();
-	}
-	
-	// Business Logic
-	public LoginPage gotoLogout() {
-		clickLogout();
-		return new LoginPage(driver);
-	}
+    protected InfoPage() {
+        this.controls = new InfoPageUIMap();
+    }
+
+    // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void clickLogout() {
+        this.controls.logout.click();
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public ILabel getFirstname() {
+        return this.controls.firstname;
+    }
+
+    public ILabel getLastname() {
+        return this.controls.lastname;
+    }
+
+    public ILabel getRole() {
+        return this.controls.role;
+    }
+
+    public ILink getLogout() {
+        return this.controls.logout;
+    }
+
+    public String getFirstnameText() {
+        return getFirstname().getText();
+    }
+
+    public String getLastnameText() {
+        return getLastname().getText();
+    }
+
+    public String getRoleText() {
+        return getRole().getText();
+    }
+
+    // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    public LoginPage logout() {
+        clickLogout();
+        return new LoginPage();
+    }
 
 }

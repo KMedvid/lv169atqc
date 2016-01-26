@@ -6,7 +6,7 @@
 		<classes>
 			<class name="com.softserve.edu.oms.tests.CreateNewUserTest"/>
 			<class name="com.softserve.edu.oms.tests.DeleteExistUserTest"/>
-			<class name="com.softserve.edu.oms.tests.DeleteAdminTest"/>
+			<!--  <class name="com.softserve.edu.oms.tests.DeleteAdminTest"/> -->
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

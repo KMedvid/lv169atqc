@@ -1,15 +1,15 @@
 package com.softserve.edu.oms.pages;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import com.softserve.edu.controls.ILabel;
+import com.softserve.edu.controls.ILink;
+import com.softserve.edu.controls.ITextField;
+import com.softserve.edu.controls.Label;
+import com.softserve.edu.controls.Link;
+import com.softserve.edu.controls.TextField;
 import com.softserve.edu.oms.data.IUser;
+import com.softserve.edu.tools.BrowserUtils;
+import com.softserve.edu.tools.ControlLocation;
+import com.softserve.edu.tools.ControlSearch;
 
 public class AdministrationPage {
 
@@ -19,7 +19,6 @@ public class AdministrationPage {
         LAST_NAME("Last Name"),
         ROLE("Role"),
         LOGIN_NAME("Login Name");
-        //
         private String field;
 
         private AdministrationPageFields(String field) {
@@ -50,189 +49,81 @@ public class AdministrationPage {
         }
     }
 
-    //
-    private WebDriver driver;
-    //
-    private WebElement createNewUser;
-    private Select selectField;
-    private Select selectCondition;
-    private WebElement searchField;
-    private WebElement logout;
-    //
-    private WebElement firstname;
-    private WebElement lastname;
-    private WebElement login;
-    private WebElement delete;
-    private WebElement usersFound;
-    private String usersFoundText;
+    private class AdministrationPageUIMap {
+        public final ILink createNewUser;
+        //public final ISelect selectField;
+        //public final ISelect selectCondition;
+        public final ITextField searchField;
+        public final ILink logout;
 
-    public AdministrationPage(WebDriver driver) {
-        this.driver = driver;
-        // Static Elements
-        this.createNewUser = driver.findElement(By.partialLinkText("Create New User"));
-        selectField = new Select(driver.findElement(By.id("field")));
-        selectCondition = new Select(driver.findElement(By.id("condition")));
-        this.searchField = driver.findElement(By.id("searchField"));
-        this.logout = driver.findElement(By.xpath("//a[@href='/OMS/logout.htm']"));
-        // Dynamic Elements
-        initFirstTableRow();
+        public AdministrationPageUIMap() {
+            this.createNewUser = Link.get().getByPartialLinkText("Create New User");
+            this.searchField = TextField.get().getById("searchField");
+            //this.field = Select.getById("field");
+            //this.condition = Select.getById("condition");
+            this.logout = Link.get().getByXpath("//a[@href='/OMS/logout.htm']");
+        }
     }
 
-    private void initFirstTableRow() {
-        this.firstname = driver.findElement(By.xpath("//tbody/tr[1]/td[1]"));
-        this.lastname = driver.findElement(By.xpath("//tbody/tr[1]/td[2]"));
-        this.login = driver.findElement(By.xpath("//tbody/tr[1]/td[3]"));
-        this.delete = driver.findElement(By.xpath("//tbody/tr[1]/td[7]/a"));
-        initUsersFound();
-        // System.out.println("initFirstTableRow: "+firstname.getText());
+    private class AdministrationPageTableUIMap {
+        public final ILabel usersFound;
+        public final ILabel firstname;
+        public final ILabel lastname;
+        public final ILabel login;
+        public final ILink delete;
+        public final String usersFoundText;
+
+        public AdministrationPageTableUIMap() {
+            // TODO if Load Table Complete
+            this.usersFound = Label.get().getById("usersFound");
+            this.usersFoundText = usersFound.getText();
+            if (Integer.parseInt(usersFoundText) > 0) {
+                this.firstname = Label.get().getByXpath("//tbody/tr[1]/td[1]");
+                this.lastname = Label.get().getByXpath("//tbody/tr[1]/td[2]");
+                this.login = Label.get().getByXpath("//tbody/tr[1]/td[3]");
+                this.delete = Link.get().getByXpath("//tbody/tr[1]/td[7]/a");
+            } else {
+                this.firstname = Label.get().getByXpath("//thead/tr[1]/th[1]");
+                this.lastname = Label.get().getByXpath("//thead/tr[1]/th[2]");
+                this.login = Label.get().getByXpath("//thead/tr[1]/th[3]");
+                this.delete = Link.get().getByXpath("//thead/tr[1]/th[1]");
+            }
+        }
+
+        public AdministrationPageTableUIMap(String login) {
+            // TODO if Load Table Complete
+            // TODO Check Existing Row
+            this.usersFound = Label.get().getById("usersFound");
+            this.usersFoundText = usersFound.getText();
+            //
+            this.firstname = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[2]");
+            this.lastname = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[1]");
+            this.login = Label.get().getByXpath("//tbody//td[3][text()='" + login + "']");
+            this.delete = Link.get().getByXpath("//tbody//td[3][text()='" + login + "']/following-sibling::td[4]/a");
+        }
+
     }
 
-    private void initTableRowByLogin(String login) {
-        // TODO Check Existing Row
-        this.firstname = driver
-                .findElement(By.xpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[2]"));
-        this.lastname = driver.findElement(By.xpath("//tbody//td[3][text()='" + login + "']/preceding-sibling::td[1]"));
-        this.login = driver.findElement(By.xpath("//tbody//td[3][text()='" + login + "']"));
-        this.delete = driver.findElement(By.xpath("//tbody//td[3][text()='" + login + "']/following-sibling::td[4]/a"));
-        initUsersFound();
-    }
+    // Elements
+    private AdministrationPageUIMap controls;
+    // AJAX Elements
+    private AdministrationPageTableUIMap controlsTable;
+    // Alert Elements
+    //private IAlertLight controlsAlert = null;
 
-    private void initUsersFound() {
-        this.usersFound = driver.findElement(By.id("usersFound"));
-        this.usersFoundText = usersFound.getText();
+    public AdministrationPage() {
+        controls = new AdministrationPageUIMap();
+        controlsTable = new AdministrationPageTableUIMap();
     }
 
     private boolean isTableRefresh() {
-        boolean result;
-        // TODO Change Wait
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        // try {
-        // Thread.sleep(2000);
-        // } catch (InterruptedException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-        result = new WebDriverWait(driver, 10).until(ExpectedConditions.stalenessOf(firstname))
-                && new WebDriverWait(driver, 10)
-                        .until(ExpectedConditions.invisibilityOfElementWithText(By.id("usersFound"), usersFoundText));
-        //
-        // try {
-        // System.out.println("isTableRefresh() firstname =
-        // "+firstname.getText());
-        // } catch(StaleElementReferenceException expected){
-        // System.out.println("StaleElementReferenceException");
-        // }
-        //
-        // System.out.println("result = "+result);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        return result;
+        return this.controlsTable.firstname.isStatelessOf()
+                && this.controlsTable.usersFound.isInvisibleWithText(
+                        this.controlsTable.usersFoundText);
     }
 
-    // Get Elements
-    public WebElement getCreateNewUser() {
-        return this.createNewUser;
-    }
-
-    public Select getSelectField() {
-        return this.selectField;
-    }
-
-    public Select getSelectCondition() {
-        return this.selectCondition;
-    }
-
-    public WebElement getSearchField() {
-        return this.searchField;
-    }
-
-    public WebElement getLogout() {
-        return this.logout;
-    }
-
-    public WebElement getFirstname() {
-        return this.firstname;
-    }
-
-    public WebElement getLastname() {
-        return this.lastname;
-    }
-
-    public WebElement getLogin() {
-        return this.login;
-    }
-
-    public WebElement getDelete() {
-        return this.delete;
-    }
-
-    public WebElement getUsersFound() {
-        return this.usersFound;
-    }
-
-    public String getSelectFieldText() {
-        return this.selectField.getFirstSelectedOption().getText();
-    }
-
-    public String getSelectConditionText() {
-        return this.selectCondition.getFirstSelectedOption().getText();
-    }
-
-    public String getSearchFieldText() {
-        return this.searchField.getText();
-    }
-
-    public String getFirstnameText() {
-        return this.firstname.getText();
-    }
-
-    public String getLastnameText() {
-        return this.lastname.getText();
-    }
-
-    public String getLoginText() {
-        return this.login.getText();
-    }
-
-    public String getUsersFoundText() {
-        return this.usersFoundText;
-    }
-
-    // Set Data
-    public void setSelectField(AdministrationPageFields field) {
-        this.selectField.selectByVisibleText(field.toString());
-    }
-
-    public void setSelectCondition(AdministrationPageConditions condition) {
-        this.selectCondition.selectByVisibleText(condition.toString());
-    }
-
-    public void setSearchField(String searchText) {
-        this.searchField.sendKeys(searchText);
-    }
-
-    public void clearSearchField() {
-        this.searchField.clear();
-    }
-
-    public void clickSearchField() {
-        this.searchField.click();
-    }
-
-    public void clickCreateNewUser() {
-        this.createNewUser.click();
-    }
-
-    public void clickLogout() {
-        this.logout.click();
-    }
-
-    // Business Logic
-    public void searchUser(IUser user, AdministrationPageFields field, AdministrationPageConditions conditions) {
+    private String getUserPropertyByField(IUser user, AdministrationPageFields field) {
         String searchProperties;
-        setSelectField(field);
-        setSelectCondition(conditions);
-        clickSearchField();
-        clearSearchField();
         switch (field) {
         case FIRST_NAME:
             searchProperties = user.getFirstname();
@@ -249,47 +140,199 @@ public class AdministrationPage {
         default:
             searchProperties = user.getLogin();
         }
-        setSearchField(searchProperties);
-        // setSearchField("noneiva");
-        isTableRefresh();
-        initFirstTableRow();
+        return searchProperties;
+    }
+    
+    // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    // getters controls
+
+    public ILink getCreateNewUser() {
+        return this.controls.createNewUser;
+    }
+
+//    public ISelect getSelectField() {
+//        return this.controls.selectField;
+//    }
+
+//    public ISelect getSelectCondition() {
+//        return this.controls.selectCondition;
+//    }
+
+    public ITextField getSearchField() {
+        return this.controls.searchField;
+    }
+
+    public ILink getLogout() {
+        return this.controls.logout;
+    }
+
+//    public String getSelectFieldText() {
+//        return this.controls.selectField.getFirstSelectedOption().getText();
+//    }
+
+//    public String getSelectConditionText() {
+//        return this.controls.selectCondition.getFirstSelectedOption().getText();
+//    }
+
+    public String getSearchFieldText() {
+        return getSearchField().getText();
+    }
+    
+    // getters controlsTable
+
+    public ILabel getUsersFound() {
+        return this.controlsTable.usersFound;
+    }
+
+    public ILabel getFirstname() {
+        return this.controlsTable.firstname;
+    }
+
+    public ILabel getLastname() {
+        return this.controlsTable.lastname;
+    }
+
+    public ILabel getLogin() {
+        return this.controlsTable.login;
+    }
+
+    public ILink getDelete() {
+        return this.controlsTable.delete;
+    }
+
+//    public String getUsersFoundText() {
+//        return this.controlsTable.usersFoundText;
+//    }
+
+    public String getFirstnameText() {
+        return getFirstname().getText();
+    }
+
+    public String getLastnameText() {
+        return getLastname().getText();
+    }
+
+    public String getLoginText() {
+        return getLogin().getText();
+    }
+
+    // getters controlsAlert
+
+    //public IAlert getAlert() {
+    //  if (this.controlsAlert != null) {
+    //  return this.controlsAlert;
+    //  }
+    //}
+
+    // setters controls
+
+    public void setSelectField(AdministrationPageFields field) {
+        //this.controls.selectField.selectByVisibleText(field.toString());
+        // TODO +++
+        ControlSearch.get().getVisibleSelectWebElement(ControlLocation.getById("field"))
+            .selectByVisibleText(field.toString());
+    }
+
+    public void setSelectCondition(AdministrationPageConditions condition) {
+        //this.controls.selectCondition.selectByVisibleText(condition.toString());
+        // TODO +++
+        ControlSearch.get().getVisibleSelectWebElement(ControlLocation.getById("condition"))
+            .selectByVisibleText(condition.toString());
+    }
+
+    public void setSearchField(String text) {
+        getSearchField().sendKeys(text);
+    }
+
+    public void clearSearchField() {
+        getSearchField().clear();
+    }
+
+    public void clickSearchField() {
+        getSearchField().click();
+    }
+
+    public void clickCreateNewUser() {
+        getCreateNewUser().click();
+    }
+
+    public void clickLogout() {
+        getLogout().click();
+    }
+    
+    // setters controlsTable
+
+    public void resetTable() {
+        if (isTableRefresh()) {
+            controlsTable = new AdministrationPageTableUIMap();
+        }
+    }
+    
+    public void resetTable(String login) {
+        if (isTableRefresh()) {
+            controlsTable = new AdministrationPageTableUIMap(login);
+        }
+    }
+
+    public void clickDelete() {
+        getDelete().click();
+        // TODO Alert
+        // this.controlsAlert = new Alert();
+    }
+
+    // setters controlsAlert
+
+    public void acceptAlert() {
+//      if (this.controlsAlert != null) {
+//      this.controlsAlert.click();
+//      this.controlsAlert = null;
+//        controls = new AdministrationPageUIMap();
+//        controlsAjax = new AdministrationPageUIMapAjax();
+          //
+//        resetTable();
+//  }
+        // TODO +++
+       BrowserUtils.get().getBrowser().getWebDriver().switchTo().alert().accept();
+    }
+
+    public void dismissAlert() {
+//      if (this.controlsAlert != null) {
+//          this.controlsAlert.click();
+//          this.controlsAlert = null;
+//      }
+    }   
+
+    // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public void searchUser(IUser user, AdministrationPageFields field,
+            AdministrationPageConditions condition) {
+        setSelectField(field);
+        setSelectCondition(condition);
+        setSearchField(getUserPropertyByField(user, field));
+        // Initialize Table Elements
+        resetTable(user.getLogin());
     }
 
     public void searchByLoginName(IUser user) {
-        // try {
-        // Thread.sleep(2000);
-        // } catch (InterruptedException e1) {
-        // // TODO Auto-generated catch block
-        // e1.printStackTrace();
-        // }
-        // System.out.println("Before Searsh: firstname="+firstname.getText());
         searchUser(user, AdministrationPageFields.LOGIN_NAME, AdministrationPageConditions.EQUALS);
-        // System.out.println("After Searsh1: firstname="+firstname.getText());
-        initTableRowByLogin(user.getLogin());
-         try {
-         Thread.sleep(2000);
-         } catch (InterruptedException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-         }
-        // System.out.println("After Searsh2: firstname="+firstname.getText());
     }
-    public void deleteSelectedUser() throws InterruptedException {
-    	driver.findElement(By.partialLinkText("Delete")).click();
-    	Thread.sleep(2000);
-		driver.switchTo().alert().accept();
-		Thread.sleep(2000);
+    
+    public void deleteByLoginName(IUser user) {
+        searchByLoginName(user);
+        clickDelete();
+        // TODO Develop AlertWrapper
+        acceptAlert();
     }
 
     public CreateNewUserPage gotoCreateNewUser() {
         clickCreateNewUser();
-        return new CreateNewUserPage(driver);
+        return new CreateNewUserPage();
     }
 
-    public LoginPage gotoLogout() {
+    public LoginPage logout() {
         clickLogout();
-        driver.close();
-        return new LoginPage(driver);
+        return new LoginPage();
     }
 
 }

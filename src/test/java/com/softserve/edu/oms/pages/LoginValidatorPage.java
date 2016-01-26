@@ -1,31 +1,62 @@
 package com.softserve.edu.oms.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.softserve.edu.controls.ILabel;
+import com.softserve.edu.controls.Label;
 
 public class LoginValidatorPage extends LoginPage {
-    public static final String START_VALIDATOR_MESSAGE = "Your login attempt was not successful";
-    //
-    private WebElement validator;
 
-    public LoginValidatorPage(WebDriver driver) {
-        super(driver);
-        this.validator = driver.findElement(By.xpath("//font[@color='red']"));
+    public static enum LoginPageMessages {
+        START_VALIDATOR_MESSAGE("Your login attempt was not successful, try again.");
+
+        private String field;
+
+        private LoginPageMessages(String field) {
+            this.field = field;
+        }
+
+        public int getLenght() {
+            return this.field.length();
+        }
+
+        @Override
+        public String toString() {
+            return this.field;
+        }
     }
 
-    // Get Elements
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+    private class LoginValidatorPageUIMap {
+        public final ILabel validator;
 
-    public WebElement getValidator() {
-        return this.validator;
+        public LoginValidatorPageUIMap() {
+            //this.validator = Label.get().getByXpath("//div[@id='edit']//font");
+            this.validator = Label.get().getByXpath("//font[@color='red']");
+        }
+    }
+
+    // Elements
+    private LoginValidatorPageUIMap controls;
+
+    public LoginValidatorPage() {
+        this.controls = new LoginValidatorPageUIMap();
+    }
+
+    // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    public ILabel getValidator() {
+        return this.controls.validator;
     }
 
     public String getValidatorText() {
-        return this.validator.getText();
+        return this.controls.validator.getText();
     }
 
+    // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     public String getStartValidatorText() {
-        return this.validator.getText().substring(0, START_VALIDATOR_MESSAGE.length());
+        return this.controls.validator.getText().trim().substring(0,
+                LoginPageMessages.START_VALIDATOR_MESSAGE.toString().length());
     }
 
 }

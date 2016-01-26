@@ -1,111 +1,119 @@
 package com.softserve.edu.oms.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
+import com.softserve.edu.controls.Button;
+import com.softserve.edu.controls.IButton;
+import com.softserve.edu.controls.ITextField;
+import com.softserve.edu.controls.TextField;
 import com.softserve.edu.oms.data.IUser;
 
 public class LoginPage {
-	private WebDriver driver;
-	//
-	private WebElement login;
-	private WebElement password;
-	private WebElement submit;
 
-	public LoginPage(WebDriver driver) {
-		this.driver = driver;
-		//
-		this.login = driver.findElement(By.name("j_username"));
-		this.password = driver.findElement(By.name("j_password"));
-		this.submit = driver.findElement(By.name("submit"));
-	}
+    private class LoginPageUIMap {
+        public final ITextField login;
+        public final ITextField password;
+        public final IButton submit;
 
-	// Get Elements
+        public LoginPageUIMap() {
+            this.login = TextField.get().getByName("j_username");
+            this.password = TextField.get().getByName("j_password");
+            this.submit = Button.get().getByName("submit");
+        }
+    }
 
-	public WebElement getLogin() {
-		return this.login;
-	}
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	public WebElement getPassword() {
-		return this.password;
-	}
+    // Elements
+    private LoginPageUIMap controls;
 
-	public WebElement getSubmit() {
-		return this.submit;
-	}
+    public LoginPage() {
+        controls = new LoginPageUIMap();
+    }
 
-	public String getLoginText() {
-		return this.login.getText();
-	}
+    // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-	public String getPasswordText() {
-		return this.password.getText();
-	}
+    public void setLogin(String login) {
+        this.controls.login.sendKeysClear(login);
+    }
+    
+    public void setPassword(String password) {
+        this.controls.password.sendKeysClear(password);
+    }
 
-	// Set Data
+    public void clearLogin() {
+        this.controls.login.clear();
+    }
 
-	public void setLogin(String login) {
-		this.login.sendKeys(login);
-	}
+    public void clearPassword() {
+        this.controls.password.clear();
+    }
 
-	public void setPassword(String password) {
-		this.password.sendKeys(password);
-	}
+    public void clickLogin() {
+        this.controls.login.click();
+    }
 
-	public void clearLogin() {
-		this.login.clear();
-	}
+    public void clickPassword() {
+        this.controls.password.click();
+    }
 
-	public void clearPassword() {
-		this.password.clear();
-	}
+    public void clickSubmit() {
+        this.controls.submit.click();
+    }
 
-	public void clickLogin() {
-		this.login.click();
-	}
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+    public ITextField getLogin() {
+        return this.controls.login;
+    }
 
-	public void clickPassword() {
-		this.password.click();
-	}
+    public ITextField getPassword() {
+        return this.controls.password;
+    }
 
-	public void clickSubmit() {
-		this.submit.click();
-	}
+    public IButton getSubmit() {
+        return this.controls.submit;
+    }
 
-	// Business Logic
+    public String getLoginText() {
+        return this.controls.login.getText();
+    }
 
-	private void setLoginData(IUser user) {
-		clickLogin();
-		clearLogin();
-		setLogin(user.getLogin());
-		clickPassword();
-		clearPassword();
-		setPassword(user.getPassword());
-		clickSubmit();
-	}
+    public String getPasswordText() {
+        return this.controls.password.getText();
+    }
+
+    // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+    private void setLoginData(IUser user) {
+        clickLogin();
+        clearLogin();
+        setLogin(user.getLogin());
+        clickPassword();
+        clearPassword();
+        setPassword(user.getPassword());
+        clickSubmit();
+    }
 
     public HomePage successUserLogin(IUser user) {
         setLoginData(user);
         // Return a new page object representing the destination.
-        return new HomePage(driver);
+        return new HomePage();
     }
 
     public AdminHomePage successAdminLogin(IUser admin) {
-		setLoginData(admin);
-		// Return a new page object representing the destination.
-		return new AdminHomePage(driver);
-	}
+        setLoginData(admin);
+        // Return a new page object representing the destination.
+        return new AdminHomePage();
+    }
 
-	public CustomerHomePage successCustomerLogin(IUser customer) {
-		setLoginData(customer);
-		// Return a new page object representing the destination.
-		return new CustomerHomePage(driver);
-	}
+    public CustomerHomePage successCustomerLogin(IUser customer) {
+        setLoginData(customer);
+        // Return a new page object representing the destination.
+        return new CustomerHomePage();
+    }
 
-	public LoginValidatorPage unsuccessfulLogin(IUser invalidUser) {
-		setLoginData(invalidUser);
-		return new LoginValidatorPage(driver); // return this;
-	}
+    public LoginValidatorPage unSuccesfulLogin(IUser invalidUser) {
+        setLoginData(invalidUser);
+        return new LoginValidatorPage(); // return this;
+    }
 
 }

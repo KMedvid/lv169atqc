@@ -4,3 +4,48 @@
 [INFO] 09:23:33 DeleteExistUserTest - Done
 [INFO] 09:23:33 DeleteAdminTest - Done
 [ERROR] 09:24:00 DeleteAdminTest - Fail
+[INFO] 00:13:24 @BeforeClass - oneTimeSetUp() START
+[INFO] 00:13:27 @BeforeClass - oneTimeSetUp() DONE
+[INFO] 00:13:27 @Test -  testUnit() START
+[INFO] 00:13:27 Goto http://ssu-oms.training.local:8180/OMS/login.htm
+[INFO] 00:13:29 Creating Web Elements
+[INFO] 00:13:39 oneTimeTearDown() - oneTimeSetUp() START
+[INFO] 00:13:39 oneTimeTearDown() - oneTimeSetUp() DONE
+[INFO] 00:13:54 testApp() - START
+[INFO] 00:13:54 testApp() - DONE
+[INFO] 00:13:54 DeleteAdminTest - Done
+[INFO] 00:22:17 CreateNewUserTest - Done
+[INFO] 00:24:46 CreateNewUserTest - Start
+[INFO] 00:29:12 CreateNewUserTest - Start
+[INFO] 00:34:02 CreateNewUserTest - Start
+[INFO] 00:35:36 CreateNewUserTest - Start
+[INFO] 00:43:11 CreateNewUserTest - Start
+[INFO] 01:38:09 CreateNewUserTest - Done
+[INFO] 01:40:51 CreateNewUserTest - Start
+[INFO] 01:44:36 CreateNewUserTest - Start
+[INFO] 01:56:54 CreateNewUserTest - Start
+[INFO] 01:59:14 CreateNewUserTest - Start
+[INFO] 02:08:06 CreateNewUserTest - Start
+[INFO] 02:33:41 CreateNewUserTest - Start
+[INFO] 02:34:33 CreateNewUserTest - Start
+[INFO] 02:36:40 CreateNewUserTest - Start
+[INFO] 02:38:18 CreateNewUserTest - Start
+[INFO] 11:01:18 CreateNewUserTest - Start
+[INFO] 11:08:06 CreateNewUserTest - Start
+[INFO] 11:09:55 CreateNewUserTest - Start
+[INFO] 11:14:19 CreateNewUserTest - Start
+[INFO] 11:14:44 CreateNewUserTest - Done
+[INFO] 11:26:49 CreateNewUserTest - Start
+[INFO] 11:27:18 CreateNewUserTest - Done
+[INFO] 11:34:21 CreateNewUserTest - Start
+[INFO] 11:51:10 DeleteExistUserTest - Done
+[INFO] 11:53:39 DeleteExistUserTest - Done
+[INFO] 11:54:07 DeleteExistUserTest - Done
+[INFO] 11:55:27 DeleteExistUserTest - Done
+[INFO] 11:55:54 DeleteExistUserTest - Done
+[INFO] 11:57:37 DeleteExistUserTest - Done
+[INFO] 11:58:06 DeleteExistUserTest - Done
+[INFO] 12:00:13 CreateNewUserTest - Start
+[INFO] 12:00:40 CreateNewUserTest - Done
+[INFO] 12:02:49 DeleteExistUserTest - Done
+[INFO] 12:03:17 DeleteExistUserTest - Done
