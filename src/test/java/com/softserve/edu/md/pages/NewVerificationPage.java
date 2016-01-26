@@ -10,148 +10,142 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.atqc.controls.Button;
+import com.softserve.edu.atqc.controls.IButton;
+import com.softserve.edu.atqc.controls.ITextField;
+import com.softserve.edu.atqc.controls.TextField;
+import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.User;
 
-public class NewVerificationPage {
-	private WebDriver driver;
-	private WebElement requestnumber;
-	private WebElement clientdata;
-	private WebElement clientstreet;
-	private WebElement workerdata;
-	private WebElement options;
-	private WebElement logout;
 
-	public static final String SERCH_NUMBER_DATA = "5aa79022-c720-4424-ab71-eed574d1b48d";
+public class NewVerificationPage {
+	public static final String SERCH_NUMBER_OF_HOUSE_DATA = "1";
 	public static final String SEARCH_STREET_DATA = "Лукаша";
 	public static final String SEARCH_CLIENT_NAMES_DATA = "Чопик Василь Іванович";
-	public static final String SEARCH_WORKER_NAMES_DATA = "Річардс Кейт Романович";
+	public static final String SEARCH_DISTRICT_DATA = "Cихів";
+	private NewVerificationPageUIMap controls;
+
+	public class NewVerificationPageUIMap {
+
+		public ITextField clientdata;
+		public ITextField clientstreet;
+		public ITextField district;
+		public ITextField numberofhouse;
+		public IButton options;
+	//	public IButton logout;
+
+		/**
+		 * Constructor of New Verifications Home Page. Check if all necessary
+		 * elements exist.
+		 */
+		public NewVerificationPageUIMap() {
+			this.clientdata = TextField.get().getByXpath("//table/thead/tr[2]/th[3]//input");
+			this.district = TextField.get().getByXpath("//table/thead/tr[2]/th[4]//input");
+			this.clientstreet = TextField.get().getByXpath("//table/thead/tr[2]/th[5]//input");
+			this.numberofhouse = TextField.get().getByXpath("//table/thead/tr[2]/th[6]//input");
+			this.options = Button.get().getByCssSelector("div i.fa.fa-caret-down");
+	//		this.logout = Button.get().getByXpath("//p[text()='Вилогуватись']");
+
+		}
+	}
+
+	public NewVerificationPage() {
+		controls = new NewVerificationPageUIMap();
+	}
+
+	public ITextField getDistrict() {
+		return this.controls.district;
+	}
+
+	public String getDistricttext() {
+		return this.controls.district.getText();
+	}
+
+	public ITextField getClientData() {
+		return this.controls.clientdata;
+	}
+
+	public ITextField getClientStreet() {
+		return this.controls.clientstreet;
+	}
+
+	public ITextField getNumberOfHouse() {
+		return this.controls.numberofhouse;
+	}
+
+	public IButton getOptions() {
+		return this.controls.options;
+	}
+
+//	public void clickLogout() {
+//		this.controls.logout.click();
+//	}
+
+//	public IButton getLogout() {
+//		return this.controls.logout;
+//	}
 
 	/**
-	 * Constructor of New Verifications Home Page. Check if all necessary
-	 * elements exist.
-	 */
-	public NewVerificationPage(WebDriver driver) {
-		this.driver = driver;
-		this.requestnumber = driver.findElement(By.xpath("//table/thead/tr[2]/th[3]//input"));
-		this.clientdata = driver.findElement(By.xpath("//table/thead/tr[2]/th[4]//input"));
-		this.clientstreet = driver.findElement(By.xpath("//table/thead/tr[2]/th[5]//input"));
-		this.workerdata = driver.findElement(By.xpath("//table/thead/tr[2]/th[7]//input"));
-		this.options = driver.findElement(By.cssSelector("div i.fa.fa-caret-down"));
-		this.logout = driver.findElement(By.xpath("//p[text()='Вилогуватись']"));
-
-	}
-
-	public WebElement getRequestnumber() {
-		return this.requestnumber;
-	}
-
-	public String getRequestnumberText() {
-		return this.requestnumber.getText();
-	}
-
-	public WebElement getClientdata() {
-		return this.clientdata;
-	}
-
-	public WebElement getClientstreet() {
-		return this.clientstreet;
-	}
-
-	public WebElement getWorkerdata() {
-		return this.workerdata;
-	}
-
-	public WebElement getOptions() {
-		return this.options;
-	}
-
-	public void clickLogout() {
-		this.logout.click();
-	}
-
-	public WebElement getLogout() {
-		return this.logout;
-	}
-
-	/**
-	 * Search by Request Number field in New Verifications. Return string with
+	 * Search by Client Data field in New Verifications. Return string with
 	 * text of found element.
-	 */
-	public String searchSearchNumber(String searchfilter) {
-		getRequestnumber().sendKeys(searchfilter);
-		String s = driver.findElement(By.cssSelector("td.ng-pristine.ng-untouched.ng-valid.ng-binding")).getText();
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbynumber.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		getRequestnumber().clear();
-		return s;
-	}
-
-	/**
-	 * 
-	 * Search by Worker Data field in New Verifications. Return string with text
-	 * of found element.
-	 * 
-	 */
-	public String searchWorkerData(String searchfilter) {
-		getWorkerdata().sendKeys(searchfilter);
-		String s = driver.findElement(By.xpath("//table/tbody/tr/td[7]")).getText();
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbyworkerdata.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		getWorkerdata().clear();
-		return s;
-	}
-
-	/**
-	 * 
-	 * Search by Client Data field in New Verifications. Return string with text
-	 * of found element.
-	 * 
-	 * 
 	 */
 	public String searchClientData(String searchfilter) {
-		getClientdata().sendKeys(searchfilter);
-		String s = driver.findElement(By.xpath("//table/tbody/tr/td[4]")).getText();
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbyclientdata.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		getClientdata().clear();
+		getClientData().sendKeys(searchfilter);
+		String s = BrowserUtils.get().getBrowser().getWebDriver()
+				.findElement(By.xpath("//table/thead/tr[2]/th[3]")).getText();
+		// String s =
+		// driver.findElement(By.cssSelector("td.ng-pristine.ng-untouched.ng-valid.ng-binding")).getText();
 		return s;
 	}
 
 	/**
 	 * 
-	 * Search by Client Street field in New Verifications. Return string with
-	 * text of found element.
+	 * Search by District field in New Verifications. Return string with text
+	 * of found element.
+	 * 
+	 */
+	public String searchDistrict(String searchfilter) {
+		getDistrict().sendKeys(searchfilter);
+		String s = BrowserUtils.get().getBrowser().getWebDriver()
+				.findElement(By.xpath("//table/thead/tr[2]/th[4]")).getText();
+		        
+		return s;
+	}
+
+	/**
+	 * 
+	 * Search by Client Street field in New Verifications. Return string with text
+	 * of found element.
+	 * 
 	 * 
 	 */
 	public String searchClientStreet(String searchfilter) {
-		getClientstreet().sendKeys(searchfilter);
-		String s = driver.findElement(By.xpath("//table/tbody/tr/td[5]")).getText();
-		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		try {
-			FileUtils.copyFile(scrFile, new File("screenfolder/screenshot_searchbyclientstreet.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		getClientstreet().clear();
+		getClientStreet().sendKeys(searchfilter);
+		String s = BrowserUtils.get().getBrowser().getWebDriver()
+				.findElement(By.xpath("//table/thead/tr[2]/th[5]"))
+				.getText();
+
+		return s;
+	}
+
+	/**
+	 * 
+	 * Search by Number of House field in New Verifications. Return string with
+	 * text of found element.
+	 * 
+	 */
+	public String searchByNubmerOfHouse(String searchfilter) {
+		getNumberOfHouse().sendKeys(searchfilter);
+		String s = BrowserUtils.get().getBrowser().getWebDriver()
+				.findElement(By.xpath("//table/thead/tr[2]/th[6]"))
+				.getText();
 		return s;
 	}
 
 	// Return a new page object representing the destination.
 	public NewVerificationPage successVerifaction(IUser calibrator) {
-		return new NewVerificationPage(driver);
+		return new NewVerificationPage();
 	}
 
 	/**
@@ -159,8 +153,8 @@ public class NewVerificationPage {
 	 * Logout from your user account.
 	 * 
 	 */
-	public void gotoLogout() {
-		getOptions().click();
-		clickLogout();
-	}
+	//public void gotoLogout() {
+//		getOptions().click();
+	//	clickLogout();
+//	}
 }

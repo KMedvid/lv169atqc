@@ -4,86 +4,89 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.atqc.controls.Button;
+import com.softserve.edu.atqc.controls.IButton;
+import com.softserve.edu.atqc.controls.ITextField;
+import com.softserve.edu.atqc.controls.TextField;
 import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.User;
 
 public class CalibratorHomePage {
-	private WebDriver driver;
-	private WebElement verificationPageButton;
-	private WebElement measuringEquipmentPagebutton;
-	private WebElement title;
-	private WebElement loginname;
-	private WebElement options;
-	private WebElement logout;
+	private CalibratorHomePageUIMap controls;
 
-	/**
-	 * 
-	 * Constructor of Calibrator Home Page. Check if all necessary elements
-	 * exist.
-	 */
-	public CalibratorHomePage(WebDriver driver) {
+	private class CalibratorHomePageUIMap {
+		// private WebDriver driver;
+		public IButton verificationPageButton;
+		public IButton calibratorTaskStationButton;
+		public ITextField title;
+		public ITextField loginname;
+		public IButton options;
+		//public IButton logout;
 
-		this.driver = driver;
-		this.verificationPageButton = driver.findElement(By.xpath("//div/ul/li[2]/a/span[1]"));
-		this.measuringEquipmentPagebutton = driver.findElement(By.xpath("//li[3]/a/span"));
-		this.title = driver.findElement(By.cssSelector("h1.page-header.ng-binding"));
-		this.loginname = driver.findElement(By.cssSelector("div label.ng-scope"));
-		this.options = driver.findElement(By.cssSelector("div i.fa.fa-caret-down"));
-		this.logout = driver.findElement(By.xpath("//p[text()='Вилогуватись']"));
+		/**
+		 * 
+		 * Constructor of Calibrator Home Page UI Map. Check if all necessary
+		 * elements exist.
+		 */
+		public CalibratorHomePageUIMap() {
+
+			this.verificationPageButton = Button.get().getByXpath("//div/ul/li[2]/a/span[1]");
+			this.calibratorTaskStationButton = Button.get().getByXpath("//div/ul/li[6]/a/span[1]");
+			this.title = TextField.get().getByCssSelector("h1.page-header.ng-binding");
+			this.loginname = TextField.get().getByCssSelector("div label.ng-scope");
+			this.options = Button.get().getByCssSelector("div i.fa.fa-caret-down");
+		//	this.logout = Button.get().getByXpath("//p[text()='Вилогуватись']");
+		}
 	}
 
-	public WebElement getverificationPageButton() {
-		return this.verificationPageButton;
-	}
-	
-	public WebElement getmeasuringEquipmentPagebutton() {
-		return this.measuringEquipmentPagebutton;
-	}
-	
-	public WebElement getTitle() {
-		return this.title;
+	public CalibratorHomePage() {
+		controls = new CalibratorHomePageUIMap();
 	}
 
-	public WebElement getOptions() {
-		return this.options;
+	public IButton getverificationPageButton() {
+		return this.controls.verificationPageButton;
 	}
 
-	public WebElement getLoginName() {
-		return this.loginname;
+	public IButton calibratorTaskStationButton() {
+		return this.controls.calibratorTaskStationButton;
+	}
+
+	public ITextField getTitle() {
+		return this.controls.title;
+	}
+
+	public IButton getOptions() {
+		return this.controls.options;
+	}
+
+	public ITextField getLoginName() {
+		return this.controls.loginname;
 	}
 
 	public String getTitleText() {
-		return this.title.getAttribute("textContent");
+		return this.controls.title.getAttribute("textContent");
 	}
 
 	public String getLoginNameText() {
-		return this.loginname.getAttribute("textContent");
+		return this.controls.loginname.getAttribute("textContent");
 	}
 
-	public WebElement getLogout() {
-		return this.logout;
-	}
+	////public IButton getLogout() {
+	//	return this.controls.logout;
+	//}
 
-	public void clickLogout() {
-		this.logout.click();
-	}
+//	public void clickLogout() {
+	//	this.controls.logout.click();
+//	}
 
-	public void gotoLogout() {
-		getOptions().click();
-		clickLogout();
-	}
+	//public void gotoLogout() {
+//		getOptions().click();
+//		clickLogout();
+	//}
 
-	public CalibratorHomePage successCalLogin(IUser calibrator) {
-		return new CalibratorHomePage(driver);
-	}
+	 public NewVerificationPage gotoverificationpage(){
+	 this.controls.verificationPageButton.click();;
+	 return new NewVerificationPage();
+	 }
 
-	public NewVerificationPage gotoverificationpage(){
-		this.verificationPageButton.click();;
-		return new NewVerificationPage(driver);
-	}
-
-	public MeasuringEquipmentPage gotoMeasuringEquipmentPage(){
-		this.measuringEquipmentPagebutton.click();
-		return new MeasuringEquipmentPage(driver);
-	}
 }

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite1">
-	<parameter name="testurl" value="http://localhost:8080/#/login" />
+	<parameter name="testurl" value="http://java.training.local:8080/#/login" />
 	<test name="Test1">
 		<classes>
 			<class name="com.softserve.edu.md.tests.LoginTest"/>
-			<class name="com.softserve.edu.md.tests.VerificationSearchTest"/>
-			<class name="com.softserve.edu.md.tests.EquipmentEditAllFieldsTest"/>
-			<class name="com.softserve.edu.md.tests.EquipmentEditSomeFieldsTest"/>
-			<class name="com.softserve.edu.md.tests.EquipmentEditNotificationTest"/>
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -77,7 +77,7 @@ public class LoginStartPage {
 	public LoginPage load(IUrls urls) {
 		WebDriver driver = getDriver(urls);
 		driver.get(urls.getLogin());
-		return new LoginPage(driver);
+		return new LoginPage();
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class LoginStartPage {
 		WebDriver driver = data.getDriver();
 		driver.get(data.getUrls().getLogout());
 		driver.get(data.getUrls().getLogin());
-		return new LoginPage(driver);
+		return new LoginPage();
 
 	}
 

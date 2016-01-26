@@ -3,8 +3,11 @@ package com.softserve.edu.md.tests;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.softserve.edu.atqc.data.StartData;
+import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.md.data.IUrls;
 import com.softserve.edu.md.data.IUser;
+import com.softserve.edu.md.data.StartPage;
 import com.softserve.edu.md.data.UrlRepository;
 import com.softserve.edu.md.data.User;
 import com.softserve.edu.md.data.UserRepository;
@@ -39,40 +42,41 @@ import org.testng.annotations.AfterClass;
 public class VerificationSearchTest {
 
 	private SoftAssert softAssert;
-
+	StartData startData = new StartData("http://java.training.local:8080/#/login",
+			"http://java.training.local:8080/#/logout","","firefox","");
 	@BeforeClass
-	public void beforeSearch() {
+	public void oneTimeSetUp() {
 		softAssert = new SoftAssert();
 	}
 
 	   @AfterMethod
 	    public void tearDown() {
-	        LoginStartPage.get().logout();
+	        StartPage.get().logout();
 	    }
 
-	    @AfterClass
-	    public void oneTimeTearDown() {
-	        LoginStartPage.get().close();
-	    }
+	@AfterClass
+    public void oneTimeTearDown() {
+        BrowserUtils.closeAll();
+    }
 	    
 	@DataProvider
 	public Object[][] calibratorUsers() {
 		return new Object[][] { 
-			{ UserRepository.get().getCalibratorUser(), UrlRepository.get().getLocalUrls() }, 
+			{ UserRepository.get().getCalibratorUser(), UrlRepository.get().getTrainingUrls() }, 
 			};
 	}
 
 	@Test(dataProvider = "calibratorUsers")
 	public void checkVerificationSearch(IUser calibrator, IUrls urls) throws InterruptedException, IOException
 	{
-		LoginPage loginPage = LoginStartPage.get().load(urls);	
-		CalibratorHomePage calhomepage = loginPage
-				.successCalLogin(UserRepository.get().getCalibratorUser());
+		
+		StartPage.get().load(startData);
+        CalibratorHomePage calhomepage = StartPage.get().load().successCalLogin(calibrator);	
 		NewVerificationPage newVerificationPage = calhomepage.gotoverificationpage();
 		Thread.sleep(2000);
     	softAssert.assertEquals(newVerificationPage
-    			.searchSearchNumber(NewVerificationPage.SERCH_NUMBER_DATA),
-    			NewVerificationPage.SERCH_NUMBER_DATA );
+    			.searchByNubmerOfHouse(NewVerificationPage.SERCH_NUMBER_OF_HOUSE_DATA),
+    			NewVerificationPage.SERCH_NUMBER_OF_HOUSE_DATA);
     	Thread.sleep(2000);
 		softAssert.assertEquals(newVerificationPage
 				.searchClientData(NewVerificationPage.SEARCH_CLIENT_NAMES_DATA), 
@@ -83,11 +87,12 @@ public class VerificationSearchTest {
 				NewVerificationPage.SEARCH_STREET_DATA);
 		Thread.sleep(2000);
 		softAssert.assertEquals(newVerificationPage
-				.searchWorkerData(NewVerificationPage.SEARCH_WORKER_NAMES_DATA),
-				NewVerificationPage.SEARCH_WORKER_NAMES_DATA);
+				.searchDistrict(NewVerificationPage.SEARCH_DISTRICT_DATA),
+				NewVerificationPage.SEARCH_DISTRICT_DATA);
 		Thread.sleep(2000);
-		newVerificationPage.gotoLogout();
+	//	newVerificationPage.gotoLogout();
 		softAssert.assertAll();
+		
 	}
 
 }

@@ -9,9 +9,14 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.softserve.edu.atqc.data.StartData;
+import com.softserve.edu.atqc.tools.BrowserUtils;
+import com.softserve.edu.atqc.tools.ControlLocation;
+import com.softserve.edu.atqc.tools.ControlWrapper;
 import com.softserve.edu.md.data.CombineProvider;
 import com.softserve.edu.md.data.IUrls;
 import com.softserve.edu.md.data.IUser;
+import com.softserve.edu.md.data.StartPage;
 import com.softserve.edu.md.data.UrlRepository;
 import com.softserve.edu.md.data.UserRepository;
 import com.softserve.edu.md.pages.CalibratorHomePage;
@@ -21,7 +26,7 @@ import com.softserve.edu.md.pages.LoginValidatorPage;
 
 /**
  * 
- * Testing if we can log in at page http://localhost:8080/#/login two tests in
+ * Testing if we can log in at page http://java.training.local:8080/#/login two tests in
  * this class using right and wrong data to login check if necessary elements
  * are present on page
  * 
@@ -33,21 +38,22 @@ import com.softserve.edu.md.pages.LoginValidatorPage;
 public class LoginTest {
 	private SoftAssert softAssert;
 	public static final Logger logger = LoggerFactory.getLogger(LoginTest.class);
+	StartData startData = new StartData("http://java.training.local:8080/#/login","http://java.training.local:8080/#/logout","","firefox","");
 	
 	@BeforeClass
 	public void oneTimeSetUp() {
 		softAssert = new SoftAssert();
 	}
 
-	@AfterMethod
-	public void tearDown() {
-		LoginStartPage.get().logout();
-	}
+	   @AfterMethod
+	    public void tearDown() {
+	        StartPage.get().logout();
+	    }
 
 	@AfterClass
-	public void oneTimeTearDown() {
-		LoginStartPage.get().close();
-	}
+    public void oneTimeTearDown() {
+        BrowserUtils.closeAll();
+    }
 
 	@DataProvider
 	public Object[][] invalidUsers() {
@@ -56,8 +62,8 @@ public class LoginTest {
 
 	@Test(dataProvider = "invalidUsers")
 	public void checkInvalidLogin(IUser invalidUser, IUrls urls) throws InterruptedException {
-		LoginPage loginPage = LoginStartPage.get().load(urls);
-		LoginValidatorPage loginValidatorPage = loginPage.unsuccessfulLogin(UserRepository.get().getInvalidUser());
+		StartPage.get().load(startData);
+		LoginValidatorPage loginValidatorPage = StartPage.get().load().unsuccessfulLogin(invalidUser);
 		Thread.sleep(2000);
 		softAssert.assertEquals(loginValidatorPage.getValidatorText(), LoginValidatorPage.LOGIN_VALIDATOR_MESSAGE);
 		Thread.sleep(2000);
@@ -66,18 +72,18 @@ public class LoginTest {
 
 	@DataProvider
 	public Object[][] calibratorUsers() {
-		return new Object[][] { { UserRepository.get().getCalibratorUser(), UrlRepository.get().getLocalUrls() } };
+		return new Object[][] { { UserRepository.get().getCalibratorUser(), UrlRepository.get().getTrainingUrls() } };
 	}
 
 	@DataProvider
-	public Object[][] existUsersCVS() {
-		return CombineProvider.get().getExistUsersCVS(UrlRepository.get().getLocalUrls());
+	public Object[][] calibratorUsersCVS() {
+		return CombineProvider.get().getExistUsersCVS(UrlRepository.get().getTrainingUrls());
 	}
 
-	@Test(dataProvider = "existUsersCVS")
+	@Test(dataProvider = "calibratorUsers")
 	public void checkCalibratorLogin(IUser calibrator, IUrls urls) throws InterruptedException {
-		LoginPage loginPage = LoginStartPage.get().load(urls);
-		CalibratorHomePage calhomepage = loginPage.successCalLogin(UserRepository.get().getCalibratorUser());
+		StartPage.get().load(startData);
+        CalibratorHomePage calhomepage = StartPage.get().load().successCalLogin(calibrator);
 		Thread.sleep(2000);
 		softAssert.assertEquals(calhomepage.getLoginNameText(), LoginPage.LOGIN_ATTRIBUTES);
 		softAssert.assertEquals(calhomepage.getTitleText(), LoginPage.TITLE);
