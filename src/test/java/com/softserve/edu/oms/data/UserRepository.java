@@ -50,8 +50,8 @@ public final class UserRepository {
         // return new User("firstName1", "lastName1", "login1", "qwerty",
         // "mail@gmail.com", "East", "Customer");
         return User.get()
-                .setFirstname("firstName1")
-                .setLastname("lastName1")
+                .setFirstname("firstName")
+                .setLastname("lastName")
                 .setLogin("login")
                 //.setLogin("login1")
                 .setPassword("qwerty")
@@ -89,13 +89,13 @@ public final class UserRepository {
 
     public IUser getNewUser() {
         return User.get()
-                .setFirstname("cccc")
-                .setLastname("cccc")
-                .setLogin("cccc")
+                .setFirstname("cccca")
+                .setLastname("cccca")
+                .setLogin("cccca")
                 .setPassword("qwerty")
-                .setEmail("cccc@gmail.com")
-                .setRegion("West")
-                .setRole("Administrator")
+                .setEmail("cccca@gmail.com")
+                .setRegion("East")
+                .setRole("Customer")
                 .build();
     }
 

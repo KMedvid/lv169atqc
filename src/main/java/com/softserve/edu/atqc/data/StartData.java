@@ -9,7 +9,9 @@ public final class StartData {
     private String browserName;
     private String browserPath;
     private ABrowser browser;
-
+    // TODO Set Implicit and Explicit Waits
+    // TODO Set Sleep for Demo
+    
     public StartData() {
         this.login = new String();
         this.logout = new String();

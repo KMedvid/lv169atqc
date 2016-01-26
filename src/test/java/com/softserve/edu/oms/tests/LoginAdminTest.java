@@ -3,6 +3,8 @@ package com.softserve.edu.oms.tests;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -17,16 +19,30 @@ import com.softserve.edu.oms.pages.LoginValidatorPage;
 import com.softserve.edu.oms.pages.LoginValidatorPage.LoginPageMessages;
 
 public class LoginAdminTest {
-    StartData startData = new StartData("","","","chrome","");
+    StartData startData = new StartData("http://ssu-oms:8180/OMS/login.htm",
+            "http://ssu-oms:8180/OMS/logout.htm", "", "chrome", "");
 
-    @AfterMethod
-    public void tearDown() {
-        StartPage.get().logout();
+    @BeforeClass
+    public void oneTimeSetUp() {
+        System.out.println("@BeforeClass - oneTimeSetUp");
+        System.out.println("\t@BeforeClass - oneTimeSetUp, Thread Id = "
+                + Thread.currentThread().getId());
     }
 
     @AfterClass
     public void oneTimeTearDown() {
         BrowserUtils.quitAll();
+    }
+
+    @BeforeMethod
+    public void setUp() {
+        System.out.println("\t@BeforeMethod - setUp, Thread Id = "
+                + Thread.currentThread().getId());
+    }
+    
+    @AfterMethod
+    public void tearDown() {
+        StartPage.get().logout();
     }
 
     @DataProvider//(parallel = true)
@@ -40,6 +56,8 @@ public class LoginAdminTest {
     @Test(dataProvider = "allUsers")
     public void checkLogin(IUser user) throws InterruptedException {
         // Preconditions.
+        System.out.println("\tcheckLogin(), Thread Id = "
+                + Thread.currentThread().getId());
         StartPage.get().load(startData);
         // Test Steps.
         HomePage homepage = StartPage.get().load().successUserLogin(user);
@@ -104,14 +122,14 @@ public class LoginAdminTest {
             };
     }
 
-    // @Test(dataProvider = "invalidProvider")
+    //@Test(dataProvider = "invalidProvider")
     public void checkInvalidLogin(IUser invalidUser) {
         // Preconditions.
         StartPage.get().load(startData);
         // Test Steps.
         LoginValidatorPage loginValidatorPage = StartPage.get().load().unSuccesfulLogin(invalidUser);
         // Checking.
-        Assert.assertEquals(loginValidatorPage.getValidatorText(),
+        Assert.assertEquals(loginValidatorPage.getStartValidatorText(),
                 LoginPageMessages.START_VALIDATOR_MESSAGE.toString());
 //        AssertWrapper.get()
 //            .forElement(validatorLoginPage.getValidatorText())

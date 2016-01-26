@@ -55,7 +55,7 @@ public class LoginValidatorPage extends LoginPage {
     // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     public String getStartValidatorText() {
-        return this.controls.validator.getText().trim().substring(0,
+        return getValidatorText().trim().substring(0,
                 LoginPageMessages.START_VALIDATOR_MESSAGE.toString().length());
     }
 
