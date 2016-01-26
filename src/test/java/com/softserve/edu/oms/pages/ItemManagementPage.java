@@ -131,15 +131,7 @@ public class ItemManagementPage {
     public String getSearchFieldText() {
         return this.controls.searchField.getText();
     }
-    
-    public final ILabel productsFound;
-    public final ILabel name;
-    public final ILabel description;
-    public final ILabel price;
-    public final ILink edit;
-    public final ILink delete;
-    public final String  productsFoundText;
-    
+   
     // getters controlsTable
     public ILabel getProductsFound() {
         return this.controlsTable.productsFound;

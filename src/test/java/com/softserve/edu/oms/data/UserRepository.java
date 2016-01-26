@@ -61,6 +61,18 @@ public final class UserRepository {
                 .build();
     }
 
+    public IUser getSupervisorUser() {
+        return User.get()
+                .setFirstname("firstName3")
+                .setLastname("lastName3")
+                .setLogin("login3")
+                .setPassword("qwerty")
+                .setEmail("mail@gmail.com")
+                .setRegion("East")
+                .setRole("Supervisor")
+                .build();
+    }
+    
     public IUser getInvalidUser() {
         // return new User("ivanka", "horoshko", "iva1", "qwerty1",
         // "mail@gmail.com", "West", "Administrator");
