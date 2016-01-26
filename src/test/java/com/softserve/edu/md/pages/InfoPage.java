@@ -118,9 +118,10 @@ public abstract class InfoPage {
      * @return HomePage
      */
     public HomePage logout() {
-        ControlSearch.get().setExplicitStrategy();
         clickProfile();
         //TODO Explicitwait!
+//        while(!getLogout().isInvisible()){}
+//        ControlSearch.get().isInvisibleWebElement(controlLocation)
 //        (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
 //                .until(ExpectedConditions.visibilityOf(profilePopup.getLogout()));
         clickLogout();
