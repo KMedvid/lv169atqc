@@ -40,10 +40,10 @@ public class NewVerificationPage {
 		 * elements exist.
 		 */
 		public NewVerificationPageUIMap() {
-			this.clientdata = TextField.get().getByXpath("//table/thead/tr[2]/th[3]//input");
-			this.district = TextField.get().getByXpath("//table/thead/tr[2]/th[4]//input");
-			this.clientstreet = TextField.get().getByXpath("//table/thead/tr[2]/th[5]//input");
-			this.numberofhouse = TextField.get().getByXpath("//table/thead/tr[2]/th[6]//input");
+			this.clientdata = TextField.get().getByXpath("//th[3]//input");
+			this.district = TextField.get().getByXpath("//th[4]//input");
+			this.clientstreet = TextField.get().getByXpath("//th[5]//input");
+			this.numberofhouse = TextField.get().getByXpath("//th[6]//input");
 			this.options = Button.get().getByCssSelector("div i.fa.fa-caret-down");
 	//		this.logout = Button.get().getByXpath("//p[text()='Вилогуватись']");
 
@@ -94,8 +94,6 @@ public class NewVerificationPage {
 		getClientData().sendKeys(searchfilter);
 		String s = BrowserUtils.get().getBrowser().getWebDriver()
 				.findElement(By.xpath("//table/thead/tr[2]/th[3]")).getText();
-		// String s =
-		// driver.findElement(By.cssSelector("td.ng-pristine.ng-untouched.ng-valid.ng-binding")).getText();
 		return s;
 	}
 
@@ -108,8 +106,7 @@ public class NewVerificationPage {
 	public String searchDistrict(String searchfilter) {
 		getDistrict().sendKeys(searchfilter);
 		String s = BrowserUtils.get().getBrowser().getWebDriver()
-				.findElement(By.xpath("//table/thead/tr[2]/th[4]")).getText();
-		        
+				.findElement(By.xpath("//table/thead/tr[2]/th[4]")).getText();        
 		return s;
 	}
 
@@ -125,7 +122,6 @@ public class NewVerificationPage {
 		String s = BrowserUtils.get().getBrowser().getWebDriver()
 				.findElement(By.xpath("//table/thead/tr[2]/th[5]"))
 				.getText();
-
 		return s;
 	}
 
@@ -141,11 +137,6 @@ public class NewVerificationPage {
 				.findElement(By.xpath("//table/thead/tr[2]/th[6]"))
 				.getText();
 		return s;
-	}
-
-	// Return a new page object representing the destination.
-	public NewVerificationPage successVerifaction(IUser calibrator) {
-		return new NewVerificationPage();
 	}
 
 	/**
