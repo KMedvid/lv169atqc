@@ -45,11 +45,25 @@ public class StartPage {
         return new HomePage();
     }
 
+    // TODO Code Duplicate
+    public HomePage logout() {
+        StartData startData = BrowserUtils.get().getStartData();
+        if ((startData.getLogin() == null)
+                || (startData.getLogin().isEmpty())) {
+            // TODO Create class Exception + log + report.
+            throw new RuntimeException(START_PAGE_UNDEFINED);
+        }
+        return logout(startData);
+    }
+    
     public HomePage logout(StartData startData) {
         BrowserUtils.get().getBrowser().loadPage(startData.getLogout());
         return new HomePage();
     }
 
+
+    
+    
     public void quit() {
         BrowserUtils.get().getBrowser().quit();
     }

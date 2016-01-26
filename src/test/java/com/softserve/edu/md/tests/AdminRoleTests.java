@@ -10,13 +10,12 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.softserve.edu.atqc.data.StartData;
 import com.softserve.edu.md.data.AgreementRepository;
 import com.softserve.edu.md.data.IAgreement;
-import com.softserve.edu.md.data.IUser;
+import com.softserve.edu.md.data.StartPage;
 import com.softserve.edu.md.data.UserRepository;
-import com.softserve.edu.md.data.WaterType;
 import com.softserve.edu.md.pages.AgreementsPage;
-import com.softserve.edu.md.pages.MetersCategoryPage;
 
 public class AdminRoleTests {
     SoftAssert softAssert;
@@ -26,81 +25,42 @@ public class AdminRoleTests {
     @BeforeClass
     public void oneTimeSetUp() {
         softAssert = new SoftAssert();
-
+        StartPage.get().load(new StartData(
+                                "http://10.1.10.100:8080/#/start"
+                                ,"http://10.1.10.100:8080/#/logout"
+                                ,""
+                                ,"firefox"
+                                ,""));
     }
 
     @AfterMethod
     public void tearDown() {
-        LoginStartPage.get().logout();
+        StartPage.get().logout();
     }
 
     @AfterClass
     public void oneTimeTearDown() {
-        LoginStartPage.get().quit();
+        StartPage.get().quit();
     }
 
     @DataProvider
     public Object[][] existAdmins() {
-        return new Object[][] { { UserRepository.get().getAdminUser(), UrlRepository.get().getVmUrls() } };
+        return new Object[][] { { UserRepository.get().getAdminUser()} };
     }
 
     @DataProvider
-    public Object[][] newAreements() {
+    public Object[][] newAgreements() {
         return new Object[][] {
-                { AgreementRepository.get().getProviderAgreementCold(), UrlRepository.get().getVmUrls() },
-                { AgreementRepository.get().getLaboratoryAgreementHeated(), UrlRepository.get().getVmUrls() } };
+                { AgreementRepository.get().getProviderAgreementCold()},
+                { AgreementRepository.get().getLaboratoryAgreementHeated()} };
     }
 
-    @Test(dataProvider = "existAdmins")
-    public void checkAddingNewMeterCategory(IUser admin, IUrls urls) {
-        logger.info("TEST START: checkAddingNewMeterCategory");
-        final String CATEGORY_NAME = "Новий лічильник гарячої води";
-        final WaterType CATEGORY_WATER_TYPE = WaterType.HEATED;
-
-        // PreCondition
-        MetersCategoryPage metersCategoryPage = LoginStartPage.get().load(urls).gotoSignIn()
-                .successAdminLogin(UserRepository.get().getAdminUser()).gotoMetersCategory();
-
-        // Test Operation
-        metersCategoryPage.addNewMeterCategory(CATEGORY_WATER_TYPE, CATEGORY_NAME);
-        metersCategoryPage.initFirstTableRow();
-        metersCategoryPage.clickDeleteMeterCategory();
-
-        // Checking
-        Assert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
-        logger.info("TEST DONE: checkAddingNewMeterCategory");
-
-    }
-
-    @Test(dataProvider = "existAdmins")
-    public void checkAddingNewMeterCategoryFilterSearch(IUser admin, IUrls urls) {
-        final String CATEGORY_NAME = "Новий лічильник холодної води";
-        final WaterType CATEGORY_WATER_TYPE = WaterType.COLD;
-
-        logger.info("TEST START: checkAddingNewMeterCategoryFilterSearch");
-
-        // PreCondition
-        MetersCategoryPage metersCategoryPage = LoginStartPage.get().load(urls).gotoSignIn()
-                .successAdminLogin(UserRepository.get().getAdminUser()).gotoMetersCategory();
-
-        // Test Operation
-        metersCategoryPage.addNewMeterCategory(CATEGORY_WATER_TYPE, CATEGORY_NAME);
-        metersCategoryPage.initFirstTableRow();
-        softAssert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
-
-        metersCategoryPage.deleteMeterCategory(CATEGORY_WATER_TYPE, CATEGORY_NAME);
-        softAssert.assertEquals(metersCategoryPage.getMeterNameText(), CATEGORY_NAME);
-
-        softAssert.assertAll();
-        logger.info("TEST DONE: checkAddingNewMeterCategoryFilterSearch");
-
-    }
-
-    @Test(dataProvider = "newAreements")
-    public void checkAddingNewAgreement(IAgreement agreement, IUrls urls) {
+ 
+    @Test(dataProvider = "newAgreements")
+    public void checkAddingNewAgreement(IAgreement agreement) {
         logger.info("TEST START: checkAddingNewAgreement");
         // PreCondition
-        AgreementsPage agreementsPage = LoginStartPage.get().load(urls).gotoSignIn()
+        AgreementsPage agreementsPage = StartPage.get().load().gotoSignIn()
                 .successAdminLogin(UserRepository.get().getAdminUser()).gotoAgreements();
 
         // Test Operation
