@@ -1,7 +1,5 @@
 package com.softserve.edu.oms.data;
 
-import org.openqa.selenium.WebDriver;
-
 import com.softserve.edu.data.StartData;
 import com.softserve.edu.oms.pages.LoginPage;
 import com.softserve.edu.tools.BrowserUtils;

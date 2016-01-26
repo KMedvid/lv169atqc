@@ -36,11 +36,11 @@ public final class UserRepository {
         //
         //return user;
         return User.get()
-                .setFirstname("ivanka")
-                .setLastname("horoshko")
-                .setLogin("iva")
+                .setFirstname("Roman")
+                .setLastname("Kovalchuk")
+                .setLogin("roman")
                 .setPassword("qwerty")
-                .setEmail("mail@gmail.com")
+                .setEmail("roman@gmail.com")
                 .setRegion("West")
                 .setRole("Administrator")
                 .build();
@@ -52,7 +52,7 @@ public final class UserRepository {
         return User.get()
                 .setFirstname("firstName1")
                 .setLastname("lastName1")
-                .setLogin("login")
+                .setLogin("login1")
                 //.setLogin("login1")
                 .setPassword("qwerty")
                 .setEmail("mail@gmail.com")

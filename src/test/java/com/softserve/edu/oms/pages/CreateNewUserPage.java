@@ -395,8 +395,7 @@ public class CreateNewUserPage {
         setLastname(user.getLastname());
         setPassword(user.getPassword());
         setConfirmPassword(user.getPassword());
-        setEmail(user.getEmail());
-        
+        setEmail(user.getEmail());       
        // setRegion(getRegionByPartialText(user));
        // setRole(getRoleByPartialText(user));
         if (controls.isDisableValidators()) {

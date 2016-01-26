@@ -318,11 +318,14 @@ public class AdministrationPage {
         searchUser(user, AdministrationPageFields.LOGIN_NAME, AdministrationPageConditions.EQUALS);
     }
     
-    public void deleteByLoginName(IUser user) {
+    public void deleteByLoginName(IUser user) throws InterruptedException {
         searchByLoginName(user);
+        Thread.sleep(1000);
         clickDelete();
+        Thread.sleep(1000);
         // TODO Develop AlertWrapper
         acceptAlert();
+        Thread.sleep(1000);
     }
 
     public CreateNewUserPage gotoCreateNewUser() {
