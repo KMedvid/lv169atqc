@@ -4,7 +4,6 @@ import com.softserve.edu.atqc.controls.ILabel;
 import com.softserve.edu.atqc.controls.ILink;
 import com.softserve.edu.atqc.controls.Label;
 import com.softserve.edu.atqc.controls.Link;
-import com.softserve.edu.atqc.tools.ControlSearch;
 
 public abstract class InfoPage {
 
@@ -13,35 +12,92 @@ public abstract class InfoPage {
         public final ILabel title;
 
         public InfoPageUIMap() {
-            this.profile = Link.get().getByCssSelector("fa fa-caret-down");
+            this.profile = Link.get().getByCssSelector(".fa.fa-caret-down");
             this.title = Label.get().getByXpath("//a[@translate = 'HEAD_TITLE']");
         }
     }
 
-    private class ProfilePopupUIMap {
-        public final ILabel userName;
-        public final ILink profileInfo;
-        public final ILink settings;
-        public final ILink logout;
+    
+    private class ProfilePopupPage {
+        
+        private class ProfilePopupUIMap {
+            public final ILabel userName;
+            public final ILink profileInfo;
+            public final ILink settings;
+            public final ILink logout;
 
-        public ProfilePopupUIMap() {
-            this.userName = Label.get().getByXpath("//label[@class = 'userlabel ng-scope']");
-            this.profileInfo = Link.get().getByXpath("//div[@ui-sref = 'profile-info']");
-            this.settings = Link.get().getByXpath("//p[@translate = 'SETTINGS']");
-            this.logout = Link.get().getByXpath("//div[@ui-sref = 'profile-info']");
+            public ProfilePopupUIMap() {
+                this.userName = Label.get().getByCssSelector("userlabel ng-scope");//getByXpath("//label[@class = 'userlabel ng-scope']");
+                this.profileInfo = Link.get().getByXpath("//div[@ui-sref = 'profile-info']");
+                this.settings = Link.get().getByXpath("//p[@translate = 'SETTINGS']");
+                this.logout = Link.get().getByXpath("//div[@ui-sref = 'profile-info']");
+            }
+            
+        }
+        //Elements
+        private ProfilePopupUIMap controlsPopup;
+        
+        public ProfilePopupPage() {
+            this.controlsPopup = new ProfilePopupUIMap();
+        }
+        
+        public ILabel getUserName() {
+            return this.controlsPopup.userName;
         }
 
+        public String getUserNameText() {
+            return this.controlsPopup.userName.getText();
+        }
+
+        public ILink getProfileInfo() {
+            return this.controlsPopup.profileInfo;
+        }
+
+        public ILink getSettings() {
+            return this.controlsPopup.settings;
+        }
+
+        /**
+         * Popup window elements
+         */
+        public ILink getLogout() {
+            return this.controlsPopup.logout;
+        }
+        
+        /**
+         * Popup window elements
+         */
+        public void clickProfileInfo() {
+            this.controlsPopup.profileInfo.click();
+        }
+
+        /**
+         * Popup window elements
+         */
+        public void clickSettings() {
+            this.controlsPopup.settings.click();
+        }
+
+        /**
+         * Popup window elements
+         */
+        public void clickLogout() {
+            this.controlsPopup.logout.click();
+        }
+        
+        
+        
     }
+    
+    
     
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     // Elements
     private InfoPageUIMap controls;
-    private ProfilePopupUIMap controlsPopup;
 
     protected InfoPage() {
         this.controls = new InfoPageUIMap();
-        this.controlsPopup = new ProfilePopupUIMap();
     }
 
     // PageObject - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -65,50 +121,11 @@ public abstract class InfoPage {
     }
 
     // Get Elements
-    public ILabel getUserName() {
-        return this.controlsPopup.userName;
-    }
-
-    public String getUserNameText() {
-        return this.controlsPopup.userName.getText();
-    }
-
-    public ILink getProfileInfo() {
-        return this.controlsPopup.profileInfo;
-    }
-
-    public ILink getSettings() {
-        return this.controlsPopup.settings;
-    }
-
-    /**
-     * Popup window elements
-     */
-    public ILink getLogout() {
-        return this.controlsPopup.logout;
-    }
+  
 
     // Click Elements
-    /**
-     * Popup window elements
-     */
-    public void clickProfileInfo() {
-        this.controlsPopup.profileInfo.click();
-    }
 
-    /**
-     * Popup window elements
-     */
-    public void clickSettings() {
-        this.controlsPopup.settings.click();
-    }
-
-    /**
-     * Popup window elements
-     */
-    public void clickLogout() {
-        this.controlsPopup.logout.click();
-    }
+  
 
     // Business Logic
     /**
@@ -119,12 +136,13 @@ public abstract class InfoPage {
      */
     public HomePage logout() {
         clickProfile();
+        new ProfilePopupPage().clickLogout();
         //TODO Explicitwait!
 //        while(!getLogout().isInvisible()){}
 //        ControlSearch.get().isInvisibleWebElement(controlLocation)
 //        (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT))
 //                .until(ExpectedConditions.visibilityOf(profilePopup.getLogout()));
-        clickLogout();
+        //clickLogout();
         return new HomePage();
     }
 

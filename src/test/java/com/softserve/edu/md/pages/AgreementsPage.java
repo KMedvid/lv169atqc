@@ -49,8 +49,9 @@ public class AgreementsPage extends AdminHomePage {
                     .getByXpath("//tr[1]/td[@data-title-text = 'Виконавець']");
             this.waterType = Label.get()
                     .getByXpath("//tr[1]/td[@data-title-text = 'Вид лічильника']");
+            
             this.deleteAgreement = Link.get()
-                    .getByXpath("//tr[1]/td[7]/div/button[@class = 'btn btn-danger']");
+                  .getByCssSelector(".glyphicon.glyphicon-remove-sign.cancel_icon");
         }
         
     }
@@ -306,7 +307,7 @@ public class AgreementsPage extends AdminHomePage {
 //            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 //            (new WebDriverWait(driver, DEFAULT_EXPLICITLY_WAIT)).until(
 //                    ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text() = '" + executor + "']")));
-            Link.get().getByXpath("//span[text() = '" + executor + "']").click();
+            //Link.get().getByXpath("//span[text() = '" + executor + "']").click();
 
             clickSpanElementWithText(executor);
             //driver.findElement(By.xpath("//span[text() = '" + executor + "']")).click();

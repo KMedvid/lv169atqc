@@ -1,6 +1,7 @@
 package com.softserve.edu.md.data;
 public enum CustomerType {
-    PROVIDER("Постачальник послуг"), LABORATORY("Вимірювальна лабораторія");
+    PROVIDER("Надавач послуг"), 
+    LABORATORY("Вимірювальна лабораторія");
     //
     private String field;
 

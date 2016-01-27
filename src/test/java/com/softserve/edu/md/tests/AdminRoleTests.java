@@ -2,7 +2,6 @@ package com.softserve.edu.md.tests;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -18,19 +17,26 @@ import com.softserve.edu.md.data.UserRepository;
 import com.softserve.edu.md.pages.AgreementsPage;
 
 public class AdminRoleTests {
-    SoftAssert softAssert;
     public static final Logger logger = LoggerFactory.getLogger(AdminRoleTests.class);
-    
 
+    SoftAssert softAssert;
+    
     @BeforeClass
     public void oneTimeSetUp() {
         softAssert = new SoftAssert();
+//        StartPage.get().load(new StartData(
+//                                "http://java.training.local:8080/#/start"
+//                                ,"http://java.training.local:8080/#/logout"
+//                                ,""
+//                                ,"firefox"
+//                                ,""));
+//        
         StartPage.get().load(new StartData(
-                                "http://10.1.10.100:8080/#/start"
-                                ,"http://10.1.10.100:8080/#/logout"
-                                ,""
-                                ,"firefox"
-                                ,""));
+                "http://10.1.10.100:8080/#/start"
+                ,"http://10.1.10.100:8080/#/logout"
+                ,""
+                ,"firefox"
+                ,""));
     }
 
     @AfterMethod
@@ -51,8 +57,8 @@ public class AdminRoleTests {
     @DataProvider
     public Object[][] newAgreements() {
         return new Object[][] {
-                { AgreementRepository.get().getProviderAgreementCold()},
-                { AgreementRepository.get().getLaboratoryAgreementHeated()} };
+                { AgreementRepository.get().getProviderCalibratorAgreementCold()},
+                { AgreementRepository.get().getCalibratorVerificatorAgreementCold()} };
     }
 
  
@@ -70,11 +76,14 @@ public class AdminRoleTests {
         logger.info("TEST: initFirstTableRow");
         agreementsPage.initFirstTableRow();
 
+        logger.info("TEST: softAssert.assertEquals");
+        softAssert.assertEquals(agreementsPage.getCustomerText(), agreement.getCustomerName());
+
         logger.info("TEST: clickDeleteAgreement");
         agreementsPage.clickDeleteAgreement();
 
-        logger.info("TEST: Assert.assertEquals");
-        Assert.assertEquals(agreementsPage.getCustomerText(), agreement.getCustomerName());
+        logger.info("TEST: softAssert.assertAll");
+        softAssert.assertAll();
 
         logger.info("TEST DONE: checkAddingNewAgreement");
 

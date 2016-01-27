@@ -1,9 +1,5 @@
 package com.softserve.edu.md.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import com.softserve.edu.atqc.controls.ILink;
 import com.softserve.edu.atqc.controls.Link;
 

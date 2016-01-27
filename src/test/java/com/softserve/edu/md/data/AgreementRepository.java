@@ -17,15 +17,27 @@ public final class AgreementRepository {
         }
         return instance;
     }
-
-    public IAgreement getProviderAgreementCold() {
+    
+    public IAgreement getProviderCalibratorAgreementCold() {
         return Agreement.get()
                 .setWaterType(WaterType.COLD)
                 .setCustomerType(CustomerType.PROVIDER)
                 .setCustomerName("ЛКП «Львівводоканал»")
                 .setExecutorName("Київ калібратор")
-                .setAgreementCode("КДХ012345")
+                .setAgreementCode("ПК1234")
                 .setMetersQuantity(25)
+                .build();
+    }
+    
+    
+    public IAgreement getCalibratorVerificatorAgreementCold() {
+        return Agreement.get()
+                .setWaterType(WaterType.COLD)
+                .setCustomerType(CustomerType.LABORATORY )
+                .setCustomerName("Київ калібратор")
+                .setExecutorName("ПП «Повірик з Тернополя»")
+                .setAgreementCode("КВ1234")
+                .setMetersQuantity(50)
                 .build();
     }
 
