@@ -34,7 +34,7 @@ public class LoginValidatorPage extends LoginPage {
 	}
 
 	public String getValidatorText() {
-		return this.controls.validator.getAttribute("textContent");
+		return getValidator().getAttribute("textContent");
 	}
 
 }

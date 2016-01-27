@@ -64,13 +64,14 @@ public class StartPage {
             // TODO Create class Exception + log + report.
             throw new RuntimeException(START_PAGE_UNDEFINED);
         }
-        BrowserUtils.get().getBrowser().loadPage("http://java.training.local:8080/#/login");
+        BrowserUtils.get().getBrowser().loadPage("http://localhost:8080/#/login");
         return logout(startData);
     }
     
     public LoginPage logout(StartData startData) {
         BrowserUtils.get().getBrowser().loadPage(startData.getLogout());
-        BrowserUtils.get().getBrowser().loadPage("http://java.training.local:8080/#/login");
+        BrowserUtils.get().getBrowser().loadPage("http://localhost:8080/#/logout");
+        BrowserUtils.get().getBrowser().loadPage("http://localhost:8080/#/login");
         return new LoginPage();
     }
 

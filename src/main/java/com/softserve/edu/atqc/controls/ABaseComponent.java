@@ -13,7 +13,7 @@ public abstract class ABaseComponent<TComponent> {
         // TODO Create tComponent using Reflection API
         // tComponent = this;
     }
-
+ 
     public TComponent getById(String id) {
         return get(ControlLocation.getById(id));
     }

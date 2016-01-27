@@ -1,5 +1,7 @@
 package com.softserve.edu.md.tests;
 
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterClass;
@@ -23,44 +25,47 @@ import com.softserve.edu.md.pages.CalibratorHomePage;
 import com.softserve.edu.md.pages.LoginPage;
 import com.softserve.edu.md.pages.LoginStartPage;
 import com.softserve.edu.md.pages.LoginValidatorPage;
+import com.softserve.edu.md.pages.NewVerificationPage;
 
 /**
  * 
- * Testing if we can log in at page http://java.training.local:8080/#/login two tests in
- * this class using right and wrong data to login check if necessary elements
- * are present on page
+ * Testing if we can log in at page http://java.training.local:8080/#/login two
+ * tests in this class using right and wrong data to login check if necessary
+ * elements are present on page
  * 
  * @version 1.00
  * 
  * @author Me
  * 
  */
-public class LoginTest {
+public class SendtoCalibratorTest {
 	private SoftAssert softAssert;
-	public static final Logger logger = LoggerFactory.getLogger(LoginTest.class);
-	StartData startData = new StartData("http://java.training.local:8080/#/login","http://java.training.local:8080/#/logout","","firefox","");
-	
+	public static final Logger logger = LoggerFactory.getLogger(SendtoCalibratorTest.class);
+	StartData startData = new StartData("http://localhost:8080/#/login", "http://localhost:8080/#/logout", "", "firefox",
+			"");
+
 	@BeforeClass
 	public void oneTimeSetUp() {
 		softAssert = new SoftAssert();
+
 	}
 
-	   @AfterMethod
-	    public void tearDown() {
-	        StartPage.get().logout();
-	    }
+	@AfterMethod
+	public void tearDown() {
+		StartPage.get().logout();
+	}
 
 	@AfterClass
-    public void oneTimeTearDown() {
-        BrowserUtils.closeAll();
-    }
+	public void oneTimeTearDown() {
+		BrowserUtils.closeAll();
+	}
 
 	@DataProvider
 	public Object[][] invalidUsers() {
-		return new Object[][] { { UserRepository.get().getInvalidUser(), UrlRepository.get().getLocalUrls() } };
+		return new Object[][] { { UserRepository.get().getInvalidUser(), UrlRepository.get().getTrainingUrls() } };
 	}
 
-	@Test(dataProvider = "invalidUsers")
+	// @Test(dataProvider = "invalidUsers")
 	public void checkInvalidLogin(IUser invalidUser, IUrls urls) throws InterruptedException {
 		StartPage.get().load(startData);
 		LoginValidatorPage loginValidatorPage = StartPage.get().load().unsuccessfulLogin(invalidUser);
@@ -83,10 +88,13 @@ public class LoginTest {
 	@Test(dataProvider = "calibratorUsers")
 	public void checkCalibratorLogin(IUser calibrator, IUrls urls) throws InterruptedException {
 		StartPage.get().load(startData);
-        CalibratorHomePage calhomepage = StartPage.get().load().successCalLogin(calibrator);
+		CalibratorHomePage calhomepage = StartPage.get().load().successCalLogin(calibrator);
 		Thread.sleep(2000);
 		softAssert.assertEquals(calhomepage.getLoginNameText(), LoginPage.LOGIN_ATTRIBUTES);
 		softAssert.assertEquals(calhomepage.getTitleText(), LoginPage.TITLE);
+		NewVerificationPage news = calhomepage.gotoverificationpage();
+		news.sendTask();
+		softAssert.assertEquals(news.getTitle(),news.PAGE_TITLE);
 		Thread.sleep(2000);
 		softAssert.assertAll();
 	}

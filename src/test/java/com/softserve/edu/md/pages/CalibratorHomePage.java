@@ -8,6 +8,7 @@ import com.softserve.edu.atqc.controls.Button;
 import com.softserve.edu.atqc.controls.IButton;
 import com.softserve.edu.atqc.controls.ITextField;
 import com.softserve.edu.atqc.controls.TextField;
+import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.User;
 
@@ -47,7 +48,7 @@ public class CalibratorHomePage {
 		return this.controls.verificationPageButton;
 	}
 
-	public IButton calibratorTaskStationButton() {
+	public IButton getcalibratorTaskStationButton() {
 		return this.controls.calibratorTaskStationButton;
 	}
 
@@ -83,10 +84,30 @@ public class CalibratorHomePage {
 //		getOptions().click();
 //		clickLogout();
 	//}
-
+	
+	public void clickSelectPersonButton() throws InterruptedException{
+		BrowserUtils.get().getBrowser().getWebDriver().findElement(By.cssSelector("i.fa.fa-user.add_attached_user_icon")).click();
+	Thread.sleep(1000);
+		clickAcceptButton();
+	}
+	
+	private void clickAcceptButton(){
+		BrowserUtils.get().getBrowser().getWebDriver().findElement(By.cssSelector("button.btn.btn-success.pull-left.ng-binding")).click();
+	}
+	
+	public String getVerificationClientName(){
+		return BrowserUtils.get().getBrowser().getWebDriver().findElement(By.xpath("//tbody/tr/td[2]"))
+		.getText();
+	}
+	
 	 public NewVerificationPage gotoverificationpage(){
-	 this.controls.verificationPageButton.click();;
+		 getverificationPageButton().click();;
 	 return new NewVerificationPage();
 	 }
 
+	// public CalibratorTaskStationPage gotoCalibratorTaskStationPage{
+//		 getcalibratorTaskStationButton().click();;
+//	 return new CalibratorTaskStationPage;
+//	 }
+	 
 }

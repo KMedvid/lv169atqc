@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 
 class SearchImplicit extends ASearchContext {
     private static volatile SearchImplicit instance = null;
-    private long implicitlyWaitTimeout = 30L;
+    private long implicitlyWaitTimeout = 10L;
 
     private SearchImplicit() {
     }
@@ -24,6 +24,7 @@ class SearchImplicit extends ASearchContext {
         }
         BrowserUtils.get().getBrowser().getWebDriver()
             .manage().timeouts().implicitlyWait(instance.implicitlyWaitTimeout,TimeUnit.SECONDS);
+        SearchExplicit.get().setExplicitlyWaitTimeout(0L);
         return instance;
     }
 
@@ -38,9 +39,11 @@ class SearchImplicit extends ASearchContext {
     }
 
     WebElement getVisibleWebElement(ControlLocation controlLocation) {
+    	 BrowserUtils.get().getBrowser().getWebDriver()
+         .manage().timeouts().implicitlyWait(implicitlyWaitTimeout, TimeUnit.SECONDS);
         WebElement result = BrowserUtils.get().getBrowser().getWebDriver()
                 .findElement(controlLocation.getBy());
-        if (!(result.isDisplayed())) {
+        if (!(result.isEnabled() )) {
             // TODO
             //throw new ScreenCapturingCustomException(String.format(ASearchControl.ERROR_NOT_FOUND, controlLocation.getValue()));
             throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));

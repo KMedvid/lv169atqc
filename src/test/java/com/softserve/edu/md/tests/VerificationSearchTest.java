@@ -45,8 +45,8 @@ public class VerificationSearchTest {
 	private StartData startData;
 	@BeforeClass
 	public void oneTimeSetUp() {
-		startData = new StartData("http://java.training.local:8080/#/login",
-				"http://java.training.local:8080/#/logout","","firefox","");
+		startData = new StartData("http://localhost:8080/#/login",
+				"http://localhost:8080/#/logout","implicit","firefox","");
 		softAssert = new SoftAssert();
 	}
 
@@ -75,23 +75,31 @@ public class VerificationSearchTest {
         CalibratorHomePage calhomepage = StartPage.get().load().successCalLogin(calibrator);	
 		NewVerificationPage newVerificationPage = calhomepage.gotoverificationpage();
 		Thread.sleep(2000);
-		softAssert.assertEquals(newVerificationPage
-				.searchClientData(NewVerificationPage.SEARCH_CLIENT_NAMES_DATA), 
+		newVerificationPage.searchClientData(
 				NewVerificationPage.SEARCH_CLIENT_NAMES_DATA);
 		Thread.sleep(2000);
-		softAssert.assertEquals(newVerificationPage
-				.searchDistrict(NewVerificationPage.SEARCH_DISTRICT_DATA),
+		softAssert.assertEquals(
+				newVerificationPage.
+				getClientDataSearchResultText().substring(0, NewVerificationPage.SEARCH_CLIENT_NAMES_DATA.length()),
+		NewVerificationPage.SEARCH_CLIENT_NAMES_DATA);
+		newVerificationPage.searchDistrict(
 				NewVerificationPage.SEARCH_DISTRICT_DATA);
 		Thread.sleep(2000);
-		softAssert.assertEquals(newVerificationPage
-				.searchClientStreet(NewVerificationPage.SEARCH_STREET_DATA),
-				NewVerificationPage.SEARCH_STREET_DATA);
+		softAssert.assertEquals(
+				newVerificationPage.getDistrictSearchResultText(),
+				NewVerificationPage.SEARCH_DISTRICT_DATA);
+		newVerificationPage.searchClientStreet(newVerificationPage.SEARCH_STREET_DATA);
 		Thread.sleep(2000);
-    	softAssert.assertEquals(newVerificationPage
-    			.searchByNubmerOfHouse(NewVerificationPage.SERCH_NUMBER_OF_HOUSE_DATA),
-    			NewVerificationPage.SERCH_NUMBER_OF_HOUSE_DATA);
-    			Thread.sleep(2000);
-	//	newVerificationPage.gotoLogout();
+		softAssert.assertEquals(
+				newVerificationPage.getClientStreetSearchResultText(),
+		NewVerificationPage.SEARCH_STREET_DATA);
+		Thread.sleep(2000);
+		newVerificationPage.searchByNubmerOfHouse(newVerificationPage.SERCH_NUMBER_OF_HOUSE_DATA);
+		Thread.sleep(2000);
+		softAssert.assertEquals(
+				newVerificationPage.getNumberOfHouseSearchResultText(),
+		NewVerificationPage.SERCH_NUMBER_OF_HOUSE_DATA);
+		newVerificationPage.gotoLogout();
 		softAssert.assertAll();
 		
 	}
