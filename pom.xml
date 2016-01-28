@@ -109,6 +109,11 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19</version>
 				<configuration>
+					<systemPropertyVariables>
+						<surefire.reports.directory>
+							${testng.reports.directory}
+						</surefire.reports.directory>
+					</systemPropertyVariables>
 					<suiteXmlFiles>
 						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>

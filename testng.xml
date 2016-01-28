@@ -5,8 +5,8 @@
 	<test name="Test1">
 		<classes>
 			<!-- <class name="com.softserve.edu.oms.tests.FindTest"/> -->
-			<class name="com.softserve.edu.AppTest"/>
-			<!-- <class name="com.softserve.edu.LoginAdmin"/> -->
+			<!-- <class name="com.softserve.edu.AppTest"/> -->
+			<class name="com.softserve.edu.oms.tests.LoginAdminTest"/>
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -7,6 +7,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.atqc.exceptions.ScreenCapturingCustomException;
+
 class SearchImplicit extends ASearchContext {
     private static volatile SearchImplicit instance = null;
     private long implicitlyWaitTimeout = 30L;
@@ -38,12 +40,15 @@ class SearchImplicit extends ASearchContext {
     }
 
     WebElement getVisibleWebElement(ControlLocation controlLocation) {
+        // TODO Use try {} catch {}
         WebElement result = BrowserUtils.get().getBrowser().getWebDriver()
                 .findElement(controlLocation.getBy());
+        // TODO Generate Custom Exception
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++ isDisplayed ?
         if (!(result.isDisplayed())) {
             // TODO
-            //throw new ScreenCapturingCustomException(String.format(ASearchControl.ERROR_NOT_FOUND, controlLocation.getValue()));
-            throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
+            throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
+            //throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
         }
         return result;
     }
@@ -58,8 +63,8 @@ class SearchImplicit extends ASearchContext {
             }
         }
         if (countInvisibleWebElements == results.size()) {
-            //throw new ScreenCapturingCustomException(String.format(ASearchControl.ERROR_NOT_FOUND, controlLocation.getValue()));
-            throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
+            throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
+            //throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
         }
         return results;
     }
@@ -81,9 +86,10 @@ class SearchImplicit extends ASearchContext {
                 isWebElementInvisible = true;
                 break;
             } catch (Exception e) {
-//                throw new ScreenCapturingCustomException(
-//                        String.format(ASearchControl.ERROR_STILL_VISIBLE, controlLocation.getValue()));
-                throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE, controlLocation.getValue()));
+                throw new ScreenCapturingCustomException(
+                        String.format(ASearchContext.ERROR_STILL_VISIBLE, controlLocation.getValue()));
+//                throw new RuntimeException(
+//                        String.format(ASearchContext.ERROR_STILL_VISIBLE, controlLocation.getValue()));
             }
         }
         return isWebElementInvisible;
@@ -106,9 +112,10 @@ class SearchImplicit extends ASearchContext {
                 isWebElementInvisible = true;
                 break;
             } catch (Exception e) {
-//                throw new ScreenCapturingCustomException(
-//                        String.format(ASearchControl.ERROR_STILL_VISIBLE, controlLocation.getValue()));
-                throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE, controlLocation.getValue()));
+                throw new ScreenCapturingCustomException(
+                        String.format(ASearchContext.ERROR_STILL_VISIBLE, controlLocation.getValue()));
+//                throw new RuntimeException(
+//                        String.format(ASearchContext.ERROR_STILL_VISIBLE, controlLocation.getValue()));
             }
         }
         return isWebElementInvisible;
@@ -125,10 +132,10 @@ class SearchImplicit extends ASearchContext {
                 isStalenessWebElement = true;
                 break;
             } catch (Exception e) {
-//                throw new ScreenCapturingCustomException(String.format(ASearchControl.ERROR_STILL_VISIBLE,
-//                        webElementWrapper.getWebElement().getTagName()));
-                throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+                throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
                         controlWrapper.getWebElement().getTagName()));
+//                throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+//                        controlWrapper.getWebElement().getTagName()));
             }
         }
         return isStalenessWebElement;
@@ -146,9 +153,10 @@ class SearchImplicit extends ASearchContext {
             try {
                 Thread.sleep(ASearchContext.ONE_SECOND / 2);
             } catch (Exception e) {
-//                throw new ScreenCapturingCustomException(
-//                        String.format(ASearchControl.ERROR_TITLE_INVISIBLE, partialTitle));
-                throw new RuntimeException(String.format(ASearchContext.ERROR_TITLE_INVISIBLE, partialTitle));
+                throw new ScreenCapturingCustomException(
+                        String.format(ASearchContext.ERROR_TITLE_INVISIBLE, partialTitle));
+//                throw new RuntimeException(
+//                        String.format(ASearchContext.ERROR_TITLE_INVISIBLE, partialTitle));
             }
         }
         return isVisibleTitlePage;

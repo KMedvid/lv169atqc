@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.atqc.data.StartData;
+import com.softserve.edu.atqc.exceptions.ScreenCapturingCustomException;
 import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.StartPage;
@@ -49,11 +50,20 @@ public class LoginAdminTest {
     public Object[][] allUsers() {
         return new Object[][] {
                 { UserRepository.get().getAdminUser() },
-                { UserRepository.get().getCustomerUser() }
+                //{ UserRepository.get().getCustomerUser() }
                 };
     }
-
+    
     @Test(dataProvider = "allUsers")
+    public void checkLoadPage(IUser user) {
+        // Preconditions.
+        System.out.println("\tcheckLogin(), Thread Id = " + Thread.currentThread().getId());
+        StartPage.get().load(startData);
+        // Check Load Page
+        throw new ScreenCapturingCustomException("ERROR");
+    }
+
+    //@Test(dataProvider = "allUsers")
     public void checkLogin(IUser user) throws InterruptedException {
         // Preconditions.
         System.out.println("\tcheckLogin(), Thread Id = "
