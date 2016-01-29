@@ -2,6 +2,7 @@ package com.softserve.edu.oms.data;
 
 import com.softserve.edu.atqc.data.StartData;
 import com.softserve.edu.atqc.tools.BrowserUtils;
+import com.softserve.edu.atqc.tools.PageObserveLoad;
 import com.softserve.edu.oms.pages.LoginPage;
 
 public class StartPage {
@@ -70,6 +71,15 @@ public class StartPage {
     public LoginPage logout(StartData startData) {
         BrowserUtils.get().getBrowser().loadPage(startData.getLogout());
         return new LoginPage();
+    }
+
+    public void addEventsPageLoadComplete() {
+        PageObserveLoad.get().addLoadCompleteEvent(new PageLoadComplete());
+        //PageObserveLoad.get().addLoadCompleteEvent(new PageLoadComplete2());
+    }
+
+    public void clearEventsPageLoadComplete() {
+        PageObserveLoad.get().deleteLoadCompleteEvents();
     }
 
     public void quit() {

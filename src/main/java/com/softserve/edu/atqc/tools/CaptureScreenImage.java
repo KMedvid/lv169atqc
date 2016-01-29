@@ -61,9 +61,7 @@ public class CaptureScreenImage {
 		try {
 		    // TODO Remove Thread sleep. 
 		    //Thread.sleep(2000);
-		    // TODO ++++++++++++++++++++++
-		    if (true) {
-            //if (ContextUtils.get().isLoadComplete()) {
+            if (PageObserveLoad.get().isLoadComplete()) {
                 File srcFile = ((TakesScreenshot) BrowserUtils.get()
                         .getBrowser().getWebDriver()).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(srcFile, new File(absolutePathFileName));

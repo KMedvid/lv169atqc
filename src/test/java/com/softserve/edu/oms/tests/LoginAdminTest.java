@@ -37,6 +37,7 @@ public class LoginAdminTest {
 
     @BeforeMethod
     public void setUp() {
+        StartPage.get().addEventsPageLoadComplete();
         System.out.println("\t@BeforeMethod - setUp, Thread Id = "
                 + Thread.currentThread().getId());
     }
@@ -55,12 +56,14 @@ public class LoginAdminTest {
     }
     
     @Test(dataProvider = "allUsers")
-    public void checkLoadPage(IUser user) {
+    public void checkLoadPage(IUser user) throws InterruptedException {
         // Preconditions.
         System.out.println("\tcheckLogin(), Thread Id = " + Thread.currentThread().getId());
         StartPage.get().load(startData);
+        //BrowserUtils.get().getBrowser().getWebDriver().navigate().to("http://java.training.local:8080/#/start");
+        //Thread.sleep(1000);
         // Check Load Page
-        throw new ScreenCapturingCustomException("ERROR");
+        throw new ScreenCapturingCustomException("Run ScreenCapturingCustomException()");
     }
 
     //@Test(dataProvider = "allUsers")

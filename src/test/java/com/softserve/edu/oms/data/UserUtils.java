@@ -3,6 +3,9 @@ package com.softserve.edu.oms.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.softserve.edu.atqc.data.CSVUtils;
+import com.softserve.edu.atqc.data.IExternalData;
+
 public final class UserUtils {
     private String filename;
     private IExternalData externalData;

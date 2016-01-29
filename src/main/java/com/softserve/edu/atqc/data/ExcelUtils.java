@@ -1,4 +1,4 @@
-package com.softserve.edu.oms.data;
+package com.softserve.edu.atqc.data;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

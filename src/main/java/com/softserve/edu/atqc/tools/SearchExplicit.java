@@ -11,7 +11,7 @@ import com.softserve.edu.atqc.exceptions.ScreenCapturingCustomException;
 
 class SearchExplicit extends ASearchContext {
     private static volatile SearchExplicit instance = null;
-    private long explicitlyWaitTimeout = 4L; //30L;
+    private long explicitlyWaitTimeout = 30L; //4L; //30L;
     
     private SearchExplicit() {
     }
