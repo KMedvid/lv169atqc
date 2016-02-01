@@ -26,6 +26,7 @@ class SearchImplicit extends ASearchContext {
         }
         BrowserUtils.get().getBrowser().getWebDriver()
             .manage().timeouts().implicitlyWait(instance.implicitlyWaitTimeout,TimeUnit.SECONDS);
+        // TODO Set Implicit Wait for PageLoad and Script
         return instance;
     }
 
@@ -40,12 +41,16 @@ class SearchImplicit extends ASearchContext {
     }
 
     WebElement getVisibleWebElement(ControlLocation controlLocation) {
-        // TODO Use try {} catch {}
+        // TODO Use try {} catch {} for Custom Exceptions
         WebElement result = BrowserUtils.get().getBrowser().getWebDriver()
                 .findElement(controlLocation.getBy());
         // TODO Generate Custom Exception
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++ isDisplayed ?
+        System.out.println("\t**********Web Element " + result.getTagName()
+                + "  text " + result.getText()
+                + "  result.isDisplayed() = "+ result.isDisplayed());
         if (!(result.isDisplayed())) {
+            System.out.println("");
             // TODO
             throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
             //throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));

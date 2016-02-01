@@ -10,7 +10,9 @@ public class ControlSearch {
     private ASearchContext context;
 
     private ControlSearch() {
-        this.context = ContextRepository.get().getSearchExplicit();
+        // Set Strategy by Default.
+        //this.context = ContextRepository.get().getSearchExplicit();
+        this.context = ContextRepository.get().getSearchImplicit();
     }
 
     public static ControlSearch get() {
@@ -51,6 +53,7 @@ public class ControlSearch {
      * page and visible.
      */
     WebElement getVisibleWebElement(ControlLocation controlLocation) {
+        System.out.println("\t***** ControlSearch getVisibleWebElement()");
         isLoadComplete();
         return context.getVisibleWebElement(controlLocation);
     }

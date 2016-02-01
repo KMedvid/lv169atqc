@@ -10,6 +10,7 @@ public final class StartData {
     private String browserPath;
     private ABrowser browser;
     // TODO Set Implicit and Explicit Waits
+    // TODO Set Logger Strategy
     // TODO Set Sleep for Demo
     
     public StartData() {

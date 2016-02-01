@@ -1,5 +1,6 @@
 package com.softserve.edu.atqc.exceptions;
 
+import com.softserve.edu.atqc.loggers.LoggerUtils;
 import com.softserve.edu.atqc.tools.CaptureScreenImage;
 
 public class ScreenCapturingCustomException extends GeneralCustomException {
@@ -19,10 +20,8 @@ public class ScreenCapturingCustomException extends GeneralCustomException {
 
     private void takeScreenshot() {
         String fileNamePath = CaptureScreenImage.get().captureAndSaveScreen();
-        // TODO +++
-        System.out.println("+++" + SCREENSHOT_FILENAME + fileNamePath);
-        //LoggerUtils.get().errorLog(SCREENSHOT_FILENAME + fileNamePath);
-        //LoggerUtils.get().insertScreenShot(fileNamePath);
+        LoggerUtils.get().errorLog(SCREENSHOT_FILENAME + fileNamePath);
+        LoggerUtils.get().insertScreenShot(fileNamePath);
     }
 
 }
