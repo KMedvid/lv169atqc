@@ -22,9 +22,9 @@ import com.softserve.edu.md.data.IUser;
 import com.softserve.edu.md.data.User;
 
 public class NewVerificationPage {
-	public static final String SERCH_NUMBER_OF_HOUSE_DATA = "12, 18";
+	public static final String SERCH_NUMBER_OF_HOUSE_DATA = "33,15";
 	public static final String SEARCH_STREET_DATA = "Лукаша";
-	public static final String SEARCH_CLIENT_NAMES_DATA = "Чопик";
+	public static final String SEARCH_CLIENT_NAMES_DATA = "Скала";
 	public static final String SEARCH_DISTRICT_DATA = "Львівський";
 	public static final String SEARCH_CREATE_CLIENT_NAMES_DATA = "Тест";
 	public static final String PAGE_TITLE = "Нові Повірки";
@@ -41,7 +41,6 @@ public class NewVerificationPage {
 		public IButton topcheckbox;
 		public IButton options;
 		public IButton sendtaskbutton;
-		// public IButton logout;
 
 		/**
 		 * Constructor of New Verifications Home Page. Check if all necessary
@@ -143,6 +142,10 @@ public class NewVerificationPage {
 		return this.controls.searchByclientdata;
 	}
 
+	public ITextField getsearchByclientdata() {
+		return this.controls.searchByclientdata;
+	}
+	
 	public ITextField getsearchByClientStreet() {
 		return this.controls.searchByclientstreet;
 	}
@@ -182,7 +185,7 @@ public class NewVerificationPage {
 	 */
 
 	public void searchClientData(String searchfilter) throws InterruptedException {
-		getClientData().sendKeys(searchfilter);
+		getsearchByclientdata().sendKeys(searchfilter);
 	}
 
 	/**

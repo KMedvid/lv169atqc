@@ -39,8 +39,8 @@ class SearchImplicit extends ASearchContext {
     }
 
     WebElement getVisibleWebElement(ControlLocation controlLocation) {
-    	 BrowserUtils.get().getBrowser().getWebDriver()
-         .manage().timeouts().implicitlyWait(implicitlyWaitTimeout, TimeUnit.SECONDS);
+    	BrowserUtils.get().getBrowser().getWebDriver()
+        .manage().timeouts().implicitlyWait(implicitlyWaitTimeout, TimeUnit.SECONDS);
         WebElement result = BrowserUtils.get().getBrowser().getWebDriver()
                 .findElement(controlLocation.getBy());
         if (!(result.isEnabled() )) {

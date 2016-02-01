@@ -38,9 +38,9 @@ import com.softserve.edu.md.pages.NewVerificationPage;
  * @author Me
  * 
  */
-public class SendtoCalibratorTest {
+public class SendtoCalibratorStationTest {
 	private SoftAssert softAssert;
-	public static final Logger logger = LoggerFactory.getLogger(SendtoCalibratorTest.class);
+	public static final Logger logger = LoggerFactory.getLogger(SendtoCalibratorStationTest.class);
 	StartData startData = new StartData("http://localhost:8080/#/login", "http://localhost:8080/#/logout", "", "firefox",
 			"");
 

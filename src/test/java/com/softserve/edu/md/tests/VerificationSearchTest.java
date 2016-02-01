@@ -74,7 +74,6 @@ public class VerificationSearchTest {
 		StartPage.get().load(startData);
         CalibratorHomePage calhomepage = StartPage.get().load().successCalLogin(calibrator);	
 		NewVerificationPage newVerificationPage = calhomepage.gotoverificationpage();
-		Thread.sleep(2000);
 		newVerificationPage.searchClientData(
 				NewVerificationPage.SEARCH_CLIENT_NAMES_DATA);
 		Thread.sleep(2000);
@@ -82,17 +81,23 @@ public class VerificationSearchTest {
 				newVerificationPage.
 				getClientDataSearchResultText().substring(0, NewVerificationPage.SEARCH_CLIENT_NAMES_DATA.length()),
 		NewVerificationPage.SEARCH_CLIENT_NAMES_DATA);
+		newVerificationPage.getsearchByclientdata().clear();
+		Thread.sleep(2000);
 		newVerificationPage.searchDistrict(
 				NewVerificationPage.SEARCH_DISTRICT_DATA);
+		
 		Thread.sleep(2000);
 		softAssert.assertEquals(
 				newVerificationPage.getDistrictSearchResultText(),
 				NewVerificationPage.SEARCH_DISTRICT_DATA);
+		newVerificationPage.getsearchByDistrict().clear();
 		newVerificationPage.searchClientStreet(newVerificationPage.SEARCH_STREET_DATA);
+		
 		Thread.sleep(2000);
 		softAssert.assertEquals(
 				newVerificationPage.getClientStreetSearchResultText(),
 		NewVerificationPage.SEARCH_STREET_DATA);
+		newVerificationPage.getsearchByClientStreet().clear();
 		Thread.sleep(2000);
 		newVerificationPage.searchByNubmerOfHouse(newVerificationPage.SERCH_NUMBER_OF_HOUSE_DATA);
 		Thread.sleep(2000);
