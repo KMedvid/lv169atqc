@@ -77,6 +77,15 @@ public class ControlSearch {
     }
 
     /**
+     * An expectation for checking an element is visible and enabled such that
+     * you can click it.
+     */
+    public boolean isClickableWebElement(ControlLocation controlLocation) {
+        isLoadComplete();
+        return context.isClickableWebElement(controlLocation);
+    }
+    
+    /**
      * An expectation for checking that an element is either invisible or not
      * present on the DOM.
      */

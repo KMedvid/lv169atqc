@@ -1,11 +1,11 @@
 package com.softserve.edu.md.tests;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.atqc.controls.Button;
-import com.softserve.edu.atqc.controls.ILink;
+import com.softserve.edu.atqc.controls.LabelClickable;
 import com.softserve.edu.atqc.controls.Link;
 import com.softserve.edu.atqc.controls.TextField;
 import com.softserve.edu.atqc.data.StartData;
@@ -17,7 +17,7 @@ public class VerificatorTest {
 
     @AfterClass
     public void oneTimeTearDown() {
-        BrowserUtils.quitAll();
+        //BrowserUtils.quitAll();
     }
 
     @Test
@@ -31,15 +31,22 @@ public class VerificatorTest {
         TextField.get().getById("inputPassword").sendKeys("pass");
         Button.get().getByXpath("//button[@type='submit']").click();
         //
+        LabelClickable.get().getByXpath("//span[@translate='EMPLOYEE']").click();
+        Button.get().getByXpath("//button[@ng-click='openAddEmployeeModal()']").click();
+        Button.get().getByXpath("//button[@ng-click='closeModal()']").click();
+        Button.get().getByXpath("//button[@ng-click='submit()']").click();
         //
-//        driver.findElement(By.cssSelector("span.ng-scope")).click();
-//        driver.findElement(By.xpath("//button[@ng-click='openAddEmployeeModal()']")).click();
-//        driver.findElement(By.xpath("//button[@ng-click='closeModal()']")).click();
-//        //
-//        //driver.findElement(By.cssSelector("i.fa.fa-caret-down")).click();
-//        driver.findElement(By.partialLinkText("��� ������")).click();
-//        driver.findElement(By.xpath("//div[@ng-click='logout()']")).click();
-//        System.out.println("\t*** logout done ***");
+        //LabelClickable.get().getByPartialLinkText("Оззі Озборн").click();
+        //LabelClickable.get().getByCssSelector("i.fa.fa-caret-down").click();
+        Thread.sleep(1000);
+        System.out.println(" +++++ opacity ="
+                + (boolean) ((JavascriptExecutor) BrowserUtils.get().getBrowser()
+                        .getWebDriver()).executeScript("return $('#employeeModule')[0].style.opacity == ''")
+                );
+        Link.get().getByXpath("//a[@class='dropdown-toggle']").click();
+        LabelClickable.get().getByXpath("//div[@ng-click='logout()']").click();
+        //
+        System.out.println("\t*** logout done ***");
         //
         //((JavascriptExecutor) driver).executeScript(" $http({method: 'POST', url: 'logout'}).then(function () {window.location.replace('.'); });");
         //((JavascriptExecutor) driver).executeScript(" document.location.href = 'localhost:8080/#/logout';");

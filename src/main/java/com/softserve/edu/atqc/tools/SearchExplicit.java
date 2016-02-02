@@ -26,6 +26,10 @@ class SearchExplicit extends ASearchContext {
         }
         BrowserUtils.get().getBrowser().getWebDriver()
             .manage().timeouts().implicitlyWait(0L, TimeUnit.SECONDS);
+//        BrowserUtils.get().getBrowser().getWebDriver()
+//            .manage().timeouts().pageLoadTimeout(0L, TimeUnit.SECONDS);
+//        BrowserUtils.get().getBrowser().getWebDriver()
+//            .manage().timeouts().setScriptTimeout(0L, TimeUnit.SECONDS);
         return instance;
     }
 
@@ -107,8 +111,32 @@ class SearchExplicit extends ASearchContext {
         return webElement;
     }
     
+    boolean isClickableWebElement(ControlLocation controlLocation) {
+        boolean clickableWebElement = false;
+        try {
+            clickableWebElement = (new WebDriverWait(
+                    BrowserUtils.get().getBrowser().getWebDriver(),
+                        getExplicitlyWaitTimeout())
+                .until(ExpectedConditions
+                    .elementToBeClickable(controlLocation.getBy()))) != null;
+            System.out.println(" +++++++clickableWebElement = "+clickableWebElement);
+        } catch (Exception e) {
+            throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+                    controlLocation.getValue()));
+//            throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+//                    controlLocation.getValue()));
+        }
+        if (!clickableWebElement) {
+            throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+                    controlLocation.getValue()));
+//            throw new RuntimeException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
+//                    controlLocation.getValue()));
+        }
+        return clickableWebElement;
+    }
+
     boolean isInvisibleWebElement(ControlLocation controlLocation){
-        Boolean invisibilityWebElement = false;
+        boolean invisibilityWebElement = false;
         try {
             invisibilityWebElement = new WebDriverWait(
                     BrowserUtils.get().getBrowser().getWebDriver(),
@@ -131,7 +159,7 @@ class SearchExplicit extends ASearchContext {
     }
     
     boolean isInvisibleWebElementWithText(ControlLocation controlLocation, String text){
-        Boolean invisibilityWebElement = false;
+        boolean invisibilityWebElement = false;
         try {
             invisibilityWebElement = new WebDriverWait(
                     BrowserUtils.get().getBrowser().getWebDriver(),
@@ -154,7 +182,7 @@ class SearchExplicit extends ASearchContext {
     }
     
     boolean isStatelessOfWebElement(ControlWrapper controlWrapper){
-        Boolean statelessOfWebElement = true;
+        boolean statelessOfWebElement = true;
         try {
             statelessOfWebElement = new WebDriverWait(
                     BrowserUtils.get().getBrowser().getWebDriver(),
@@ -177,7 +205,7 @@ class SearchExplicit extends ASearchContext {
     }
     
     boolean isVisibleTitle(String partialTitle){
-        Boolean visibleTitle = false;
+        boolean visibleTitle = false;
         try {
             visibleTitle = new WebDriverWait(
                     BrowserUtils.get().getBrowser().getWebDriver(),

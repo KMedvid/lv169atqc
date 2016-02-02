@@ -11,7 +11,7 @@ import com.softserve.edu.atqc.exceptions.ScreenCapturingCustomException;
 
 class SearchImplicit extends ASearchContext {
     private static volatile SearchImplicit instance = null;
-    private long implicitlyWaitTimeout = 30L;
+    private long implicitlyWaitTimeout = 10L; // 30L;
 
     private SearchImplicit() {
     }
@@ -27,6 +27,10 @@ class SearchImplicit extends ASearchContext {
         BrowserUtils.get().getBrowser().getWebDriver()
             .manage().timeouts().implicitlyWait(instance.implicitlyWaitTimeout,TimeUnit.SECONDS);
         // TODO Set Implicit Wait for PageLoad and Script
+//        BrowserUtils.get().getBrowser().getWebDriver()
+//            .manage().timeouts().pageLoadTimeout(instance.implicitlyWaitTimeout,TimeUnit.SECONDS);
+//        BrowserUtils.get().getBrowser().getWebDriver()
+//            .manage().timeouts().setScriptTimeout(instance.implicitlyWaitTimeout,TimeUnit.SECONDS);
         return instance;
     }
 
@@ -41,23 +45,43 @@ class SearchImplicit extends ASearchContext {
     }
 
     WebElement getVisibleWebElement(ControlLocation controlLocation) {
-        // TODO Use try {} catch {} for Custom Exceptions
-        WebElement result = BrowserUtils.get().getBrowser().getWebDriver()
-                .findElement(controlLocation.getBy());
-        // TODO Generate Custom Exception
-        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++ isDisplayed ?
-        System.out.println("\t**********Web Element " + result.getTagName()
-                + "  text " + result.getText()
-                + "  result.isDisplayed() = "+ result.isDisplayed());
-        if (!(result.isDisplayed())) {
-            System.out.println("");
-            // TODO
-            throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
-            //throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND, controlLocation.getValue()));
+        WebElement result = null;
+        long beginTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - beginTime < ASearchContext.ONE_SECOND * getImplicitlyWaitTimeout()) {
+            try {
+                result = BrowserUtils.get().getBrowser().getWebDriver()
+                        .findElement(controlLocation.getBy());
+                if ((result != null) 
+                        && (result.isDisplayed())) {
+                    break;
+                }
+                Thread.sleep(ASearchContext.ONE_SECOND / 2);
+            } catch (NoSuchElementException e) {
+                throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_NOT_FOUND,
+                        controlLocation.getValue()));
+                //throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND,
+                //controlLocation.getValue()));
+            } catch (Exception e) {
+                throw new ScreenCapturingCustomException(ASearchContext.ERROR_BY_SEARCH, e);
+            }
+        }
+        System.out.println("\t**********Web Element " + result.getTagName() + "  text " + result.getText()
+                + "  result.isDisplayed() = " + result.isDisplayed()
+                + "  result.isEnabled() = " + result.isEnabled()
+                + "  result.isSelected() = " + result.isSelected());
+        if ((result == null)
+                || (!(result.isDisplayed()))) {
+            System.out.println("\t*************throw new ScreenCapturingCustomException");
+            // TODO Code Duplicate
+            throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_NOT_FOUND,
+                    controlLocation.getValue()));
+            //throw new RuntimeException(String.format(ASearchContext.ERROR_NOT_FOUND,
+            //controlLocation.getValue()));
         }
         return result;
     }
 
+    // TODO getPresentElements
     List<WebElement> getVisibleWebElements(ControlLocation controlLocation) {
         int countInvisibleWebElements = 0;
         List<WebElement> results = BrowserUtils.get().getBrowser().getWebDriver()
@@ -78,7 +102,12 @@ class SearchImplicit extends ASearchContext {
         return BrowserUtils.get().getBrowser().getWebDriver()
                 .findElement(controlLocation.getBy());
     }
-
+    
+    boolean isClickableWebElement(ControlLocation controlLocation) {
+        // TODO Use Explicit
+        return true;
+    }
+    
     boolean isInvisibleWebElement(ControlLocation controlLocation) {
         boolean isWebElementInvisible = false;
         long beginTime = System.currentTimeMillis();

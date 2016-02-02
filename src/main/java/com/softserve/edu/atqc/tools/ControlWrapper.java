@@ -3,9 +3,14 @@ package com.softserve.edu.atqc.tools;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.atqc.exceptions.ScreenCapturingCustomException;
+
 public class ControlWrapper {
+    private final String ELEMENT_NOT_CLICKABLE = "Element is not clickable %s";
+    private final String ERROR_ON_CLICK = "Error on click";
     private final String INVALID_TAG = "Invalid Tag. Must be <a>";
     private final String TAG_A = "a";
     private final String ATTRIBUTE_HREF = "href";
@@ -80,7 +85,14 @@ public class ControlWrapper {
     }
 
     public void click() {
-        getWebElement().click();
+        try {
+            getWebElement().click();
+        } catch (WebDriverException e) {
+            throw new ScreenCapturingCustomException(
+                    String.format(ELEMENT_NOT_CLICKABLE, getWebElement().getTagName()));
+        } catch (Exception e) {
+            throw new ScreenCapturingCustomException(ERROR_ON_CLICK, e);
+        }
     }
 
     public boolean isDisplayed() {
