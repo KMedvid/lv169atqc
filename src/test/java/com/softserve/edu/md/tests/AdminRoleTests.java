@@ -24,13 +24,7 @@ public class AdminRoleTests {
     @BeforeClass
     public void oneTimeSetUp() {
         softAssert = new SoftAssert();
-//        StartPage.get().load(new StartData(
-//                                "http://java.training.local:8080/#/start"
-//                                ,"http://java.training.local:8080/#/logout"
-//                                ,""
-//                                ,"firefox"
-//                                ,""));
-//        
+
         StartPage.get().load(new StartData(
                 "http://10.1.10.100:8080/#/start"
                 ,"http://10.1.10.100:8080/#/logout"
