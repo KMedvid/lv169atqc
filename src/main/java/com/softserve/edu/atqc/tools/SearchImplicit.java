@@ -6,12 +6,13 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.softserve.edu.atqc.exceptions.ScreenCapturingCustomException;
 
 class SearchImplicit extends ASearchContext {
     private static volatile SearchImplicit instance = null;
-    private long implicitlyWaitTimeout = 10L; // 30L;
+    private long implicitlyWaitTimeout = 8L; // 30L;
 
     private SearchImplicit() {
     }
@@ -104,7 +105,12 @@ class SearchImplicit extends ASearchContext {
     }
     
     boolean isClickableWebElement(ControlLocation controlLocation) {
-        // TODO Use Explicit
+        // TODO Use Explicit Wait or Pattern Observe
+//        System.out.println("\t +++isClickableWebElement controlLocation="+controlLocation.getValue());
+        //getVisibleWebElement(controlLocation).sendKeys("");
+//        new Actions(BrowserUtils.get().getBrowser().getWebDriver())
+//            .moveToElement(getVisibleWebElement(controlLocation)).perform();
+//        System.out.println("\t +++   set Focus DONE");
         return true;
     }
     

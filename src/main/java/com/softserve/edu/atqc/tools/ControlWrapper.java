@@ -85,6 +85,32 @@ public class ControlWrapper {
     }
 
     public void click() {
+        // TODO It is Workaround
+        boolean clickDone = false;
+        long beginTime = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - beginTime < ASearchContext.ONE_SECOND
+                    * SearchImplicit.get().getImplicitlyWaitTimeout())
+                && (!clickDone)) {
+            try {
+                getWebElement().click();
+                clickDone = true;
+                break;
+            } catch (WebDriverException e) {
+                try {
+                    Thread.sleep(ASearchContext.ONE_SECOND / 2);
+                } catch (InterruptedException e1) {
+                    throw new ScreenCapturingCustomException(
+                            String.format(ELEMENT_NOT_CLICKABLE, getWebElement().getTagName()));
+                }
+            } catch (Exception e) {
+                throw new ScreenCapturingCustomException(
+                        String.format(ELEMENT_NOT_CLICKABLE, getWebElement().getTagName()));
+            }
+        }
+        if (clickDone) {
+            return;
+        }
+        // Original Version
         try {
             getWebElement().click();
         } catch (WebDriverException e) {
@@ -117,8 +143,11 @@ public class ControlWrapper {
     }
 
     public void setFocus() {
-        // TODO Make Visible. Scrolling browser
+        // TODO Make Visible. Scrolling browser. Use Actions Class. 
         sendKeys(new String());
+//        new Actions(BrowserUtils.get().getBrowser().getWebDriver())
+//        .moveToElement(getVisibleWebElement(controlLocation)).perform();
+
     }
 
     public void submit() {

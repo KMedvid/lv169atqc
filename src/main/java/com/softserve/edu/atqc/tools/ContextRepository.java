@@ -19,8 +19,8 @@ public final class ContextRepository {
 
     public ASearchContext getSearchDefault() {
         System.out.println("\t****++++getSearchDefault()");
-        //return SearchExplicit.get();
-        return SearchImplicit.get();
+        return SearchExplicit.get();
+        //return SearchImplicit.get();
     }
 
     public ASearchContext getSearchImplicit() {

@@ -1,6 +1,8 @@
 package com.softserve.edu.md.tests;
 
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
@@ -36,13 +38,24 @@ public class VerificatorTest {
         Button.get().getByXpath("//button[@ng-click='closeModal()']").click();
         Button.get().getByXpath("//button[@ng-click='submit()']").click();
         //
+        //Thread.sleep(1000);
+//        new Actions(BrowserUtils.get().getBrowser().getWebDriver())
+//            .moveToElement(BrowserUtils.get().getBrowser().getWebDriver()
+//                    .findElement(By.xpath("//a[@class='dropdown-toggle']"))).perform();
+//        Thread.sleep(4000);
+//        new Actions(BrowserUtils.get().getBrowser().getWebDriver())
+//            .moveToElement(BrowserUtils.get().getBrowser().getWebDriver()
+//                    .findElement(By.xpath("//a[@class='dropdown-toggle']"))).click();
+//        BrowserUtils.get().getBrowser().getWebDriver()
+//            .findElement(By.xpath("//a[@class='dropdown-toggle']")).sendKeys(Keys.ENTER);
+        //
         //LabelClickable.get().getByPartialLinkText("Оззі Озборн").click();
         //LabelClickable.get().getByCssSelector("i.fa.fa-caret-down").click();
-        Thread.sleep(1000);
-        System.out.println(" +++++ opacity ="
-                + (boolean) ((JavascriptExecutor) BrowserUtils.get().getBrowser()
-                        .getWebDriver()).executeScript("return $('#employeeModule')[0].style.opacity == ''")
-                );
+//        Thread.sleep(1000);
+//        System.out.println(" +++++ opacity ="
+//                + (boolean) ((JavascriptExecutor) BrowserUtils.get().getBrowser()
+//                        .getWebDriver()).executeScript("return $('#employeeModule')[0].style.opacity == ''")
+//                );
         Link.get().getByXpath("//a[@class='dropdown-toggle']").click();
         LabelClickable.get().getByXpath("//div[@ng-click='logout()']").click();
         //
