@@ -1,41 +1,41 @@
 package com.softserve.edu.oms.dao;
 
-import java.util.List;
-
 import com.softserve.edu.oms.entity.RoleDB;
+import com.softserve.edu.oms.entity.RoleDB.RoleDBQueries;
 
-public class RoleDao implements IDao<RoleDB> {
+public final class RoleDao extends ADao<RoleDB> {
+    private static volatile RoleDao instance = null;
 
-    // Create
-    public boolean insert(RoleDB entity) {
-        return true;
+    private RoleDao() {
+        super();
+        init();
     }
 
-    // Read
-    public RoleDB getById(Long id) {
-        return null;
+    public static RoleDao get() {
+        if (instance == null) {
+            synchronized (RoleDao.class) {
+                if (instance == null) {
+                    instance = new RoleDao();
+                }
+            }
+        }
+        return instance;
     }
 
-    public RoleDB getByFieldName(String fieldName, String text) {
-        return null;
+    private void init() {
+        for (RoleDBQueries roleDBQueries : RoleDBQueries.values()) {
+            sqlQueries.put(roleDBQueries.name(), roleDBQueries);
+        }
+     }
+
+    protected RoleDB createInstance(String[] args) {
+        return new RoleDB(Long.parseLong(args[0]), args[1]);
     }
 
-    public List<RoleDB> getAll() {
-        return null;
-    }
-
-    // Update
-    public boolean update(RoleDB entity) {
-        return true;
-    }
-
-    // Delete
-    public boolean deleteById(Long id) {
-        return true;
-    }
-
-    public boolean delete(RoleDB entity) {
-        return true;
+    protected String[] getFields(RoleDB entity) {
+        String[] fields = new String[1];
+        fields[0]=entity.getRoleName();
+         return fields;
     }
 
 }

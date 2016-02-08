@@ -1,41 +1,56 @@
 package com.softserve.edu.oms.dao;
 
-import java.util.List;
-
 import com.softserve.edu.oms.entity.UserDB;
+import com.softserve.edu.oms.entity.UserDB.UserDBQueries;
 
-public class UserDao implements IDao<UserDB> {
+public final class UserDao extends ADao<UserDB> {
+    private static volatile UserDao instance = null;
 
-    // Create
-    public boolean insert(UserDB entity) {
-        return true;
+    private UserDao() {
+        super();
+        init();
     }
 
-    // Read
-    public UserDB getById(Long id) {
-        return null;
+    public static UserDao get() {
+        if (instance == null) {
+            synchronized (UserDao.class) {
+                if (instance == null) {
+                    instance = new UserDao();
+                }
+            }
+        }
+        return instance;
     }
 
-    public UserDB getByFieldName(String fieldName, String text) {
-        return null;
+    private void init() {
+       for (UserDBQueries userDBQueries : UserDBQueries.values()) {
+           sqlQueries.put(userDBQueries.name(), userDBQueries);
+       }
     }
 
-    public List<UserDB> getAll() {
-        return null;
+    protected UserDB createInstance(String[] args) {
+        return new UserDB(Long.parseLong(args[0]),
+                Long.parseLong(args[1]),
+                Double.parseDouble(args[2]),
+                args[3], args[4], args[5], args[6], args[7],
+                Long.parseLong(args[8]),
+                Long.parseLong(args[9]),
+                Long.parseLong(args[10]));
     }
 
-    // Update
-    public boolean update(UserDB entity) {
-        return true;
-    }
-
-    // Delete
-    public boolean deleteById(Long id) {
-        return true;
-    }
-
-    public boolean delete(UserDB entity) {
-        return true;
+    protected String[] getFields(UserDB entity) {
+        String[] fields = new String[10];
+        fields[0]=entity.getIsUserActive().toString();
+        fields[1]=entity.getBalance().toString();
+        fields[2]=entity.getEmail();
+        fields[3]=entity.getFirstname();
+        fields[4]=entity.getLastname();
+        fields[5]=entity.getLogin();
+        fields[6]=entity.getPassword();
+        fields[7]=entity.getCustomerTypeRef().toString();
+        fields[8]=entity.getRegionRef().toString();
+        fields[9]=entity.getRoleRef().toString();
+        return fields;
     }
 
 }

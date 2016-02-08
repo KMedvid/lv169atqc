@@ -1,13 +1,15 @@
 package com.softserve.edu.oms.entity;
 
-public class UserDB {
+public class UserDB implements IEntity {
 
     public static enum UserDBQueries {
-        INSERT_USER_BY_LOGIN("INSERT INTO dbo.Users (Login, Password, FirstName, LastName, Email, RegionRef, RoleRef) VALUES ('%s', '%s', '%s', '%s', '%s', %s, %s);"),
-        GET_USER_BY_LOGIN("SELECT ID, Login, Password, FirstName, LastName, Email, RegionRef, RoleRef FROM dbo.Users WHERE Login = '%s';"),
-        GET_ALL_USERS("SELECT ID, Login, Password, FirstName, LastName, Email, RegionRef, RoleRef FROM dbo.Users;"),
-        DELETE_USER_BY_ID("DELETE dbo.Users WHERE ID='%s';"),
-        DELETE_USER_BY_PARTIAL_LOGIN("DELETE dbo.Users WHERE Login LIKE '%s%%';");
+        INSERT("INSERT INTO dbo.Users (IsUserActive, Balance, Email, FirstName, LastName, Login, Password, CustomerTypeRef, RegionRef, RoleRef) VALUES ('%s', '%s', '%s', '%s', '%s', %s, %s, %s, %s, %s);"),
+        GET_BY_ID("SELECT ID, IsUserActive, Balance, Email, FirstName, LastName, Login, Password, CustomerTypeRef, RegionRef, RoleRef FROM dbo.Users WHERE ID = '%s';"),
+        GET_BY_FIELD("SELECT ID, IsUserActive, Balance, Email, FirstName, LastName, Login, Password, CustomerTypeRef, RegionRef, RoleRef FROM dbo.Users WHERE %s = '%s';"),
+        GET_ALL("SELECT ID, IsUserActive, Balance, Email, FirstName, LastName, Login, Password, CustomerTypeRef, RegionRef, RoleRef FROM dbo.Users;"),
+        UPDATE_BY_FIELD("UPDATE dbo.Users SET %s = '%s';"),
+        DELETE_BY_ID("DELETE dbo.Users WHERE ID='%s';");
+        //DELETE_USER_BY_PARTIAL_LOGIN("DELETE dbo.Users WHERE Login LIKE '%s%%';");
         private String query;
 
         private UserDBQueries(String query) {

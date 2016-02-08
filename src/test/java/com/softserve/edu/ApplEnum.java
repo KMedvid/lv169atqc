@@ -34,8 +34,14 @@ public class ApplEnum {
 
     public static void main(String[] args) {
         // get pointer to enum
-        Class<?> classEnum = First.class;
-        //System.out.println(First.ONE.toString());
+        // Class<?> classEnum = First.class;
+        // Enum en = First; // Error
+        Enum en = First.ONE;
+        for (First first : First.values()) {
+            System.out.println("ELEMENT: " + first.name() + " toStr: " + first.toString());
+        }
+        System.out.println("DONE");
+        // System.out.println(First.ONE.toString());
         System.out.println(First.ONE.toString());
     }
 

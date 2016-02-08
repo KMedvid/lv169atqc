@@ -2,7 +2,9 @@ package com.softserve.edu.oms.dao;
 
 import java.util.List;
 
-public interface IDao<TEntity> {
+import com.softserve.edu.oms.entity.IEntity;
+
+public interface IDao<TEntity extends IEntity> {
 
     // Create
     boolean insert(TEntity entity);
@@ -10,14 +12,14 @@ public interface IDao<TEntity> {
     // Read
     TEntity getById(Long id);
 
-    TEntity getByFieldName(String fieldName, String text);
+    List<TEntity> getByFieldName(String fieldName, String text);
 
     // TEntity getByFieldName(String fieldName, Long value);
 
     List<TEntity> getAll();
 
     // Update
-    boolean update(TEntity entity);
+    boolean updateByFieldName(String fieldName, String text);
 
     // Delete
     boolean deleteById(Long id);
