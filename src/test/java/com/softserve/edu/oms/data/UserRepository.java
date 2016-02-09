@@ -91,11 +91,11 @@ public final class UserRepository {
 
     public IUser getNewUser() {
         return User.get()
-                .setFirstname("cccca")
-                .setLastname("cccca")
-                .setLogin("cccca")
+                .setFirstname("ccccd")
+                .setLastname("ccccd")
+                .setLogin("ccccd")
                 .setPassword("qwerty")
-                .setEmail("cccca@gmail.com")
+                .setEmail("ccccd@gmail.com")
                 .setRegion("East")
                 .setRole("Customer")
                 .build();

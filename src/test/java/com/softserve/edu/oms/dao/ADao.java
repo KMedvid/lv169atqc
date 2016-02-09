@@ -116,6 +116,7 @@ public abstract class ADao<TEntity extends IEntity> implements IDao<TEntity> {
             while (resultSet.next()) {
                 queryResult = new String[resultSet.getMetaData().getColumnCount()];
                 for (i = 0; i < queryResult.length; i++) {
+                	//System.out.println("\t\t *** queryResult["+i+"]="+resultSet.getString(i+1));
                     queryResult[i] = resultSet.getString(i+1);
                 }
                 all.add(createInstance(queryResult));
@@ -227,7 +228,9 @@ public abstract class ADao<TEntity extends IEntity> implements IDao<TEntity> {
         }
         try {
             statement = ConnectionUtils.get().getConnection().createStatement();
+            //System.out.println("DAO query: "+String.format(query, id));
             result = statement.execute(String.format(query, id));
+            //System.out.println("DAO result : "+result);
         } catch (SQLException e) {
             throw new GeneralCustomException(DATABASE_READING_ERROR, e);
         } finally {

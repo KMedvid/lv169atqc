@@ -38,4 +38,8 @@ public final class RoleDao extends ADao<RoleDB> {
          return fields;
     }
 
+    public RoleDB getRoleIdByName(String roleName) {
+    	return getByFieldName("RoleName", roleName).get(0);
+    }
+
 }

@@ -8,14 +8,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.softserve.edu.atqc.data.ConnectionUtils;
 import com.softserve.edu.atqc.data.StartData;
+import com.softserve.edu.atqc.specs.AssertWrapper;
 import com.softserve.edu.atqc.tools.BrowserUtils;
+import com.softserve.edu.oms.data.DataSourceRepository;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.StartPage;
 import com.softserve.edu.oms.data.UserRepository;
 import com.softserve.edu.oms.pages.AdministrationPage;
 import com.softserve.edu.oms.pages.CreateNewUserPage;
 import com.softserve.edu.oms.pages.HomePage;
+import com.softserve.edu.oms.services.UserService;
 
 public final class FindTest {
     StartData startData = new StartData("http://ssu-oms:8180/OMS/login.htm",
@@ -23,6 +27,7 @@ public final class FindTest {
 
     @BeforeClass
     public void oneTimeSetUp() {
+    	ConnectionUtils.get(DataSourceRepository.get().getJtdsMsSqlSsu());
         System.out.println("@BeforeClass - oneTimeSetUp");
         System.out.println("\t@BeforeClass - oneTimeSetUp, Thread Id = "
                 + Thread.currentThread().getId());
@@ -98,37 +103,37 @@ public final class FindTest {
         administrationPage.searchByLoginName(newUser);
         Thread.sleep(4000);
         // Save Actual Result. Preparation for Checking
-        Assert.assertEquals(administrationPage.getFirstnameText(),
-                newUser.getFirstname());
-        Assert.assertEquals(administrationPage.getLoginText(),
-                newUser.getLogin());
-//        AssertWrapper.get()
-//                .forElement(administrationPage.getFirstname().getText())
-//                    .valueMatch(newUser.getFirstname())
-//                    .next()
-//                .forElement(administrationPage.getLogin().getText())
-//                    .valueMatch(newUser.getLogin());
+//        Assert.assertEquals(administrationPage.getFirstnameText(),
+//                newUser.getFirstname());
+//        Assert.assertEquals(administrationPage.getLoginText(),
+//                newUser.getLogin());
+        AssertWrapper.get()
+                .forElement(administrationPage.getFirstname().getText())
+                    .valueMatch(newUser.getFirstname())
+                    .next()
+                .forElement(administrationPage.getLogin().getText())
+                    .valueMatch(newUser.getLogin());
         // Test Operation
         HomePage homePage = administrationPage.logout()
                 .successUserLogin(newUser);
         Thread.sleep(4000);
         // Save Actual Result. Preparation for Checking
-        Assert.assertEquals(homePage.getFirstnameText(),
-                newUser.getFirstname());
-        Assert.assertEquals(homePage.getLastnameText(),
-                newUser.getLastname());
-        Assert.assertEquals(homePage.getRoleText(),
-                newUser.getRole());
-//        AssertWrapper.get()
-//                .forElement(homePage.getFirstname())
-//                    .valueMatch(newUser.getFirstname())
-//                    .valueStartsWith(newUser.getFirstname().substring(0,1))
-//                    .next()
-//                .forElement(homePage.getLastname())
-//                    .valueMatch(newUser.getLastname())
-//                    .next()
-//                .forElement(homePage.getRole().getText())
-//                    .valueMatch(newUser.getRole());
+//        Assert.assertEquals(homePage.getFirstnameText(),
+//                newUser.getFirstname());
+//        Assert.assertEquals(homePage.getLastnameText(),
+//                newUser.getLastname());
+//        Assert.assertEquals(homePage.getRoleText(),
+//                newUser.getRole());
+        AssertWrapper.get()
+                .forElement(homePage.getFirstname())
+                    .valueMatch(newUser.getFirstname())
+                    .valueStartsWith(newUser.getFirstname().substring(0,1))
+                    .next()
+                .forElement(homePage.getLastname())
+                    .valueMatch(newUser.getLastname())
+                    .next()
+                .forElement(homePage.getRole().getText())
+                    .valueMatch(newUser.getRole());
         // Test Operation
         administrationPage = homePage.logout()
                 .successAdminLogin(UserRepository.get().getAdminUser())
@@ -137,8 +142,8 @@ public final class FindTest {
         // Return to Previous State
         administrationPage.deleteByLoginName(newUser);
         Thread.sleep(4000);
-//        UserService.get(DataSourceRepository.getJtdsMsSqlLocal())
-//            .deleteUsersByPartialLogin(newUser.getLogin());
+        UserService.get().deleteUsersByLogin(newUser.getLogin());
+        System.out.println(UserService.get().getUserFirstnameByLogin(newUser.getLogin()));
         // Save Actual Result. Preparation for Checking
 //        AssertWrapper.get()
 //                .forElement(administrationPage.getAlert())
@@ -147,7 +152,7 @@ public final class FindTest {
 //                                .toString());
         administrationPage.logout();
         // Checking
-//        AssertWrapper.get().check();
+        AssertWrapper.get().check();
     }
 
 }

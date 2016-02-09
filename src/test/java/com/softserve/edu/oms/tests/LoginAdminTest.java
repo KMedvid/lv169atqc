@@ -26,6 +26,7 @@ public class LoginAdminTest {
 
     @BeforeClass
     public void oneTimeSetUp() {
+    	//ConnectionUtils.get(DataSourceRepository.get().getJtdsMsSqlSsu());
         System.out.println("@BeforeClass - oneTimeSetUp");
         System.out.println("\t@BeforeClass - oneTimeSetUp, Thread Id = "
                 + Thread.currentThread().getId());

@@ -29,13 +29,13 @@ public final class UserDao extends ADao<UserDB> {
     }
 
     protected UserDB createInstance(String[] args) {
-        return new UserDB(Long.parseLong(args[0]),
-                Long.parseLong(args[1]),
-                Double.parseDouble(args[2]),
+        return new UserDB(Long.parseLong(args[0] == null ? "0" : args[0]),
+                Long.parseLong(args[1] == null ? "0" : args[0]),
+                Double.parseDouble(args[2] == null ? "0" : args[2]),
                 args[3], args[4], args[5], args[6], args[7],
-                Long.parseLong(args[8]),
-                Long.parseLong(args[9]),
-                Long.parseLong(args[10]));
+                Long.parseLong(args[8] == null ? "0" : args[8]),
+                Long.parseLong(args[9] == null ? "0" : args[9]),
+                Long.parseLong(args[10] == null ? "0" : args[10]));
     }
 
     protected String[] getFields(UserDB entity) {
@@ -53,4 +53,11 @@ public final class UserDao extends ADao<UserDB> {
         return fields;
     }
 
+    public UserDB getUserDBByLogin(String login) {
+    	for (UserDB userDB : getByFieldName("Login", login)) {
+    		System.out.println("ID = " + userDB.getId()+"  IsUserActive="+ userDB.getIsUserActive());
+    	}
+    	return getByFieldName("Login", login).get(0);
+    }
+    
 }

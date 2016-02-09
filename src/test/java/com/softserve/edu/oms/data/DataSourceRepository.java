@@ -30,6 +30,11 @@ public final class DataSourceRepository {
                 "jdbc:jtds:sqlserver://CLASS02/Lv169OMS;instance=SQLEXPRESS;", "db169", "db169");
     }
 
+    public DataSource getJtdsMsSqlSsu() {
+        return new DataSource(new net.sourceforge.jtds.jdbc.Driver(),
+                "jdbc:jtds:sqlserver://ssu-sql12/ssu-oms;instance=tc;", "ssu-oms", "ssu-oms");
+    }
+
     public DataSource getJdbcMySqlLocal() {
         Driver jdbcDriver = null;
         try {
