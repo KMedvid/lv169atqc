@@ -13,7 +13,9 @@ public abstract class ABaseComponent<TComponent> {
         // TODO Create tComponent using Reflection API
         // tComponent = this;
     }
-
+    
+    // Search Visible Elements
+    
     public TComponent getById(String id) {
         return get(ControlLocation.getById(id));
     }
@@ -42,6 +44,23 @@ public abstract class ABaseComponent<TComponent> {
         this.controlLocation = controlLocation;
         // TODO Set strategy for Searching Elements
         this.controlWrapper = ControlWrapper.getVisibleWebElement(controlLocation);
+        return tComponent;
+    }
+
+    // TODO Search Present Elements
+    
+    public TComponent getPresentById(String id) {
+        return getPresent(ControlLocation.getById(id));
+    }
+
+    public TComponent getPresentByName(String name) {
+        return getPresent(ControlLocation.getByName(name));
+    }
+
+    private TComponent getPresent(ControlLocation controlLocation) {
+        this.controlLocation = controlLocation;
+        // TODO Set strategy for Searching Elements
+        this.controlWrapper = ControlWrapper.getPresentWebElement(controlLocation);
         return tComponent;
     }
 
