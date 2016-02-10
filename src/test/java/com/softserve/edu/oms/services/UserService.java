@@ -7,8 +7,11 @@ import com.softserve.edu.oms.entity.UserDB;
 
 public class UserService {
     private static volatile UserService instance = null;
+    // Singleton testing is Very Difficult !!!
+    //private UserDao userDao;
 
     private UserService() {
+    	//this.userDao = UserDao.get();
     }
 
     public static UserService get() {
