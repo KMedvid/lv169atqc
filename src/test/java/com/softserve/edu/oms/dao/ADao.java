@@ -219,6 +219,7 @@ public abstract class ADao<TEntity extends IEntity> implements IDao<TEntity> {
 
     // Delete
     public boolean deleteById(Long id) {
+        System.out.println("\t\t\tdeleteById DONE");
         boolean result = false;
         Statement statement = null;
         String query = sqlQueries.get("DELETE_BY_ID").toString();
@@ -228,9 +229,9 @@ public abstract class ADao<TEntity extends IEntity> implements IDao<TEntity> {
         }
         try {
             statement = ConnectionUtils.get().getConnection().createStatement();
-            //System.out.println("DAO query: "+String.format(query, id));
+            System.out.println("DAO query: "+String.format(query, id));
             result = statement.execute(String.format(query, id));
-            //System.out.println("DAO result : "+result);
+            System.out.println("DAO result : "+result);
         } catch (SQLException e) {
             throw new GeneralCustomException(DATABASE_READING_ERROR, e);
         } finally {

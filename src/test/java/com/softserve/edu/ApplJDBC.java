@@ -49,7 +49,7 @@ public class ApplJDBC {
         //ResultSet rs = st.executeQuery("SELECT * FROM users WHERE Login='iva';");
         //ResultSet rs = st.executeQuery("SELECT *  FROM Users;");
         //ResultSet rs = st.executeQuery("SELECT *  FROM Users WHERE Login LIKE 'iv%';");
-        //st.execute("DELETE dbo.Users WHERE ID='1001537'");
+        //st.execute("DELETE dbo.Users WHERE ID='1001561'");
         ResultSet rs = st.executeQuery("SELECT ID, *  FROM Users WHERE Login LIKE 'cc%';");
         // MySQL
         //ResultSet rs = st.executeQuery("SELECT *  FROM User;");

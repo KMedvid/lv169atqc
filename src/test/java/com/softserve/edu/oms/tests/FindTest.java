@@ -1,5 +1,7 @@
 package com.softserve.edu.oms.tests;
 
+import java.lang.reflect.Field;
+
 import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -16,7 +18,6 @@ import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.oms.dao.UserDao;
 import com.softserve.edu.oms.data.DataSourceRepository;
 import com.softserve.edu.oms.data.IUser;
-import com.softserve.edu.oms.data.ServiceUtils;
 import com.softserve.edu.oms.data.StartPage;
 import com.softserve.edu.oms.data.UserRepository;
 import com.softserve.edu.oms.pages.AdministrationPage;
@@ -146,7 +147,7 @@ public final class FindTest {
         administrationPage.deleteByLoginName(newUser);
         Thread.sleep(4000);
         UserService.get().deleteUsersByLogin(newUser.getLogin());
-        System.out.println(UserService.get().getUserFirstnameByLogin(newUser.getLogin()));
+        //System.out.println(UserService.get().getUserFirstnameByLogin(newUser.getLogin()));
         // Save Actual Result. Preparation for Checking
 //        AssertWrapper.get()
 //                .forElement(administrationPage.getAlert())
@@ -159,7 +160,7 @@ public final class FindTest {
     }
 
     @Test(dataProvider = "newUsers")
-    public void checkNewUserCreateMock(IUser newUser) throws InterruptedException {
+    public void checkNewUserCreateMock(IUser newUser) throws Exception {
         // PreCondition
         StartPage.get().load(startData);
         CreateNewUserPage createNewUserPage =StartPage.get().load() 
@@ -214,24 +215,28 @@ public final class FindTest {
         //
         // Singleton testing is Very Difficult !!!
         //
-        // Mock
-        //UserDao userDaoMock = Mockito.mock(UserDao.class);
-        //Long id = UserDao.get().getUserDBByLogin(newUser.getLogin()).getId();
-        //Mockito.stub(userDaoMock.deleteById(id)).toReturn(true);
+        // Mock by Class
+        UserDao userDaoMock = Mockito.mock(UserDao.class);
+        // Mock by Instance
+        //UserDao userDaoMock = Mockito.spy(UserDao.get());
+        Long id = UserDao.get().getUserDBByLogin(newUser.getLogin()).getId();
+        System.out.println("\t\t\tid="+id);
+        //Mockito.stub(userDaoMock.deleteById(Mockito.anyLong())).toReturn(true);
+        Mockito.when(userDaoMock.deleteById(Mockito.anyLong())).thenReturn(true);
         //
-        // Reflection API
-        //+++Field userDaoField = userService.getClass().getDeclaredField("userDao");
-        //+++userDaoField.setAccessible(true);
-        //+++userDaoField.set(userService, userDaoMock);
+        // Update Field userDao in UserService by Reflection API
+        //Field userDaoField = UserService.class.getDeclaredField("userDao");
+        Field userDaoField =UserService.get().getClass().getDeclaredField("userDao");
+        userDaoField.setAccessible(true);
+        userDaoField.set(UserService.get(), userDaoMock);
         //
-        //UserService.get().deleteUsersByLogin(newUser.getLogin()); // Use Singleton, not Mock
-        //
-        UserService.get().deleteUsersByLogin(newUser.getLogin());
-        System.out.println(UserService.get().getUserFirstnameByLogin(newUser.getLogin()));
+        //UserService.get().deleteUsersByLogin(newUser.getLogin()); // Singleton used.
+        UserService.get().deleteUsersById(id);
+        //System.out.println(UserService.get().getUserFirstnameByLogin(newUser.getLogin()));
         //
         // Preparation for Checking
-        //Mockito.verify(userServiceMock).deleteUsersByPartialLogin(newUser.getLogin());
-        //+++Mockito.verify(userDaoMock).deleteUsersByPartialLogin(newUser.getLogin());
+        // TODO Add handling Mockito classes in AssertWrapper
+        System.out.println("Mock = " + Mockito.verify(userDaoMock).deleteById(id));
         //
         // Save Actual Result. Preparation for Checking
 //        AssertWrapper.get()

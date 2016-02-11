@@ -3,7 +3,8 @@ package com.softserve.edu.oms.dao;
 import com.softserve.edu.oms.entity.UserDB;
 import com.softserve.edu.oms.entity.UserDB.UserDBQueries;
 
-public final class UserDao extends ADao<UserDB> {
+// Mockito cannot mock/spy for final classes. Do not use final.
+public class UserDao extends ADao<UserDB> {
     private static volatile UserDao instance = null;
 
     private UserDao() {
@@ -59,5 +60,10 @@ public final class UserDao extends ADao<UserDB> {
     	}
     	return getByFieldName("Login", login).get(0);
     }
+    
+    // DELETE Method
+//    public boolean deleteById(Long id) {
+//        return super.deleteById(id);
+//    }
     
 }
