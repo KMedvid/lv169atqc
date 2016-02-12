@@ -2,12 +2,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite1">
 	<parameter name="testurl" value="http://ssu-oms:8180/OMS/login.htm" />
+	<parameter name="paramSuite" value="From suite"/>
+	<parameter name="browserName" value="firefox"/>
 	<!-- 3 ERROR 5 WARNING 7 INFO 9 DEBUG -->
 	<test verbose="7" name="ATQC_Test">
+		<parameter name="paramTest" value="From test"/>
 		<classes>
-			<!-- <class name="com.softserve.edu.oms.tests.FindTest"/> -->
+			<class name="com.softserve.edu.oms.tests.FindTest"/>
 			<!-- <class name="com.softserve.edu.AppTest"/> -->
-			<class name="com.softserve.edu.oms.tests.LoginAdminTest"/>
+			<!-- <class name="com.softserve.edu.oms.tests.LoginAdminTest"/>  -->
+			<class name="com.softserve.edu.TestNGTest1"/>
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -83,6 +83,19 @@ public final class StartData {
         return this;
     }
 
+    public StartData setParameter(String key, String value) {
+        switch (key.trim().toLowerCase()) {
+        case "login":
+            return setLogin(value);
+        case "browserpath":
+            return setBrowserPath(value);
+        case "browsername":
+            System.out.println("\t\t*** Change BrowserName");
+            return setBrowserName(value);
+        }
+        return this;
+    }
+
     public StartData clone() {
         StartData startData = new StartData(this.login, this.logout, this.searchStrategy, this.browserName, this.browserPath);
         startData.setBrowser(this.browser);

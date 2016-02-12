@@ -31,7 +31,7 @@ public class UserDao extends ADao<UserDB> {
 
     protected UserDB createInstance(String[] args) {
         return new UserDB(Long.parseLong(args[0] == null ? "0" : args[0]),
-                Long.parseLong(args[1] == null ? "0" : args[0]),
+                Long.parseLong(args[1] == null ? "0" : args[1]),
                 Double.parseDouble(args[2] == null ? "0" : args[2]),
                 args[3], args[4], args[5], args[6], args[7],
                 Long.parseLong(args[8] == null ? "0" : args[8]),

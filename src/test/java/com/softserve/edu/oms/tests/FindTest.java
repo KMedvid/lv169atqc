@@ -1,9 +1,11 @@
 package com.softserve.edu.oms.tests;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
 import org.mockito.Mockito;
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -18,6 +20,7 @@ import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.oms.dao.UserDao;
 import com.softserve.edu.oms.data.DataSourceRepository;
 import com.softserve.edu.oms.data.IUser;
+import com.softserve.edu.oms.data.StartDataRepository;
 import com.softserve.edu.oms.data.StartPage;
 import com.softserve.edu.oms.data.UserRepository;
 import com.softserve.edu.oms.pages.AdministrationPage;
@@ -26,8 +29,6 @@ import com.softserve.edu.oms.pages.HomePage;
 import com.softserve.edu.oms.services.UserService;
 
 public final class FindTest {
-    StartData startData = new StartData("http://ssu-oms:8180/OMS/login.htm",
-            "http://ssu-oms:8180/OMS/logout.htm", "", "chrome", "");
 
     @BeforeClass
     public void oneTimeSetUp() {
@@ -54,14 +55,26 @@ public final class FindTest {
     }
 
     @DataProvider//(parallel = true)
-    public Object[][] existUsers() {
+    public Object[][] existUsers(ITestContext context) {
+        StartData startData = StartDataRepository.get().getCromeSsu();
+        /*
+        if (context.getCurrentXmlTest().getSuite().getParameter("browserName") != null) {
+            System.out.println("New browserName: "
+                    + context.getCurrentXmlTest().getSuite().getParameter("browserName"));
+            startData.setBrowserName(context.getCurrentXmlTest().getSuite().getParameter("browserName"));
+        }
+        */
+        HashMap<String, String> hashMap = new HashMap<String, String>(context.getCurrentXmlTest().getSuite().getParameters()); 
+        for (String key : hashMap.keySet()) {
+            startData.setParameter(key, hashMap.get(key));
+        }
         return new Object[][] {
-            { UserRepository.get().getAdminUser() },
+            { startData, UserRepository.get().getAdminUser() },
             };
     }
 
-    //@Test(dataProvider = "existUsers")
-    public void checkExistUsersFind(IUser existUser) {
+    @Test(dataProvider = "existUsers")
+    public void checkExistUsersFind(StartData startData, IUser existUser) {
         // PreCondition
         StartPage.get().load(startData);
         AdministrationPage administrationPage = StartPage.get().load() 
@@ -88,13 +101,14 @@ public final class FindTest {
 
     @DataProvider//(parallel = true)
     public Object[][] newUsers() {
+        StartData startData = StartDataRepository.get().getCromeSsu();
         return new Object[][] {
-            { UserRepository.get().getNewUser() },
+            { startData, UserRepository.get().getNewUser() },
             };
     }
 
     //@Test(dataProvider = "newUsers")
-    public void checkNewUserCreate(IUser newUser) throws InterruptedException {
+    public void checkNewUserCreate(StartData startData, IUser newUser) throws InterruptedException {
         // PreCondition
         StartPage.get().load(startData);
         CreateNewUserPage createNewUserPage =StartPage.get().load() 
@@ -159,8 +173,8 @@ public final class FindTest {
         AssertWrapper.get().check();
     }
 
-    @Test(dataProvider = "newUsers")
-    public void checkNewUserCreateMock(IUser newUser) throws Exception {
+    //@Test(dataProvider = "newUsers")
+    public void checkNewUserCreateMock(StartData startData, IUser newUser) throws Exception {
         // PreCondition
         StartPage.get().load(startData);
         CreateNewUserPage createNewUserPage =StartPage.get().load() 
