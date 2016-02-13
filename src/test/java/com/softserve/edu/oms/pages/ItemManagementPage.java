@@ -15,7 +15,7 @@ public class ItemManagementPage {
 	public static enum ItemManagementPageFields {
 		PRODUCT_NAME("Product Name"), 
 		DESCRIPTION("Description");
-		
+
 		private String field;
 
 		private ItemManagementPageFields(String field) {
@@ -43,218 +43,217 @@ public class ItemManagementPage {
 	}
 
 	private class ItemManagementPageTableUIMap {
-        public final ILabel productsFound;
-        public final ILabel name;
-        public final ILabel description;
-        public final ILabel price;
-        public final ILink edit;
-        public final ILink delete;
-        public final String  productsFoundText;
+		public final ILabel productsFound;
+		public final ILabel name;
+		public final ILabel description;
+		public final ILabel price;
+		public final ILink edit;
+		public final ILink delete;
+		public final String productsFoundText;
 
-        public ItemManagementPageTableUIMap() {
-            // TODO if Load Table Complete
-            this.productsFound = Label.get().getById("recordsFound");
-            this.productsFoundText = productsFound.getText();
-            
-            if (Integer.parseInt(productsFoundText) > 0) {
-                this.name = Label.get().getByXpath("//tbody/tr[1]/td[1]");
-                this.description = Label.get().getByXpath("//tbody/tr[1]/td[2]");
-                this.price = Label.get().getByXpath("//tbody/tr[1]/td[3]");
-                this.edit = Link.get().getByXpath("//tbody/tr[1]/td[4]/a");
-                this.delete = Link.get().getByXpath("//tbody/tr[1]/td[5]/a");
-            } else {
-                this.name = Label.get().getByXpath("//tbody/tr[1]/th[1]");
-                this.description = Label.get().getByXpath("//tbody/tr[1]/th[2]");
-                this.price = Label.get().getByXpath("//tbody/tr[1]/th[3]");
-                this.edit = Link.get().getByXpath("//tbody/tr[1]/th[4]");
-                this.delete = Link.get().getByXpath("//tbody/tr[1]/th[5]");
-            }
-        }
-        
-        public ItemManagementPageTableUIMap(String productName) {
-            // TODO if Load Table Complete
-            // TODO Check Existing Row
-            this.productsFound = Label.get().getById("recordsFound");
-            this.productsFoundText = productsFound.getText();
-            //
-            this.name = Label.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']");
-            this.description = Label.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[1]");
-            this.price = Link.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[2]");
-            this.edit = Link.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[3]/a");
-            this.delete = Link.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[4]/a");
-        }
+		public ItemManagementPageTableUIMap() {
+			// TODO if Load Table Complete
+			this.productsFound = Label.get().getById("recordsFound");
+			this.productsFoundText = productsFound.getText();
+
+			if (Integer.parseInt(productsFoundText) > 0) {
+				this.name = Label.get().getByXpath("//tbody/tr[1]/td[1]");
+				this.description = Label.get().getByXpath("//tbody/tr[1]/td[2]");
+				this.price = Label.get().getByXpath("//tbody/tr[1]/td[3]");
+				this.edit = Link.get().getByXpath("//tbody/tr[1]/td[4]/a");
+				this.delete = Link.get().getByXpath("//tbody/tr[1]/td[5]/a");
+			} else {
+				this.name = Label.get().getByXpath("//tbody/tr[1]/th[1]");
+				this.description = Label.get().getByXpath("//tbody/tr[1]/th[2]");
+				this.price = Label.get().getByXpath("//tbody/tr[1]/th[3]");
+				this.edit = Link.get().getByXpath("//tbody/tr[1]/th[4]");
+				this.delete = Link.get().getByXpath("//tbody/tr[1]/th[5]");
+			}
+		}
+
+		public ItemManagementPageTableUIMap(String productName) {
+			// TODO if Load Table Complete
+			// TODO Check Existing Row
+			this.productsFound = Label.get().getById("recordsFound");
+			this.productsFoundText = productsFound.getText();
+			//
+			this.name = Label.get().getByXpath("//tbody/tr[1]/td[text()='" + productName + "']");
+			this.description = Label.get()
+					.getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[1]");
+			this.price = Link.get()
+					.getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[2]");
+			this.edit = Link.get()
+					.getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[3]/a");
+			this.delete = Link.get()
+					.getByXpath("//tbody/tr[1]/td[text()='" + productName + "']/following-sibling::td[4]/a");
+		}
 	}
 
- 
 	// Elements
-    private ItemManagementPageUIMap controls;
-    // AJAX Elements
-    private ItemManagementPageTableUIMap controlsTable;
-    // Alert Elements
-    //private IAlertLight controlsAlert = null;
+	private ItemManagementPageUIMap controls;
+	// AJAX Elements
+	private ItemManagementPageTableUIMap controlsTable;
+	// Alert Elements
+	// private IAlertLight controlsAlert = null;
 
-	
-    public ItemManagementPage() {
-        controls = new ItemManagementPageUIMap();
-        controlsTable = new ItemManagementPageTableUIMap();
-    }
+	public ItemManagementPage() {
+		controls = new ItemManagementPageUIMap();
+		controlsTable = new ItemManagementPageTableUIMap();
+	}
 
+	// Get Elements
+	// Set Data
+	// Business Logic
 
-    // Get Elements
-    // Set Data
-    // Business Logic
+	private boolean isTableRefresh() {
+		return this.controlsTable.name.isStatelessOf()
+				&& this.controlsTable.productsFound.isInvisibleWithText(this.controlsTable.productsFoundText);
+	}
 
-    private boolean isTableRefresh() {
-        return this.controlsTable.name.isStatelessOf()
-                && this.controlsTable.productsFound.isInvisibleWithText(
-                        this.controlsTable.productsFoundText);
-    }
-    
-    // getters controls
-    public ILink getAddProduct() {
-        return this.controls.addProduct;
-    }
+	// getters controls
+	public ILink getAddProduct() {
+		return this.controls.addProduct;
+	}
 
-//    public ISelect getSelectField() {
-//        return this.controls.selectField;
-//    }
+	// public ISelect getSelectField() {
+	// return this.controls.selectField;
+	// }
 
+	public ITextField getSearchField() {
+		return this.controls.searchField;
+	}
 
-    public ITextField getSearchField() {
-        return this.controls.searchField;
-    }
+	public ILink getLogout() {
+		return this.controls.logout;
+	}
 
-    public ILink getLogout() {
-        return this.controls.logout;
-    }
-    
-    public String getSearchFieldText() {
-        return this.controls.searchField.getText();
-    }
-   
-    // getters controlsTable
-    public ILabel getProductsFound() {
-        return this.controlsTable.productsFound;
-    }
+	public String getSearchFieldText() {
+		return this.controls.searchField.getText();
+	}
 
-    public ILabel getName() {
-        return this.controlsTable.name;
-    }
+	// getters controlsTable
+	public ILabel getProductsFound() {
+		return this.controlsTable.productsFound;
+	}
 
-    public ILabel getDescription() {
-        return this.controlsTable.description;
-    }
+	public ILabel getName() {
+		return this.controlsTable.name;
+	}
 
-    public ILabel getPrice() {
-        return this.controlsTable.price;
-    }
+	public ILabel getDescription() {
+		return this.controlsTable.description;
+	}
 
-    public ILink getEdit() {
-        return this.controlsTable.edit;
-    }
-    
-    public ILink getDelete() {
-        return this.controlsTable.delete;
-    }
-    
-    public String getNameText() {
-        return this.controlsTable.name.getText();
-    }
+	public ILabel getPrice() {
+		return this.controlsTable.price;
+	}
 
-    public String getDescriptionText() {
-        return this.controlsTable.description.getText();
-    }
+	public ILink getEdit() {
+		return this.controlsTable.edit;
+	}
 
-    public String getPriceText() {
-        return this.controlsTable.price.getText();
-    }
-    
- // setters controls
+	public ILink getDelete() {
+		return this.controlsTable.delete;
+	}
 
-    public void setSelectField(ItemManagementPageFields field) {
-        //this.controls.selectField.selectByVisibleText(field.toString());
-        // TODO +++
-        ControlSearch.get().getVisibleSelectWebElement(ControlLocation.getById("field"))
-            .selectByVisibleText(field.toString());
-    }
-    
-    public void setSearchField(String text) {
-        this.controls.searchField.sendKeys(text);
-    }
+	public String getNameText() {
+		return this.controlsTable.name.getText();
+	}
 
-    public void clearSearchField() {
-        this.controls.searchField.clear();
-    }
+	public String getDescriptionText() {
+		return this.controlsTable.description.getText();
+	}
 
-    public void clickSearchField() {
-        this.controls.searchField.click();
-    }
+	public String getPriceText() {
+		return this.controlsTable.price.getText();
+	}
 
-    public void clickAddProduct() {
-        this.controls.addProduct.click();
-    }
+	// setters controls
 
-    public void clickLogout() {
-        this.controls.logout.click();
-    }
-    
- // setters controlsTable
+	public void setSelectField(ItemManagementPageFields field) {
+		// this.controls.selectField.selectByVisibleText(field.toString());
+		// TODO +++
+		ControlSearch.get().getVisibleSelectWebElement(ControlLocation.getById("field"))
+				.selectByVisibleText(field.toString());
+	}
 
-    public void resetTable() {
-        if (isTableRefresh()) {
-            controlsTable = new ItemManagementPageTableUIMap();
-        }
-    }
-    
-    public void resetTable(String productName) {
-    	System.out.println("Table is refreshing...");
-        if (isTableRefresh()) {
-            controlsTable = new ItemManagementPageTableUIMap(productName);
-        	System.out.println("Table is refreshed!");
+	public void setSearchField(String text) {
+		this.controls.searchField.sendKeys(text);
+	}
 
-        }
-    }
-    
-    public void acceptAlert() {
-//      if (this.controlsAlert != null) {
-//      this.controlsAlert.click();
-//      this.controlsAlert = null;
-//        controls = new ItemManagementPageUIMap();
-//        controlsAjax = newItemManagementPageUIMapAjax();
-          //
-//        resetTable();
-//  }
-        // TODO +++
-       BrowserUtils.get().getBrowser().getWebDriver().switchTo().alert().dismiss();
-    }
+	public void clearSearchField() {
+		this.controls.searchField.clear();
+	}
 
-    public void dismissAlert() {
-//      if (this.controlsAlert != null) {
-//          this.controlsAlert.click();
-//          this.controlsAlert = null;
-//      }
-    } 
-    
- // business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	public void clickSearchField() {
+		this.controls.searchField.click();
+	}
 
-    public void searchProductByName(String productName){
-    	System.out.println("++ setSelectField");
-        setSelectField(ItemManagementPageFields.PRODUCT_NAME);
-        System.out.println("++ setSearchField");
-        setSearchField(productName);
-        // Initialize Table Elements
-        System.out.println("++ resetTable");
-        resetTable(productName);
-    }
-    
-    public AddProductPage gotoAddProduct() {
-        clickAddProduct();
-        return new AddProductPage();
-    }
+	public void clickAddProduct() {
+		this.controls.addProduct.click();
+	}
 
-    public LoginPage logout() {
-        clickLogout();
-        return new LoginPage();
-    }
-    
+	public void clickLogout() {
+		this.controls.logout.click();
+	}
+
+	// setters controlsTable
+
+	public void resetTable() {
+		if (isTableRefresh()) {
+			controlsTable = new ItemManagementPageTableUIMap();
+		}
+	}
+
+	public void resetTable(String productName) {
+		System.out.println("Table is refreshing...");
+		if (isTableRefresh()) {
+			controlsTable = new ItemManagementPageTableUIMap(productName);
+			System.out.println("Table is refreshed!");
+
+		}
+	}
+
+	public void acceptAlert() {
+		// if (this.controlsAlert != null) {
+		// this.controlsAlert.click();
+		// this.controlsAlert = null;
+		// controls = new ItemManagementPageUIMap();
+		// controlsAjax = newItemManagementPageUIMapAjax();
+		//
+		// resetTable();
+		// }
+		// TODO +++
+		BrowserUtils.get().getBrowser().getWebDriver().switchTo().alert().dismiss();
+	}
+
+	public void dismissAlert() {
+		// if (this.controlsAlert != null) {
+		// this.controlsAlert.click();
+		// this.controlsAlert = null;
+		// }
+	}
+
+	// business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+	public void searchProductByName(String productName) {
+		System.out.println("++ setSelectField");
+		setSelectField(ItemManagementPageFields.PRODUCT_NAME);
+		System.out.println("++ setSearchField");
+		setSearchField(productName);
+		// Initialize Table Elements
+		System.out.println("++ resetTable");
+		resetTable(productName);
+	}
+
+	public AddProductPage gotoAddProduct() {
+		clickAddProduct();
+		return new AddProductPage();
+	}
+
+	public LoginPage logout() {
+		clickLogout();
+		return new LoginPage();
+	}
+
 }

@@ -17,70 +17,57 @@ import com.softserve.edu.oms.pages.ItemManagementPage;
 import com.softserve.edu.oms.pages.SupervisorHomePage;
 
 public class SupervisorTest {
-    StartData startData = new StartData("http://localhost:8080/OMS/login.htm",
+	StartData startData = new StartData("http://localhost:8080/OMS/login.htm", 
 			"http://localhost:8080/OMS/logout.htm",
-			"",
-			"firefox",
-			"");
+			"", "firefox", "");
 
-    @BeforeClass
-    public void oneTimeSetUp() {
+	@BeforeClass
+	public void oneTimeSetUp() {
 
-    }
+	}
 
-    @AfterClass
-    public void oneTimeTearDown() {
-        BrowserUtils.quitAll();
-    }
+	@AfterClass
+	public void oneTimeTearDown() {
+		BrowserUtils.quitAll();
+	}
 
-    @BeforeMethod
-    public void setUp() {
+	@BeforeMethod
+	public void setUp() {
 
-    }
-    
-    @AfterMethod
-    public void tearDown() {
-        StartPage.get().logout();
-    }
+	}
 
-    @DataProvider//(parallel = true)
-    public Object[][] allUsers() {
-        return new Object[][] {
-                { UserRepository.get().getSupervisorUser() }
-                };
-    }
+	@AfterMethod
+	public void tearDown() {
+		StartPage.get().logout();
+	}
 
-    @Test(dataProvider = "allUsers")
-    public void checkSupervisorAddProduct(IUser user) throws InterruptedException {
-    	final String PRODUCT_NAME = "Ariel";
-    	final String PRODUCT_DESCRIPTION = "Washing powder";
-    	final Double PRODUCT_PRICE = 100.26;
-    	
-        // Preconditions.
-        StartPage.get().load(startData);
-        // Test Steps.
-        SupervisorHomePage homepage = StartPage.get().load().successSupervisorLogin(user);
-        
-        // Checking role
-        Assert.assertEquals(homepage.getRoleText(), user.getRole());
-        //
-        
-        ItemManagementPage itemManagement =  homepage.gotoItemManagement();
-        itemManagement =  itemManagement.gotoAddProduct().addProduct(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE);
-        itemManagement.searchProductByName(PRODUCT_NAME);
-//        System.out.println("++Look for product");
-        
-        //        homepage.gotoItemManagement().searchProductByName(PRODUCT_NAME);
-//        System.out.println("++Products found");
-//        System.out.println("ProductsFound = " +  itemManagement.getProductsFound().getText());
-//        System.out.println("++Product name cell");
-//        System.out.println("ProductName = " + itemManagement.getNameText());
+	@DataProvider // (parallel = true)
+	public Object[][] allUsers() {
+		return new Object[][] { { UserRepository.get().getSupervisorUser() } };
+	}
 
-        // Check
-        Assert.assertEquals( itemManagement.getNameText(), PRODUCT_NAME); 
+	@Test(dataProvider = "allUsers")
+	public void checkSupervisorAddProduct(IUser user) throws InterruptedException {
+		final String PRODUCT_NAME = "Shirt";
+		final String PRODUCT_DESCRIPTION = "Green cotton";
+		final Double PRODUCT_PRICE = 100.5;
 
-    }
+		// Preconditions.
+		StartPage.get().load(startData);
+		// Test Steps.
+		SupervisorHomePage homepage = StartPage.get().load().successSupervisorLogin(user);
 
- 
+		// Checking role.
+		Assert.assertEquals(homepage.getRoleText(), user.getRole());
+		//
+
+		ItemManagementPage itemManagement = homepage.gotoItemManagement();
+		itemManagement = itemManagement.gotoAddProduct().addProduct(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE);
+		itemManagement.searchProductByName(PRODUCT_NAME);
+	
+		// Check
+		Assert.assertEquals(itemManagement.getNameText(), PRODUCT_NAME);
+
+	}
 
 }
