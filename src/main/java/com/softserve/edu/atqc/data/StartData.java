@@ -9,7 +9,10 @@ public final class StartData {
     private String browserName;
     private String browserPath;
     private ABrowser browser;
-
+    // TODO Set Implicit and Explicit Waits
+    // TODO Set Logger Strategy
+    // TODO Set Sleep for Demo
+    
     public StartData() {
         this.login = new String();
         this.logout = new String();
@@ -77,6 +80,19 @@ public final class StartData {
 
     public StartData setBrowser(ABrowser browser) {
         this.browser = browser;
+        return this;
+    }
+
+    public StartData setParameter(String key, String value) {
+        switch (key.trim().toLowerCase()) {
+        case "login":
+            return setLogin(value);
+        case "browserpath":
+            return setBrowserPath(value);
+        case "browsername":
+            System.out.println("\t\t*** Change BrowserName");
+            return setBrowserName(value);
+        }
         return this;
     }
 
