@@ -119,7 +119,7 @@ class SearchExplicit extends ASearchContext {
                         getExplicitlyWaitTimeout())
                 .until(ExpectedConditions
                     .elementToBeClickable(controlLocation.getBy()))) != null;
-            System.out.println(" +++++++clickableWebElement = "+clickableWebElement);
+            //System.out.println(" +++++++clickableWebElement = "+clickableWebElement);
         } catch (Exception e) {
             throw new ScreenCapturingCustomException(String.format(ASearchContext.ERROR_STILL_VISIBLE,
                     controlLocation.getValue()));

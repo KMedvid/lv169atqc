@@ -1,7 +1,6 @@
 package com.softserve.edu.atqc.specs;
 
 import org.testng.Assert;
-
 import com.softserve.edu.atqc.controls.ILabel;
 import com.softserve.edu.atqc.controls.ILink;
 import com.softserve.edu.atqc.loggers.LoggerUtils;
