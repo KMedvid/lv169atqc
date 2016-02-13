@@ -9,6 +9,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.atqc.data.StartData;
+import com.softserve.edu.atqc.loggers.LoggerUtils;
 import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.StartPage;
@@ -53,19 +54,26 @@ public class SupervisorTest {
 		final Double PRODUCT_PRICE = 100.5;
 
 		// Preconditions.
+		LoggerUtils.get().infoLog("Load browser");
 		StartPage.get().load(startData);
+		
 		// Test Steps.
+		LoggerUtils.get().infoLog("Go to SupervisorHomePage");
 		SupervisorHomePage homepage = StartPage.get().load().successSupervisorLogin(user);
 
 		// Checking role.
+		LoggerUtils.get().infoLog("Checking correct user logging");
 		Assert.assertEquals(homepage.getRoleText(), user.getRole());
 		//
 
 		ItemManagementPage itemManagement = homepage.gotoItemManagement();
+		LoggerUtils.get().infoLog("Add new product: " + PRODUCT_NAME);
 		itemManagement = itemManagement.gotoAddProduct().addProduct(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE);
+		LoggerUtils.get().infoLog("SearchP roduct By Name: " + PRODUCT_NAME);
 		itemManagement.searchProductByName(PRODUCT_NAME);
 	
 		// Check
+		LoggerUtils.get().infoLog("Checking added product : " + PRODUCT_NAME);
 		Assert.assertEquals(itemManagement.getNameText(), PRODUCT_NAME);
 
 	}
