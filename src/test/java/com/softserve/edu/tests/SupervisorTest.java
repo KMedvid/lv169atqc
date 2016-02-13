@@ -1,6 +1,5 @@
 package com.softserve.edu.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -9,7 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.atqc.data.StartData;
-import com.softserve.edu.atqc.loggers.LoggerUtils;
+import com.softserve.edu.atqc.specs.AssertWrapper;
 import com.softserve.edu.atqc.tools.BrowserUtils;
 import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.StartPage;
@@ -54,27 +53,29 @@ public class SupervisorTest {
 		final Double PRODUCT_PRICE = 100.5;
 
 		// Preconditions.
-		LoggerUtils.get().infoLog("Load browser");
 		StartPage.get().load(startData);
 		
 		// Test Steps.
-		LoggerUtils.get().infoLog("Go to SupervisorHomePage");
 		SupervisorHomePage homepage = StartPage.get().load().successSupervisorLogin(user);
 
 		// Checking role.
-		LoggerUtils.get().infoLog("Checking correct user logging");
-		Assert.assertEquals(homepage.getRoleText(), user.getRole());
+		AssertWrapper.get()
+			.forElement(homepage.getRoleText())
+			.valueMatch(user.getRole());
 		//
 
 		ItemManagementPage itemManagement = homepage.gotoItemManagement();
-		LoggerUtils.get().infoLog("Add new product: " + PRODUCT_NAME);
 		itemManagement = itemManagement.gotoAddProduct().addProduct(PRODUCT_NAME, PRODUCT_DESCRIPTION, PRODUCT_PRICE);
-		LoggerUtils.get().infoLog("SearchP roduct By Name: " + PRODUCT_NAME);
 		itemManagement.searchProductByName(PRODUCT_NAME);
 	
 		// Check
-		LoggerUtils.get().infoLog("Checking added product : " + PRODUCT_NAME);
-		Assert.assertEquals(itemManagement.getNameText(), PRODUCT_NAME);
+		AssertWrapper.get()
+			.forElement(itemManagement.getNameText())
+			.valueMatch(PRODUCT_NAME);
+
+		//Check All
+        AssertWrapper.get().check();
+
 
 	}
 
