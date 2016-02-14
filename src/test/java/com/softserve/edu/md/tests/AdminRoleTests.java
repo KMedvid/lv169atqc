@@ -1,5 +1,6 @@
 package com.softserve.edu.md.tests;
 
+import org.testng.TestRunner;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -8,6 +9,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.softserve.edu.atqc.data.StartData;
+import com.softserve.edu.atqc.loggers.LoggerRepository;
 import com.softserve.edu.atqc.loggers.LoggerUtils;
 import com.softserve.edu.md.data.AgreementRepository;
 import com.softserve.edu.md.data.IAgreement;
