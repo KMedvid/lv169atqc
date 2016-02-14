@@ -206,10 +206,10 @@ public class ItemManagementPage {
 	}
 
 	public void resetTable(String productName) {
-		System.out.println("Table is refreshing...");
+		//System.out.println("Table is refreshing...");
 		if (isTableRefresh()) {
 			controlsTable = new ItemManagementPageTableUIMap(productName);
-			System.out.println("Table is refreshed!");
+			//System.out.println("Table is refreshed!");
 
 		}
 	}
@@ -237,12 +237,12 @@ public class ItemManagementPage {
 	// business - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 	public void searchProductByName(String productName) {
-		System.out.println("++ setSelectField");
+		//System.out.println("++ setSelectField");
 		setSelectField(ItemManagementPageFields.PRODUCT_NAME);
-		System.out.println("++ setSearchField");
+		//System.out.println("++ setSearchField");
 		setSearchField(productName);
 		// Initialize Table Elements
-		System.out.println("++ resetTable");
+		//System.out.println("++ resetTable");
 		resetTable(productName);
 	}
 

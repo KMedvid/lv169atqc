@@ -53,7 +53,7 @@ public class ControlSearch {
      * page and visible.
      */
     WebElement getVisibleWebElement(ControlLocation controlLocation) {
-        System.out.println("\t***** ControlSearch getVisibleWebElement()");
+        //System.out.println("\t***** ControlSearch getVisibleWebElement()");
         isLoadComplete();
         return context.getVisibleWebElement(controlLocation);
     }
