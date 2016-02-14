@@ -44,18 +44,18 @@ public final class BrowserUtils {
             } else {
                 // startData != null
                 if (startData != null) {
-                //System.out.println("*****startData.getBrowserName()="
-                //        +startData.getBrowserName());
+               // System.out.println("*****startData.getBrowserName()="
+               //         +startData.getBrowserName());
                 	}
                 if (instance.getStartData() != null) {
-                //System.out.println("*****instance.getStartData().getBrowserName()="
-                //        +instance.getStartData().getBrowserName());
-                }
+               // System.out.println("*****instance.getStartData().getBrowserName()="
+               //         +instance.getStartData().getBrowserName());
+                	}
                 if (instance.getStartData() == null) {
                     instance.setStartData(startData);
                 }
                 //System.out.println("++++startData.getBrowserName()="
-                //       +startData.getBrowserName());
+                //        +startData.getBrowserName());
                 //System.out.println("++++instance.getStartData().getBrowserName()="
                 //        +instance.getStartData().getBrowserName());
                 
@@ -64,14 +64,14 @@ public final class BrowserUtils {
                 if (instance.getStartData().getBrowser() != null) {
                 //System.out.println("\t(instance.getBrowser().isEnabled())"
                 //        +(instance.getBrowser().isEnabled())); 
-                }
+                	}
                 //System.out.println("\t(!instance.getStartData().getBrowserName().equals(startData.getBrowserName()))"
                 //        +(!instance.getStartData().getBrowserName().equals(startData.getBrowserName())));
                 
                 if ((instance.getStartData().getBrowser() != null)
                         && (instance.getBrowser().isEnabled())
                         && (!instance.getStartData().getBrowserName().equals(startData.getBrowserName()))) {
-                //   System.out.println("++++instance.getBrowser().close();");
+                 //   System.out.println("++++instance.getBrowser().close();");
                     instance.getBrowser().close();
                     // instance.getBrowser().quit();
                     instance.setStartData(startData);
@@ -89,7 +89,7 @@ public final class BrowserUtils {
         if (instance != null) {
             // for (Long threadId : instance.browsers.keySet()) {
             for (StartData startData : instance.startDatas.values()) {
-                startData.getBrowser().quit();
+                startData.getBrowser().close();
             }
         }
     }

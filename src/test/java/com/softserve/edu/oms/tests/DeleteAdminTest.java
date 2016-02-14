@@ -14,6 +14,7 @@ import com.softserve.edu.oms.data.IUser;
 import com.softserve.edu.oms.data.StartPage;
 import com.softserve.edu.oms.data.UserRepository;
 import com.softserve.edu.oms.pages.AdministrationPage;
+import com.softserve.edu.specs.AssertWrapper;
 
 public class DeleteAdminTest {
 	private SoftAssert softAssert;
@@ -60,6 +61,7 @@ public class DeleteAdminTest {
 		softAssert.assertEquals(administrationPage.getDelete().isDisplayed(), false,
 				"Administrator cannot be deleted by himself!");
 		administrationPage.deleteByLoginName(delAdmin);
+		//AssertWrapper.get().forElement(administrationPage.getDelete()).isVisible();
 		logger.error("DeleteAdminTest - Fail");
 	}
 }

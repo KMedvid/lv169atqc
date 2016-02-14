@@ -4,7 +4,7 @@
 	<parameter name="testurl" value="http://localhost:8080/OMS/login.htm" />
 	<test name="Test1">
 		<classes>
-			<class name="com.softserve.edu.oms.tests.CreateNewUserTest"/>
+			<!--  <class name="com.softserve.edu.oms.tests.CreateNewUserTest"/> -->
 			<class name="com.softserve.edu.oms.tests.DeleteExistUserTest"/>
 			<!--  <class name="com.softserve.edu.oms.tests.DeleteAdminTest"/> -->
 		</classes>

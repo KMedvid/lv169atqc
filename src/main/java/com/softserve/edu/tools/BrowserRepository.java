@@ -4,7 +4,7 @@ final class BrowserRepository {
     
     public static enum BrowserPath {
         CHROME_PATH("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe"),
-        IE_PATH("C:\\Windows\\SystemApps\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\MicrosoftEdge.exe");
+        IE_PATH("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");
         private String field;
 
         private BrowserPath(String field) {

@@ -55,7 +55,7 @@ public class CreateNewUserPage {
         public final ITextField password;
         public final ITextField confirmPassword;
         public final ITextField email;
-        // private final ISelect region;
+        //private final ISelect region;
         //private final IRadioButtonGroup role;
         public final IButton create;
         public final IButton cancel;
@@ -395,9 +395,9 @@ public class CreateNewUserPage {
         setLastname(user.getLastname());
         setPassword(user.getPassword());
         setConfirmPassword(user.getPassword());
-        setEmail(user.getEmail());       
-       // setRegion(getRegionByPartialText(user));
-       // setRole(getRoleByPartialText(user));
+        setEmail(user.getEmail());
+        //setRegion(getRegionByPartialText(user));
+        //setRole(getRoleByPartialText(user));
         if (controls.isDisableValidators()) {
             controls.create.click();
         } else {

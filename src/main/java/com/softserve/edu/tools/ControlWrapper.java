@@ -3,9 +3,14 @@ package com.softserve.edu.tools;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
+import com.softserve.edu.exceptions.ScreenCapturingCustomException;
+
 public class ControlWrapper {
+    private final String ELEMENT_NOT_CLICKABLE = "Element is not clickable %s";
+    private final String ERROR_ON_CLICK = "Error on click";
     private final String INVALID_TAG = "Invalid Tag. Must be <a>";
     private final String TAG_A = "a";
     private final String ATTRIBUTE_HREF = "href";
@@ -80,7 +85,40 @@ public class ControlWrapper {
     }
 
     public void click() {
-        getWebElement().click();
+        // TODO It is Workaround
+        boolean clickDone = false;
+        long beginTime = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - beginTime < ASearchContext.ONE_SECOND
+                    * SearchImplicit.get().getImplicitlyWaitTimeout())
+                && (!clickDone)) {
+            try {
+                getWebElement().click();
+                clickDone = true;
+                break;
+            } catch (WebDriverException e) {
+                try {
+                    Thread.sleep(ASearchContext.ONE_SECOND / 2);
+                } catch (InterruptedException e1) {
+                    throw new ScreenCapturingCustomException(
+                            String.format(ELEMENT_NOT_CLICKABLE, getWebElement().getTagName()));
+                }
+            } catch (Exception e) {
+                throw new ScreenCapturingCustomException(
+                        String.format(ELEMENT_NOT_CLICKABLE, getWebElement().getTagName()));
+            }
+        }
+        if (clickDone) {
+            return;
+        }
+        // Original Version
+        try {
+            getWebElement().click();
+        } catch (WebDriverException e) {
+            throw new ScreenCapturingCustomException(
+                    String.format(ELEMENT_NOT_CLICKABLE, getWebElement().getTagName()));
+        } catch (Exception e) {
+            throw new ScreenCapturingCustomException(ERROR_ON_CLICK, e);
+        }
     }
 
     public boolean isDisplayed() {
@@ -105,8 +143,11 @@ public class ControlWrapper {
     }
 
     public void setFocus() {
-        // TODO Make Visible. Scrolling browser
+        // TODO Make Visible. Scrolling browser. Use Actions Class. 
         sendKeys(new String());
+//        new Actions(BrowserUtils.get().getBrowser().getWebDriver())
+//        .moveToElement(getVisibleWebElement(controlLocation)).perform();
+
     }
 
     public void submit() {

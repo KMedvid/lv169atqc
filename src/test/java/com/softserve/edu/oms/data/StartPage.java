@@ -3,6 +3,7 @@ package com.softserve.edu.oms.data;
 import com.softserve.edu.data.StartData;
 import com.softserve.edu.oms.pages.LoginPage;
 import com.softserve.edu.tools.BrowserUtils;
+import com.softserve.edu.tools.PageObserveLoad;
 
 public class StartPage {
     private final String START_PAGE_UNDEFINED = "StartPage is Undefined.";
@@ -25,16 +26,15 @@ public class StartPage {
     // TODO Add Static
     
     public LoginPage load() {
-        StartData startData = BrowserUtils.get().getStartData();       
-               if ((startData.getLogin() == null)
-                   || (startData.getLogin().isEmpty())) {
+        StartData startData = BrowserUtils.get().getStartData();
+        if ((startData.getLogin() == null)
+                || (startData.getLogin().isEmpty())) {
             // TODO Create class Exception + log + report.
-          throw new RuntimeException(START_PAGE_UNDEFINED);
-       }
-    
+            throw new RuntimeException(START_PAGE_UNDEFINED);
+        }
         return login(startData);
     }
-    
+
     public LoginPage load(StartData startData) {
         BrowserUtils.get(startData);
         return login(startData);
@@ -72,10 +72,20 @@ public class StartPage {
         BrowserUtils.get().getBrowser().loadPage(startData.getLogout());
         return new LoginPage();
     }
+
+    public void addEventsPageLoadComplete() {
+        PageObserveLoad.get().addLoadCompleteEvent(new PageLoadComplete());
+        //PageObserveLoad.get().addLoadCompleteEvent(new PageLoadComplete2());
+    }
+
+    public void clearEventsPageLoadComplete() {
+        PageObserveLoad.get().deleteLoadCompleteEvents();
+    }
+
     public void close() {
         BrowserUtils.get().getBrowser().close();
     }
-
+    
     public void quit() {
         BrowserUtils.get().getBrowser().quit();
     }

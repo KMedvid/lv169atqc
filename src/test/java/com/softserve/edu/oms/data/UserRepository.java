@@ -21,20 +21,6 @@ public final class UserRepository {
     }
 
     public IUser getAdminUser() {
-        // TODO Code
-        // return new User("ivanka", "horoshko", "iva", "qwerty",
-        // "mail@gmail.com", "West", "Administrator");
-        //
-        // User user = new User();
-        // user.setFirstname("ivanka");
-        // user.setLastname("horoshko");
-        // user.setLogin("iva");
-        // user.setPassword("qwerty");
-        // user.setEmail("mail@gmail.com");
-        // user.setRegion("West");
-        // user.setRole("Administrator");
-        //
-        //return user;
         return User.get()
                 .setFirstname("Roman")
                 .setLastname("Kovalchuk")
@@ -50,9 +36,9 @@ public final class UserRepository {
         // return new User("firstName1", "lastName1", "login1", "qwerty",
         // "mail@gmail.com", "East", "Customer");
         return User.get()
-                .setFirstname("firstName1")
-                .setLastname("lastName1")
-                .setLogin("login1")
+                .setFirstname("firstName")
+                .setLastname("lastName")
+                .setLogin("login")
                 //.setLogin("login1")
                 .setPassword("qwerty")
                 .setEmail("mail@gmail.com")
@@ -89,26 +75,28 @@ public final class UserRepository {
 
     public IUser getNewUser() {
         return User.get()
-                .setFirstname("cccc")
-                .setLastname("cccc")
-                .setLogin("cccc")
+                .setFirstname("newuser")
+                .setLastname("newuser")
+                .setLogin("newuser")
                 .setPassword("qwerty")
-                .setEmail("cccc@gmail.com")
-                .setRegion("West")
-                .setRole("Administrator")
+                .setEmail("newuser@gmail.com")
+                .setRegion("East")
+                .setRole("Customer")
                 .build();
     }
+    
     public IUser getDelUser() {
         return User.get()
                 .setFirstname("deluser")
                 .setLastname("deluser")
                 .setLogin("deluser")
                 .setPassword("qwerty")
-                .setEmail("mail@gmail.com")
+                .setEmail("deluser@gmail.com")
                 .setRegion("East")
                 .setRole("Customer")
                 .build();
-    } 
+    }
+
     public List<IUser> getExistUsersCVS() {
         return new UserUtils().getAllUsers();
     }
