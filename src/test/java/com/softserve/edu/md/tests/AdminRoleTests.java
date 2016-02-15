@@ -17,11 +17,9 @@ import com.softserve.edu.md.pages.AgreementsPage;
 
 public class AdminRoleTests {
 
-//    SoftAssert softAssert;
     
     @BeforeClass
     public void oneTimeSetUp() {
-//        softAssert = new SoftAssert();
 
         StartPage.get().load(new StartData(
                 "http://10.1.10.100:8080/#/start"
