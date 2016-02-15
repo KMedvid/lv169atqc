@@ -1,16 +1,14 @@
 package com.softserve.edu.md.tests;
 
-import org.testng.TestRunner;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import com.softserve.edu.atqc.data.StartData;
-import com.softserve.edu.atqc.loggers.LoggerRepository;
 import com.softserve.edu.atqc.loggers.LoggerUtils;
+import com.softserve.edu.atqc.specs.AssertWrapper;
 import com.softserve.edu.md.data.AgreementRepository;
 import com.softserve.edu.md.data.IAgreement;
 import com.softserve.edu.md.data.StartPage;
@@ -18,13 +16,12 @@ import com.softserve.edu.md.data.UserRepository;
 import com.softserve.edu.md.pages.AgreementsPage;
 
 public class AdminRoleTests {
-   // public static final Logger logger = LoggerFactory.getLogger(AdminRoleTests.class);
 
-    SoftAssert softAssert;
+//    SoftAssert softAssert;
     
     @BeforeClass
     public void oneTimeSetUp() {
-        softAssert = new SoftAssert();
+//        softAssert = new SoftAssert();
 
         StartPage.get().load(new StartData(
                 "http://10.1.10.100:8080/#/start"
@@ -59,34 +56,37 @@ public class AdminRoleTests {
  
     @Test(dataProvider = "newAgreements")
     public void checkAddingNewAgreement(IAgreement agreement) {
-        //logger.info("TEST START: checkAddingNewAgreement");
-        LoggerUtils.get().infoLog("TEST START: checkAddingNewAgreement");
+        LoggerUtils.get()
+            .infoLog("TEST START: checkAddingNewAgreement("+agreement.getAgreementCode()+")");
+       
         // PreCondition
         AgreementsPage agreementsPage = StartPage.get().load().gotoSignIn()
                 .successAdminLogin(UserRepository.get().getAdminUser()).gotoAgreements();
 
         // Test Operation
-        //logger.info("TEST: addAgreement");
-        LoggerUtils.get().infoLog("TEST: addAgreement");
+        LoggerUtils.get().infoLog("TEST: Add agreement");
         agreementsPage.addAgreement(agreement);
 
-        //logger.info("TEST: initFirstTableRow");
-        LoggerUtils.get().infoLog("TEST: initFirstTableRow");        
+        LoggerUtils.get().infoLog("TEST: Update result table first row");        
         agreementsPage.initFirstTableRow();
 
-        //logger.info("TEST: softAssert.assertEquals");
-        LoggerUtils.get().infoLog("TEST: softAssert.assertEquals");        
-        softAssert.assertEquals(agreementsPage.getCustomerText(), agreement.getCustomerName());
+        LoggerUtils.get().infoLog("TEST: Assert agreement");        
+        AssertWrapper.get()
+            .forElement(agreementsPage.getCustomerText())
+            .valueMatch(agreement.getCustomerName())
+            .next()
+            .forElement(agreementsPage.getAgreementCodeText())
+            .valueMatch(agreement.getAgreementCode())
+            .next()
+            .forElement(agreementsPage.getWaterType().getText())
+            .valueMatch(agreement.getWaterType().toString());
 
-        //logger.info("TEST: clickDeleteAgreement");
-        LoggerUtils.get().infoLog("TEST: clickDeleteAgreement");
+        LoggerUtils.get().infoLog("TEST: Delete agreement");
         agreementsPage.clickDeleteAgreement();
 
-        //logger.info("TEST: softAssert.assertAll");
-        LoggerUtils.get().infoLog("TEST: softAssert.assertAll");
-        softAssert.assertAll();
+        LoggerUtils.get().infoLog("TEST: Assert All");
+        AssertWrapper.get().check();    
 
-        //logger.info("TEST DONE: checkAddingNewAgreement");
         LoggerUtils.get().infoLog("TEST DONE: checkAddingNewAgreement");
 
     }
